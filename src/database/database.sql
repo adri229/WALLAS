@@ -39,17 +39,17 @@ CREATE TABLE IF NOT EXISTS `STOCK` (
     `user` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario, unico (ie, no puede haber dos usuarios con el mismo email)',
     PRIMARY KEY (`idStock`),
     FOREIGN KEY (`user`) REFERENCES `USERS` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de stock';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de stock' AUTO_INCREMENT=1;
 
 -- creacion de la tabla TYPE
 CREATE TABLE IF NOT EXISTS `TYPE` (
     `idType` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del tipo de gasto, unico y auto incremental',
     `name` int(8) NOT NULL COMMENT 'nombre del gasto',  
     PRIMARY KEY (`idType`) 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de los tipos de gastos'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de los tipos de gastos' AUTO_INCREMENT=1;
 
 
-/*
+
 -- creacion de la tabla TYPE
 CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     `type` int(9) NOT NULL COMMENT 'id del tipo de gasto, unico y auto incremental',
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     FOREIGN KEY (`spending`) REFERENCES SPENDING (`idSpending`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto'
     
-*/
+
 
 
 
