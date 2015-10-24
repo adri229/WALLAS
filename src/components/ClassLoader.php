@@ -24,14 +24,33 @@ class ClassLoader {
     }
 
     public function loadClass($className){
+        
         $ns = $this->namespace . $this->namespaceSeparator;
         
-        if($this->namespace === null || $ns === substr())
-    
-    
-
-
-
+        if ($this->namespace === null || $ns === substr($className, 0, strlen($ns))){
+        
+            $filename = "";
+            $lastNsPos = strripos($className,$this->namespaceSeparator);
+        
+            if ($lastNsPos !== false){
+                $namespace = substr($className, 0, $lastNsPos);
+                $className = substr($className, $lastNsPos + 1);
+                $filename = str_replace($namespaceSeparator, DIRECTORY_SEPARATOR, $namespace);
+                $filename .= DIRECTORY_SEPARATOR;
+            }
+        
+        }
+        
+        $filename .= str_replace('_', DIRECTORY_SEPARATOR, $className);
+        $filename .= $this->fileExtension;
+        
+        $require = "";
+        if ($this->includePath !== null)
+            $require .= $this->includePath . DIRECTORY_SEPARATOR;
+        
+        if (file_exists($require . $filename))
+            require $require . $filename;
+        
     }
 }
 ?>

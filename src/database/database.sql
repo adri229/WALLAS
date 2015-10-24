@@ -48,8 +48,6 @@ CREATE TABLE IF NOT EXISTS `TYPE` (
     PRIMARY KEY (`idType`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de los tipos de gastos' AUTO_INCREMENT=1;
 
-
-
 -- creacion de la tabla TYPE
 CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     `type` int(9) NOT NULL COMMENT 'id del tipo de gasto, unico y auto incremental',
@@ -59,6 +57,9 @@ CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     FOREIGN KEY (`spending`) REFERENCES SPENDING (`idSpending`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto'
     
+    
+
+
 
 
 
