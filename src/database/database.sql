@@ -11,13 +11,14 @@ USE `WALLAS`;
 
 -- creacion de tabla USER
 CREATE TABLE IF NOT EXISTS `USER` (
-    `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario, unico (ie, no puede haber dos usuarios con el mismo email)',
+    `login` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'login del usuario, unico (ie, no puede haber dos usuarios con el mismo email)',
     `password` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Password del usuario. No puede ser nula',
     `fullname` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre y apellidos del usuario. No puede ser nulo.',
+    `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario',
     `numberPhone` int(9) NOT NULL COMMENT 'Numero de telefono del usuario.',
     `address` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Direccion del usuario. No puede ser nula.',
     `country` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Pais del usuario. No puede ser nulo.',
-    PRIMARY KEY (`email`)
+    PRIMARY KEY (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de usuarios';
 
 -- creacion de tabla SPENDING
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `SPENDING` (
     `quantity` int(8) NOT NULL COMMENT 'cantidad del gasto',
     `user` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del autor del gasto, no puede ser nulo, clave foranea a USER.email',
     PRIMARY KEY (`idSpending`),
-    FOREIGN KEY (`user`) REFERENCES `USER` (`email`)
+    FOREIGN KEY (`user`) REFERENCES `USER` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de posts' AUTO_INCREMENT=1;
 
 -- creacion de la tabla STOCK
@@ -36,9 +37,9 @@ CREATE TABLE IF NOT EXISTS `STOCK` (
     `revenue` int(8) NOT NULL COMMENT 'ingresos del usuario',  
     `dateStock` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
     `total` int(8) NOT NULL COMMENT 'cantidad total de presupuesto del cual dispone el usuario', 
-    `user` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario, unico (ie, no puede haber dos usuarios con el mismo email)',
+    `user` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
     PRIMARY KEY (`idStock`),
-    FOREIGN KEY (`user`) REFERENCES `USER` (`email`)
+    FOREIGN KEY (`user`) REFERENCES `USER` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de stock' AUTO_INCREMENT=1;
 
 -- creacion de la tabla TYPE
