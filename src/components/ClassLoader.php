@@ -2,7 +2,8 @@
 
 namespace components;
 
-class ClassLoader {
+class ClassLoader
+{
 
     private $fileExtension = '.php';
     private $namespace;
@@ -10,7 +11,8 @@ class ClassLoader {
     private $namespaceSeparator = '\\';
 
     
-    public function __construct($ns = null, $includePath = null){
+    public function __construct($ns = null, $includePath = null)
+    {
         $this->_namespace = $ns;
         $this->_includePath = $includePath;
     }
