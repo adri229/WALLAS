@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `SPENDING` (
     `idSpending` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del gasto, unico y auto incremental',
     `dateSpending` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha y hora en la que es creado el gasto, no puede ser nulo',
     `quantity` int(8) NOT NULL COMMENT 'cantidad del gasto',
-    `user` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del autor del gasto, no puede ser nulo, clave foranea a USER.email',
+    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del autor del gasto, no puede ser nulo, clave foranea a USER.email',
     PRIMARY KEY (`idSpending`),
-    FOREIGN KEY (`user`) REFERENCES `USER` (`login`)
+    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de posts' AUTO_INCREMENT=1;
 
 -- creacion de la tabla STOCK
@@ -37,9 +37,9 @@ CREATE TABLE IF NOT EXISTS `STOCK` (
     `revenue` int(8) NOT NULL COMMENT 'ingresos del usuario',  
     `dateStock` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
     `total` int(8) NOT NULL COMMENT 'cantidad total de presupuesto del cual dispone el usuario', 
-    `user` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
+    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
     PRIMARY KEY (`idStock`),
-    FOREIGN KEY (`user`) REFERENCES `USER` (`login`)
+    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de stock' AUTO_INCREMENT=1;
 
 -- creacion de la tabla TYPE
