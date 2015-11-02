@@ -1,53 +1,87 @@
 <?php
 
-class Spending {
+namespace model;
+
+class Spending extends Model{
+	
 	private $idSpending;
 	private $dateSpending;
 	private $quantity;
-	private $user;
+	private $owner;
 	
-	public function __construct($idSpending=NULL, 
-                                    $dateSpending=NULL, 
-                                    $quantity=NULL, 
-                                    $user=NULL) {
-            $this->idSpending=idSpending;
-            $this->dateSpending=dateSpending;
-            $this->quantity=quantity;
-            $this->user=user;
+	public function __construct($idSpending=null, $owner=null) {
+	    parent::__construct();
+	    
+        $this->idSpending = $idSpending;
+        $this->dateSpending = null;
+        $this->quantity = null;
+        $this->owner = $owner;
+    }
+        
+    public function findBy($where)
+    {
+        $ids = \database\DAOFactory::getDAO("spending")->select(["idSpending"],$where);
+        if (!$ids) return array();
+        
+        $objects = array();
+        foreach ($ids as $id) {
+            $spending = new Spending($id["idSpending"]);
+            if (!$spending->getEntity()) break;
+            $objects[] = $spending;
         }
+        return $objects;
+    }
         
-        public function getIdSpending(){
-            return $this->idSpending;
-        }
+    
+    public function getEntity()
+    {
+        $rows = $this->dao->select(["*"], ["idSpending" => $this->idSpending]);
+        if (!$rows) return false;
         
-        public function setIdSpending($idSpending){
-            $this->idSpending=$idSpending;
-        }
+        $this->dateSpending = $rows[0]["dateSpending"];
+        $this->quantity     = $rows[0]["quantity"];
+        $this->owner        = $rows[0]["owner"];
         
-        public function getDateSpending(){
-            return $this->dateSpending;
-        }
+        return true;
+    }
+    
+    public function save()
+    {
+        $data = [ 
+            "dateSpending" => $this->dateSpending,
+            "quantity"     => $this->quantity,
+            "owner"        => $this->owner 
+        ];
         
-        public function setDateSpending($dateSpending){
-            $this->dateSpending=$dateSpending;
-        }
+        if (isset($this->idSpending))
+            return $this->dao->update($data, ["idSpending" => $this->idSpending]);
         
-        public function getQuantity(){
-            return $this->dateSpending;
-        }
+        return $this->dao->insert($data);
+    }
+    
+    public function delete()
+    {
+        return $this->dao->delete(["idSpending" => $this->idSpending]);
+    }
+    
+    public function validate()
+    {
         
-        public function setQuantity($quantity){
-            $this->quantity=$quantity;
-        }
-        
-        public function getUser(){
-            return $this->user;
-        }
-        
-        public function setUser($user){
-            $this->user=$user;
-        }
-        
-        
+    }
+    
+    
+    public function getIdSpending()
+    {
+        return $this->idSpending;
+    }
+    
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+    
+    
+    
+    
 }
 ?>

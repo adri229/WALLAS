@@ -1,35 +1,53 @@
 <?php
+namespace model;
 
+use database;
+class Type extends Model
+{
 
+    private $idType;
 
-class Type {
+    private $name;
+
+    public function __construct($idType = NULL, $name = NULL)
+    {
+        parent::__construct();
+        
+        $this->idType = idType;
+        $this->name = name;
+    }
     
-        private $idType;
-        private $name;
+    public function findBy($where)
+    {
+        $ids = database\DAOFactory::getDAO("model")->select(["*"],$where);
+        if (!$ids) return array();
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-	
-	public function __construct($idType=NULL,$name=NULL) {
-            $this->idType=idType;
-            $this->name=name;
-        }
-        
-        public function getidType(){
-            return $this->idType;
-        }
-        
-        public function setidType($idType){
-            $this->idType=$idType;
-        }
-        
-        public function getname(){
-            return $this->name;
-        }
-        
-        public function setname($name){
-            $this->name=$name;
-        }
-        
-       
+    public function getidType()
+    {
+        return $this->idType;
+    }
 
+    public function getname()
+    {
+        return $this->name;
+    }
+
+   
 }
 ?>
