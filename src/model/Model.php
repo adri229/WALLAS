@@ -23,7 +23,7 @@ abstract class Model
 	}
 	
 	
-	public abstract function findBy($where);
+	public abstract static function findBy($where);
 	
 	public abstract function getEntity();
 	

@@ -1,7 +1,6 @@
 <?php
 namespace model;
 
-use database;
 class Stock extends Model
 {
 
@@ -27,7 +26,7 @@ class Stock extends Model
     }
     
     
-    public function findBy($where)
+    public static function findBy($where)
     {
         $ids = database\DAOFactory::getDAO("stock")->select(["idStock"],$where);
         if (!$ids) return array();

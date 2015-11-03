@@ -1,7 +1,6 @@
 <?php
 namespace model;
 
-use database;
 class Type extends Model
 {
 
@@ -17,25 +16,52 @@ class Type extends Model
         $this->name = name;
     }
     
-    public function findBy($where)
+    public static function findBy($where)
     {
         $ids = database\DAOFactory::getDAO("model")->select(["*"],$where);
         if (!$ids) return array();
         
+        $objects = array();
+        foreach ($ids as $id) {
+            $type = new Type(["idType"]);
+            if (!$type->getEntity()) break;
+            $objects[] = $type;
+        }
         
-        
+        return $objects;
     }
     
     
+    public function getEntity()
+    {
+        $rows = $this->dao->selec(["*"],["idType" => $this->idType]);
+        if (!$rows) return false;
+        
+        $this->name   = $rows[0]["name"];
+        
+        return true;
+    }
     
     
+    public function save()
+    {
+        $data = ["name" => $this->name];
+        
+        if (isset($this->idType))
+            return $this->dao->update($data, ["idType" => $this->idType]);
+        
+        return $this->dao->insert($data);
+    }
     
+    public function delete()
+    {
+        return $this->dao->delete(["idType" => $this->idType]);
+    }
     
-    
-    
-    
-    
-    
+    public function validate()
+    {
+        
+    }
     
 
     public function getidType()

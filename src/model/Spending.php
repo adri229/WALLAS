@@ -18,7 +18,7 @@ class Spending extends Model{
         $this->owner = $owner;
     }
         
-    public function findBy($where)
+    public static function findBy($where)
     {
         $ids = \database\DAOFactory::getDAO("spending")->select(["idSpending"],$where);
         if (!$ids) return array();
