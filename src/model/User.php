@@ -131,6 +131,35 @@ class User extends Model
         return components\Password::verify($cleanPass, $this->hashedPass);        
     }
     
+    public function setFullname()
+    {
+        return $this->email;
+    }
+    
+    public function setEmail()
+    {
+        return $this->email;
+    }
+    
+    public function setPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+    
+    public function setAddress()
+    {
+        return $this->address;
+    }
+    
+    public function setCountry()
+    {
+        return $this->country;
+    }
+    
+    
+    
+    
+    
     
     
     
