@@ -52,11 +52,11 @@ class UsersRest extends BaseRest
 			echo(json_encode($e->getErrors()));
 		}
 		
-		$this->user->setFullName() 	  = $data->fullname;
-		$this->user->setEmail() 	  = $data->email; 
-		$this->user->setPhoneNumber() = $data->phoneNumber;
-		$this->user->setAddress()	  = $data->address;
-		$this->user->setCountry()	  = $data->country;
+		$this->user->setFullName($data->fullname);
+		$this->user->setEmail($data->email); 
+		$this->user->setPhoneNumber($data->phoneNumber);
+		$this->user->setAddress($data->address);
+		$this->user->setCountry($data->country);
 		
 		if (!$user->validate() || !$user->save()) {
 			header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
