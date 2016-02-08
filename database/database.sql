@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `USER` (
     `password` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Password del usuario. No puede ser nula',
     `fullname` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre y apellidos del usuario. No puede ser nulo.',
     `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario',
-    `numberPhone` int(9) NOT NULL COMMENT 'Numero de telefono del usuario.',
+    `phone` int(9) NOT NULL COMMENT 'Numero de telefono del usuario.',
     `address` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Direccion del usuario. No puede ser nula.',
     `country` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Pais del usuario. No puede ser nulo.',
     PRIMARY KEY (`login`)
