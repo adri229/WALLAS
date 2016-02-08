@@ -1,4 +1,4 @@
-CREATE DATABASE `WALLAS` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+CREATE DATABASE `wallas` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 
 -- creacion de usuario (dandole todos los privilegios)
 GRANT USAGE ON *.* TO 'wallas'@'localhost';
@@ -7,7 +7,7 @@ CREATE USER 'wallas'@'localhost' IDENTIFIED BY 'wallas';
 GRANT ALL PRIVILEGES ON `wallas`.* TO 'wallas'@'localhost' WITH GRANT OPTION;
 
 -- todas las consultas posteriores pertenecen a la base de datos wallas
-USE `WALLAS`;
+USE `wallas`;
 
 -- creacion de tabla USER
 CREATE TABLE IF NOT EXISTS `USER` (
@@ -59,7 +59,12 @@ CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     FOREIGN KEY (`spending`) REFERENCES SPENDING (`idSpending`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto' AUTO_INCREMENT=1;
    
-    
+INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`,`address`,`country`) VALUES
+('adri229','adri229','adrian gonzalez','adri229@gmailcom','988102030','Ourense','Spain'),
+('adri339','adri339','adrian dominguez','adri339@gmailcom','988102030','Ourense','Spain'),
+('adri449','adri449','adrian perez','adri449@gmailcom','988102030','Ourense','Spain'),
+('adri559','adri559','adrian martinez','adri559@gmailcom','988102030','Ourense','Spain'),
+('adri669','adri669','adrian vazquez','adri669@gmailcom','988102030','Ourense','Spain');    
 
 
 
