@@ -3,7 +3,7 @@ CREATE DATABASE `wallas` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 -- creacion de usuario (dandole todos los privilegios)
 GRANT USAGE ON *.* TO 'wallas'@'localhost';
 DROP USER 'wallas'@'localhost';
-CREATE USER 'wallas'@'localhost' IDENTIFIED BY 'wallas';
+CREATE USER 'wallas'@'localhost' IDENTIFIED BY 'wallaspass';
 GRANT ALL PRIVILEGES ON `wallas`.* TO 'wallas'@'localhost' WITH GRANT OPTION;
 
 -- todas las consultas posteriores pertenecen a la base de datos wallas

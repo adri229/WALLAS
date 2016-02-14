@@ -23,8 +23,8 @@ class UserDAO {
 	 * @throws PDOException si ocurre algun error en la BD
 	 * @return void
 	 */
-	public function save($user) {
-            $stmt = $this->db->prepare ( "insert into `USER` (`login`,`password`,`fullname`,
+	public function save(User $user) {
+            $stmt = $this->db->prepare ( "INSERT INTO `USER` (`login`,`password`,`fullname`,
 	    	`email`,`phone`,`address`,`country`) VALUES (?,?,?,?,?,?,?)" );
             $stmt->execute ( array (
 		$user->getLogin(),

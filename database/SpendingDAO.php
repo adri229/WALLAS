@@ -27,5 +27,42 @@ class SpendingDAO
         return $spendings;
     }
     
+    public function findById($idSpending)
+    {
+    	$stmt = $this->db->prepare("SELECT * FROM SPENDING WHERE id=?");
+    	$stmt->execute(array($idSpending));
+    	$spending = $stmt->fetch(PDO::FETCH_ASSOC);
+    	
+    	if ($spending != NULL) {
+    		return new Spending(
+    			$spending["idSpending"],
+    			$spending["dateSpending"],
+    			$spending["quantity"],
+    			new User($spending["owner"]));
+    	} else {
+    		return NULL;
+    	}
+    }
+    
+    public function save($spending)
+    {
+    	$stmt = $this->db->prepare("INSERT INTO SPENDING(dateSpending,quantity,owner) VALUES (?,?,?)");
+    	$stmt->execute(array($spending->getDateSpending(), $spending->getQuantity(), $spending->getOwner()));
+    	return $this->db->lastInsertId();
+    }
+    
+    public function update($spending)
+    {
+    	$stmt = $this->db->prepare("UPDATE SPPENDING SET dateSpending = ?, quantity = ?, owner = ? WHERE idSpending = ?");
+    	$stmt->execute(array($spending->getDateSpending(), $spending->getQuantity(), $spending->getOwner(), $spending->getIdSPending()));    	
+    }
+    
+    public function delete($idSpending)
+    {
+    	$stmt = $this->db->prepare("DELETE FROM SPENDING WHERE idSpending = ?");
+    	$stmt->execute(array($idSpending));
+    }
+    
+    
 }
 ?>

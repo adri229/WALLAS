@@ -1,0 +1,37 @@
+<div class="register">
+	<div class="register-head">
+		<h3 class="register-title">Sign up</h3>
+	</div>
+	<div class="register-body">
+		<form name="registerForm" accept-charset="UTF-8" role="form" data-ng-enter='register()'>
+			<fieldset>
+				<div class="register-form-login">
+					<input name="login" placeholder="Login" class="register-form-box" data-ng-model="user.login" type="text" required>
+				</div>
+				<div class="register-form-password">
+					<input name="password" placeholder="Password" class="register-form-box" data-ng-model="user.password" type="password" required>
+				</div>
+				<div class="register-form-fullname">
+					<input name="fullname" placeholder="Full Name" class="register-form-box" data-ng-model="user.fullname" type="text" required>
+				</div>
+				<div class="register-form-email">
+					<input name="email" placeholder="email" class="register-form-box" data-ng-model="user.email" type="email" required>
+				</div>
+				<div class="register-form-numberphone">
+					<input name="numberphone" placeholder="Number Phone" class="register-form-box" data-ng-model="user.numberphone" type="number" required>
+				</div>
+				<div class="register-form-address">
+					<input name="address" placeholder="Address" class="register-form-box" data-ng-model="user.address" type="text" required>
+				</div>
+				<div class="register-form-country">
+					<input name="country" placeholder="Country" class="register-form-box" data-ng-model="user.country" type="text" required>
+				</div>
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" data-ng-click="register()">
+                         Sign Up
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

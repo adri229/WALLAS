@@ -20,18 +20,26 @@ class UserRest extends BaseRest
     
     public function create($data)
     {
+        if(empty($data)) {
+            echo 'DATA EMPTY';
+			print_r($_SERVER);
+			die();
+        }
+		
+		
+        
         $user = new \User($data->login, $data->password, $data->fullname, 
                 $data->email, $data->phone, $data->address, $data->country);
         
         try {
-            $user->validate();
+            //$user->validate();
             $this->userDAO->save($user);
             header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
             header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
-        } catch (Exception $ex) {
+        } catch (Exception $e) {
             http_response_code(400);
             echo(json_encode($e->getErrors()));
-        }
+        } 
     }
     
     
@@ -41,11 +49,11 @@ class UserRest extends BaseRest
                 $data->email, $data->phone, $data->address, $data->country);
         
         try {
-            $user->validate();
+            //$user->validate();
             $this->userDAO->update($user);
             header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
             header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
-        } catch (Exception $ex) {
+        } catch (Exception $e) {
             http_response_code(400);
             echo(json_encode($e->getErrors()));
         }
@@ -57,11 +65,11 @@ class UserRest extends BaseRest
         $user = new \User($data->login, $data->password);
         
         try {
-            $user->validate();
+            //$user->validate();
             $this->userDAO->save($user);
             header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
             header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
-        } catch (Exception $ex) {
+        } catch (Exception $e) {
             http_response_code(400);
             echo(json_encode($e->getErrors()));
         }
@@ -74,7 +82,7 @@ class UserRest extends BaseRest
             $this->userDAO->delete($login);
             header($_SERVER['SERVER_PROTOCOL'].' 204 Created');
             header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
-        } catch (Exception $ex) {
+        } catch (Exception $e) {
             http_response_code(400);
             echo(json_encode($e->getErrors()));
         }
