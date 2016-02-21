@@ -19,15 +19,7 @@ class UserRest extends BaseRest
     }
     
     public function create($data)
-    {
-        if(empty($data)) {
-            echo 'DATA EMPTY';
-			print_r($_SERVER);
-			die();
-        }
-		
-		
-        
+    {       
         $user = new \User($data->login, $data->password, $data->fullname, 
                 $data->email, $data->phone, $data->address, $data->country);
         
@@ -43,15 +35,30 @@ class UserRest extends BaseRest
     }
     
     
-    public function update($data) 
+    public function update($login, $data) 
     {
-        $user = new \User($data->login, $data->password, $data->fullname, 
-                $data->email, $data->phone, $data->address, $data->country);
+    	$currentUser = parent::authenticateUser();
+    	if ($login != $currentUser->getLogin()) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		echo("You are not authorized to access this resource");
+    	} 
+    	
+    	$user = $this->userDAO->findByID($login);
+    	if ($user == NULL) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+    		echo("User with id ".$login." not found");
+    	}
+    	
+    	$user->setFullname($data->fullname);
+    	$user->setEmail($data->email);
+    	$user->setPhone($data->phone);
+    	$user->setAddress($data->address);
+    	$user->setCountry($data->country);
         
         try {
             //$user->validate();
             $this->userDAO->update($user);
-            header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
+            header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
             header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
         } catch (Exception $e) {
             http_response_code(400);
@@ -62,30 +69,44 @@ class UserRest extends BaseRest
     
     public function updatePassword ($data)
     {
-        $user = new \User($data->login, $data->password);
-        
-        try {
-            //$user->validate();
-            $this->userDAO->save($user);
-            header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-            header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
-        } catch (Exception $e) {
-            http_response_code(400);
-            echo(json_encode($e->getErrors()));
-        }
+    	$currentUser = parent::authenticateUser();
+    	if ($login != $currentUser->getLogin()) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		echo("You are not authorized to access this resource");
+    	}
+    	
+    	$user = $this->userDAO->findByID($login);
+    	if ($user == NULL) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+    		echo("User with id ".$login." not found");
+    	}
+    	
+    	$user->setPassword($data->password);
+    	try {
+    		//$user->validate();
+    		$this->userDAO->update($user);
+    		header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
+    		header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
+    	} catch (Exception $e) {
+    		http_response_code(400);
+    		echo(json_encode($e->getErrors()));
+    	}
     }
     
-    public function delete ($data) 
+    public function delete ($login) 
     {
-        $user = new User($data->login(), $data->password);
-        try {
-            $this->userDAO->delete($login);
-            header($_SERVER['SERVER_PROTOCOL'].' 204 Created');
-            header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
-        } catch (Exception $e) {
-            http_response_code(400);
-            echo(json_encode($e->getErrors()));
-        }
+    	$currentUser = parent::authenticateUser();
+    	if ($login != $currentUser->getLogin()) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		echo("You are not authorized to access this resource");
+    	}
+    	try {
+    		$this->userDAO->delete($login);
+    		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+    	} catch (Exception $e) {
+    		http_response_code(400);
+    		echo(json_encode($e->getErrors()));
+    	}
     }
     
     public function get($login)

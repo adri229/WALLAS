@@ -1,6 +1,6 @@
 'use strict';
 
-var wallasControllers = angular.module('wallasController', []);
+var wallasControllers = angular.module('wallasControllers', []);
 
 wallasControllers.controller('LoginController', 
 ['$scope', '$rootScope', '$location', 'AuthenticationService',
@@ -8,7 +8,7 @@ wallasControllers.controller('LoginController',
         AuthenticationService.clearCredentials();
 		
 		$scope.login = function() {
-			AuthenticationService.login($scope.credentials.login, $scope.credentials.password function(response){
+			AuthenticationService.login($scope.credentials.login, $scope.credentials.password, function(response){
 				if (response.success) {
 					AuthenticationService.setCredentials($scope.credentials.login,$scope.credentials.password);
 					location.path('/');
@@ -17,7 +17,7 @@ wallasControllers.controller('LoginController',
 				} 
 			});
 		}
-]);
+}]);
 
 
 wallasControllers.controller("RegisterController", ["$scope", function ($scope) {

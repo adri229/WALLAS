@@ -53,7 +53,7 @@ class UserDAO {
             $user = $stmt->fetch ( PDO::FETCH_ASSOC );
 	
             if (! sizeof ( $user ) == 0) {
-		return new User ( $user ["loin"], $user ["password"], $user ["fullname"], $user ["email"], $user ["numberPhone"], $user ["address"], $user ["country"] );
+		return new User ( $user ["login"], $user ["password"], $user ["fullname"], $user ["email"], $user ["phone"], $user ["address"], $user ["country"] );
             } else {
 		return NULL;
             }

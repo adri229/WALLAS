@@ -1,9 +1,9 @@
 'use strict';
 
-var wallasServices = angular.module('wallasServices',['ngResource']);
+var wallasServices = angular.module('wallasServices',[]);
 
 wallasServices.factory('AuthenticationService',
-	['Base64','$http','$cookies','$rootScope','$timeOut']}
+	['Base64','$http','$cookies','$rootScope','$timeOut',
 	function(Base64,$http,$cookies,$rootScope,$timeOut){
 		var serviceLogin =  {};
 		
@@ -15,7 +15,7 @@ wallasServices.factory('AuthenticationService',
 		};
 		
 		serviceLogin.setCredentials = function (login, password) {
-			var authdata = Base64.encode(login + ":" + password);
+			var authdata = btoa(login + ":" + password);
 			
 			//Todos los controllers heredan estos datos
 			$rootScope.globals = {
@@ -34,6 +34,7 @@ wallasServices.factory('AuthenticationService',
 			$http.defaults.header.common['Authorization'] = 'Basic';
 		};
 
-		return service;	
-				
-); 
+		return service;
+	
+					
+}]); 
