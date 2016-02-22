@@ -1,12 +1,13 @@
 'use strict';
 
-var wallasControllers = angular.module('wallasControllers', []);
+var wallas = angular.module('wallasApp');
 
-wallasControllers.controller('LoginController', 
+wallas.controller('LoginController',
 ['$scope', '$rootScope', '$location', 'AuthenticationService',
- function ($scope, $rootScope, $location, $AuthenticationService) {
+ function ($scope, $rootScope, $location, AuthenticationService) {
+   
         AuthenticationService.clearCredentials();
-		
+
 		$scope.login = function() {
 			AuthenticationService.login($scope.credentials.login, $scope.credentials.password, function(response){
 				if (response.success) {
@@ -14,12 +15,12 @@ wallasControllers.controller('LoginController',
 					location.path('/');
 				} else {
 					$scope.error = response.message;
-				} 
+				}
 			});
 		}
 }]);
 
 
-wallasControllers.controller("RegisterController", ["$scope", function ($scope) {
+wallas.controller("RegisterController", ["$scope", function ($scope) {
         $scope.mensaje = "Texto cargado desde el controlador Pagina2Controller";
 }]);

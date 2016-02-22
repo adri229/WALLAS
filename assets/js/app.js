@@ -1,6 +1,6 @@
 'use strict';
 
-var wallas = angular.module('wallas', ['ngRoute','wallasControllers','wallasServices']);
+var wallas = angular.module('wallasApp', ['ngRoute', 'ngCookies']);
 
 wallas.config(['$routeProvider', function ($routeProvider) {
 
@@ -19,5 +19,3 @@ wallas.config(['$routeProvider', function ($routeProvider) {
                 redirectTo: '/'
             });
     }]);
-	
-	

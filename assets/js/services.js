@@ -1,22 +1,23 @@
 'use strict';
 
-var wallasServices = angular.module('wallasServices',[]);
+var wallas = angular.module('wallasApp');
 
-wallasServices.factory('AuthenticationService',
-	['Base64','$http','$cookies','$rootScope','$timeOut',
-	function(Base64,$http,$cookies,$rootScope,$timeOut){
+wallas.factory('AuthenticationService',
+	['$http','$cookies', '$rootScope','$timeout',
+	function($http,$cookies, $rootScope,$timeOut){
+		alert("hola");
 		var serviceLogin =  {};
-		
+
 		serviceLogin.login = function(login, password, callback) {
 			$http.post('/api/authenticate', {login: login, password: password}).
 				success(function(response) {
 					callback(response);
 				});
 		};
-		
+
 		serviceLogin.setCredentials = function (login, password) {
 			var authdata = btoa(login + ":" + password);
-			
+
 			//Todos los controllers heredan estos datos
 			$rootScope.globals = {
 				currentUser: {
@@ -24,17 +25,17 @@ wallasServices.factory('AuthenticationService',
 					authdata: authdata
 				}
 			};
-			$http.defaults.header.common['Authorization'] = 'Basic ' + authdata;
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 			$cookies.put('globals',$rootScope.globals);
 		};
-		
+
 		serviceLogin.clearCredentials = function() {
 			$rootScope.globals = {};
 			$cookies.remove('globals');
-			$http.defaults.header.common['Authorization'] = 'Basic';
+			$http.defaults.headers.common['Authorization'] = 'Basic';
 		};
 
-		return service;
-	
-					
-}]); 
+		return serviceLogin;
+
+
+}]);

@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__."/../model/User.php");
+/*require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../database/UserDAO.php");
-require_once(__DIR__."/BaseRest.php");
+require_once(__DIR__."/BaseRest.php");*/
 /**
  * Refactorizar cuando se cree la clase Server
  * @author acfernandez4
@@ -15,7 +15,7 @@ class UserRest extends BaseRest
     public function __construct() {
         parent::__construct();
         
-        $this->userDAO = new \UserDAO();
+//        $this->userDAO = new \UserDAO();
     }
     
     public function create($data)
@@ -37,6 +37,7 @@ class UserRest extends BaseRest
     
     public function update($login, $data) 
     {
+	die("metodo update");
     	$currentUser = parent::authenticateUser();
     	if ($login != $currentUser->getLogin()) {
     		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
