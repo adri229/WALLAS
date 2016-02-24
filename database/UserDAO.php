@@ -90,12 +90,31 @@ class UserDAO {
 	 * @throws PDOException si ocurre algun error en la BD
 	 */
 	public function updatePassword($user) {
-            $stmt = $this->db->prepare ( "UPDATE users SET password=? WHERE login=?" );
-            $stmt->execute ( array (
-            	$user->getPassword (),
-		$user->getLogin () 
-            ));
+        $stmt = $this->db->prepare("UPDATE USER SET password=? WHERE login=?");
+        $stmt->execute (array($user->getPassword (), $user->getLogin()));
 	}
+
+	public function updateEmail($user) {
+        $stmt = $this->db->prepare("UPDATE USER SET email=? WHERE login=?");
+        $stmt->execute(array($user->getEmail(), $user->getLogin()));
+	}
+
+	public function updatePhone($user) {
+        $stmt = $this->db->prepare("UPDATE USER SET phone=? WHERE login=?");
+        $stmt->execute(array($user->getPhone(), $user->getLogin()));
+	}
+
+	public function updateAddress($user) {
+        $stmt = $this->db->prepare("UPDATE USER SET address=? WHERE login=?");
+        $stmt->execute(array($user->getAddress(), $user->getLogin()));
+	}
+
+	public function updateCountry($user) {
+        $stmt = $this->db->prepare("UPDATE USER SET country=? WHERE login=?");
+        $stmt->execute(array($user->getCountry(), $user->getLogin()));
+	}
+
+
 	
 	public function update($user)
 	{
