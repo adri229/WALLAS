@@ -15,7 +15,7 @@ class UserRest extends BaseRest
     public function __construct() {
         parent::__construct();
         
-//        $this->userDAO = new \UserDAO();
+        $this->userDAO = new \UserDAO();
     }
     
     public function create($data)
@@ -37,13 +37,12 @@ class UserRest extends BaseRest
     
     public function update($login, $data) 
     {
-	die("metodo update");
     	$currentUser = parent::authenticateUser();
     	if ($login != $currentUser->getLogin()) {
     		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
     		echo("You are not authorized to access this resource");
     	} 
-    	
+    		
     	$user = $this->userDAO->findByID($login);
     	if ($user == NULL) {
     		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
@@ -55,12 +54,14 @@ class UserRest extends BaseRest
     	$user->setPhone($data->phone);
     	$user->setAddress($data->address);
     	$user->setCountry($data->country);
+        print_r($data);
+        print_r($user);
         
         try {
             //$user->validate();
             $this->userDAO->update($user);
             header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
-            header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
+            //header("Location: ".$_SERVER['REQUEST_URI']);
         } catch (Exception $e) {
             http_response_code(400);
             echo(json_encode($e->getErrors()));
@@ -112,12 +113,19 @@ class UserRest extends BaseRest
     
     public function get($login)
     {
-        $user = $this->userDAO->findByID($login);
+        $currentUser = parent::authenticateUser();
+        if ($login != $currentUser->getLogin()) {
+            header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+            echo("You are not authorized to access this resource");
+        }
+
+	    $user = $this->userDAO->findByID($login);
         if ($user == NULL) {
             header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
             echo ("User with login ".$login." not found");
         }
         
+
         $user_array = array(
             "login" => $user->getLogin(),
             "password" => $user->getPassword(),
@@ -130,10 +138,10 @@ class UserRest extends BaseRest
         
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
-        echo(json_encode($post_array));        
+        echo(json_encode($user_array));        
         
     }
-
+/*
     public function login($login)
     {
         $currentLogged = parent::authenticateUser();
@@ -146,17 +154,17 @@ class UserRest extends BaseRest
         }
         
     }
-    
+  */  
     
 	
 }
 
 $userRest = new UserRest();
 \URIDispatcher::getInstance()
-	->map("GET", "/user/$1", array($userRest, "login"))
+	->map("GET", "/user/$1", array($userRest, "get"))
 	->map("POST", "/user", array($userRest, "create"))
 	->map("PUT", "/user/$1", array($userRest, "update"))
-	->map("DELETE", "/user/$1", array($userRest, "delete"))
-	->map("GET", "/user/$1", array($userRest, "get"));
+	->map("DELETE", "/user/$1", array($userRest, "delete"));
+	
 
 ?>
