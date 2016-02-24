@@ -7,12 +7,12 @@ wallas.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/login', {
                 pageTitle: 'Sign In - WALLAS',
-                templateUrl: "../html/login.html",
-                controller: 'LoginController'
+                templateUrl: "assets/html/login.html",
+                controller: 'AuthenticationController'
             }).
             when('/register', {
                 pageTitle: 'Register - WALLAS',
-                templateUrl: '../html/register.html',
+                templateUrl: 'assets/html/register.html',
                 controller: 'RegisterController'
             }).
             otherwise({

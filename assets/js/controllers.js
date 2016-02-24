@@ -2,7 +2,7 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('LoginController',
+wallas.controller('AuthenticationController',
 ['$scope', '$rootScope', '$location', 'AuthenticationService',
  function ($scope, $rootScope, $location, AuthenticationService) {
    

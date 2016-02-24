@@ -5,11 +5,12 @@ var wallas = angular.module('wallasApp');
 wallas.factory('AuthenticationService',
 	['$http','$cookies', '$rootScope','$timeout',
 	function($http,$cookies, $rootScope,$timeOut){
-		alert("hola");
+		
 		var serviceLogin =  {};
 
 		serviceLogin.login = function(login, password, callback) {
-			$http.post('/api/authenticate', {login: login, password: password}).
+			alert(password);
+			$http.post('wallas/rest/user', {login: login, password: password}).
 				success(function(response) {
 					callback(response);
 				});
