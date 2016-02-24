@@ -49,13 +49,10 @@ class UserRest extends BaseRest
     		echo("User with id ".$login." not found");
     	}
     	
-    	$user->setFullname($data->fullname);
     	$user->setEmail($data->email);
     	$user->setPhone($data->phone);
     	$user->setAddress($data->address);
     	$user->setCountry($data->country);
-        print_r($data);
-        print_r($user);
         
         try {
             //$user->validate();
