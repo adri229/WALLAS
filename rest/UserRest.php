@@ -238,7 +238,7 @@ class UserRest extends BaseRest
         echo(json_encode($user_array));        
         
     }
-/*
+
     public function login($login)
     {
         $currentLogged = parent::authenticateUser();
@@ -251,14 +251,15 @@ class UserRest extends BaseRest
         }
         
     }
-  */  
+    
     
 	
 }
 
 $userRest = new UserRest();
 \URIDispatcher::getInstance()
-	->map("GET", "/users/$1", array($userRest, "get"))
+    ->map("GET", "/users/$1", array($userRest, "get"))
+    ->map("POST", "/users/$1/login", array($userRest, "login"))
 	->map("POST", "/users", array($userRest, "create"))
 	->map("PUT", "/users/$1", array($userRest, "update"))
     ->map("PUT", "/users/$1/password", array($userRest, "updatePassword"))
