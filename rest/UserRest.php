@@ -66,7 +66,7 @@ class UserRest extends BaseRest
         
     }
     
-    public function updatePassword ($data)
+    public function updatePassword ($login,$password)
     {
     	$currentUser = parent::authenticateUser();
     	if ($login != $currentUser->getLogin()) {
@@ -79,17 +79,17 @@ class UserRest extends BaseRest
     		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
     		echo("User with id ".$login." not found");
     	}
-    	
-    	$user->setPassword($data->password);
-    	try {
-    		//$user->validate();
-    		$this->userDAO->update($user);
-    		header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
-    		header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
-    	} catch (Exception $e) {
-    		http_response_code(400);
-    		echo(json_encode($e->getErrors()));
-    	}
+    	$user->setPassword($password->password);
+
+    	 try {
+            //$user->validate();
+            $this->userDAO->updatePassword($user);
+            header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
+            //header("Location: ".$_SERVER['REQUEST_URI']);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo(json_encode($e->getErrors()));
+        }
     }
     
     public function delete ($login) 
@@ -161,6 +161,7 @@ $userRest = new UserRest();
 	->map("GET", "/users/$1", array($userRest, "get"))
 	->map("POST", "/users", array($userRest, "create"))
 	->map("PUT", "/users/$1", array($userRest, "update"))
+    ->map("PUT", "/users/$1/password", array($userRest, "updatePassword"))
 	->map("DELETE", "/users/$1", array($userRest, "delete"));
 	
 
