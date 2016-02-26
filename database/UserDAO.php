@@ -89,39 +89,15 @@ class UserDAO {
 	 *        	El usuario
 	 * @throws PDOException si ocurre algun error en la BD
 	 */
-	public function updatePassword($user) {
-        $stmt = $this->db->prepare("UPDATE USER SET password=? WHERE login=?");
-        $stmt->execute (array($user->getPassword (), $user->getLogin()));
-	}
-
-	public function updateEmail($user) {
-        $stmt = $this->db->prepare("UPDATE USER SET email=? WHERE login=?");
-        $stmt->execute(array($user->getEmail(), $user->getLogin()));
-	}
-
-	public function updatePhone($user) {
-        $stmt = $this->db->prepare("UPDATE USER SET phone=? WHERE login=?");
-        $stmt->execute(array($user->getPhone(), $user->getLogin()));
-	}
-
-	public function updateAddress($user) {
-        $stmt = $this->db->prepare("UPDATE USER SET address=? WHERE login=?");
-        $stmt->execute(array($user->getAddress(), $user->getLogin()));
-	}
-
-	public function updateCountry($user) {
-        $stmt = $this->db->prepare("UPDATE USER SET country=? WHERE login=?");
-        $stmt->execute(array($user->getCountry(), $user->getLogin()));
-	}
 
 
 	
 	public function update($user)
 	{
-            $stmt = $this->db->prepare("UPDATE USER SET email = ?, phone = ?,"
+            $stmt = $this->db->prepare("UPDATE USER SET password = ?, email = ?, phone = ?,"
                 . "address = ?, country = ? WHERE login = ?");
-            $stmt->execute(array($user->getEmail(), $user->getPhone(), $user->getAddress(),
-                $user->getCountry(), $user->getLogin()));	
+            $stmt->execute(array($user->getPassword(), $user->getEmail(), $user->getPhone(), 
+            	$user->getAddress(), $user->getCountry(), $user->getLogin()));	
 	}
 	
 	public function delete($login)
