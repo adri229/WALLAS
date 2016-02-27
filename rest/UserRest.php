@@ -1,8 +1,8 @@
 <?php
 
-/*require_once(__DIR__."/../model/User.php");
+require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../database/UserDAO.php");
-require_once(__DIR__."/BaseRest.php");*/
+require_once(__DIR__."/BaseRest.php");
 /**
  * Refactorizar cuando se cree la clase Server
  * @author acfernandez4
@@ -34,38 +34,7 @@ class UserRest extends BaseRest
         } 
     }
     
-    /*
-    public function update($login, $data) 
-    {
-    	$currentUser = parent::authenticateUser();
-    	if ($login != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
-    		echo("You are not authorized to access this resource");
-    	} 
-    		
-    	$user = $this->userDAO->findByID($login);
-    	if ($user == NULL) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-    		echo("User with id ".$login." not found");
-    	}
-    	
-    	$user->setEmail($data->email);
-    	$user->setPhone($data->phone);
-    	$user->setAddress($data->address);
-    	$user->setCountry($data->country);
-        
-        try {
-            //$user->validate();
-            $this->userDAO->update($user);
-            header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
-            //header("Location: ".$_SERVER['REQUEST_URI']);
-        } catch (Exception $e) {
-            http_response_code(400);
-            echo(json_encode($e->getErrors()));
-        }
-        
-    }
-    */
+    
 
     public function update($login, $attribute, $data)
     {
@@ -83,8 +52,8 @@ class UserRest extends BaseRest
         }
 
         switch ($attribute) {
-            case 'password':
-                $user->setPassword($data->password);
+            case 'passwd':
+                $user->setPassword($data->passwd);
                 break;
             case 'email':
                 $user->setEmail($data->email);
