@@ -1,0 +1,24 @@
+curl -i -X POST -H "Content-Type: application/json" -d '{"login":"adrian","passwd":"adrian","verifyPass":"passwd","fullname":"adrian fernandez","email":"adrian@gmail com","phone":"699105075","address":"Ourense","country":"Spain"}' http://localhost/wallas/rest/users
+
+curl -i -X POST -H "Content-Type: application/json" -u adrian:adrian http://localhost/wallas/rest/users/login/adrian
+
+curl -i -X GET -H "Content-Type: application/json" -u adrian:adrian http://localhost/wallas/rest/users/adrian
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"passwd":"wallas"}' -u adrian:adrian http://localhost/wallas/rest/users/adrian/passwd
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"email":"adrian@hotmail.com"}' -u adrian:wallas http://localhost/wallas/rest/users/adrian/email
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"phone":"988152545"}' -u adrian:wallas http://localhost/wallas/rest/users/adrian/phone
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"address":"London"}' -u adrian:wallas http://localhost/wallas/rest/users/adrian/address
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"country":"England"}' -u adrian:wallas http://localhost/wallas/rest/users/adrian/country
+
+curl -i -X DELETE -u adrian:wallas http://localhost/wallas/rest/users/adrian
+
+
+
+
+
+
+
