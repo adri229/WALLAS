@@ -21,26 +21,26 @@ class UserRest extends BaseRest
     public function create($data)
     {
     	$required = 
-			isset($data->login)		 &&
-			isset($data->passwd)	 &&
-			isset($data->verifyPass) &&
-			isset($data->fullname)	 &&
-			isset($data->email)		 &&
-			isset($data->phone)		 &&
-			isset($data->address)	 &&
-			isset($data->country);
+		    isset($data->login)	     &&
+		    isset($data->passwd)	 &&
+    		isset($data->verifyPass) &&
+	    	isset($data->fullname)	 &&
+		    isset($data->email)	     &&
+		    isset($data->phone)	     &&
+    		isset($data->address)	 &&
+	    	isset($data->country);
 
 
-		if (!$required || $data->passwd != $data->verifyPass) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-			echo(json_encode($e->getErrors()));
-			return;
-		}
+	if (!$required || $data->passwd != $data->verifyPass) {
+		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+		echo(json_encode($e->getErrors()));
+		return;
+	}
 
         if (!$this->userDAO->isNewLogin($data->login)) {
-        	header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-			echo(json_encode($e->getErrors()));
-			return;
+	       	header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	    	echo(json_encode($e->getErrors()));
+		    return;
         }
 
         $user = new \User($data->login, $data->passwd, $data->fullname, 
@@ -79,12 +79,12 @@ class UserRest extends BaseRest
 
         switch ($attribute) {
             case 'passwd':
-				if($data->passwd == $data->passwd){
-					$user->setPassword($data->passwd);	
-				} else {
-					header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-            		echo("The entered passwords do not match");			
-				}
+		        if($data->passwd == $data->passwd){
+        		    $user->setPassword($data->passwd);	
+	            } else {
+	    	        header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+                	echo("The entered passwords do not match");			
+		        }
                 break;
             case 'email':
                 $user->setEmail($data->email);
@@ -186,9 +186,8 @@ $userRest = new UserRest();
 \URIDispatcher::getInstance()
     ->map("GET", "/users/$1", array($userRest, "get"))
     ->map("POST", "/users/login/$1", array($userRest, "login"))
-	->map("POST", "/users", array($userRest, "create"))
+    ->map("POST", "/users", array($userRest, "create"))
     ->map("PUT", "/users/$1/$2", array($userRest, "update"))
-	->map("DELETE", "/users/$1", array($userRest, "delete"));
+    ->map("DELETE", "/users/$1", array($userRest, "delete"));
 	
-
 ?>
