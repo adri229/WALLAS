@@ -1,4 +1,4 @@
-curl -i -X POST -H "Content-Type: application/json" -d '{"login":"adrian","passwd":"adrian","verifyPass":"passwd","fullname":"adrian fernandez","email":"adrian@gmail com","phone":"699105075","address":"Ourense","country":"Spain"}' http://localhost/wallas/rest/users
+curl -i -X POST -H "Content-Type: application/json" -d '{"login":"adrian","passwd":"adrian","verifyPass":"adrian","fullname":"adrian fernandez","email":"adrian@gmail com","phone":"699105075","address":"Ourense","country":"Spain"}' http://localhost/wallas/rest/users
 
 curl -i -X POST -H "Content-Type: application/json" -u adrian:adrian http://localhost/wallas/rest/users/login/adrian
 

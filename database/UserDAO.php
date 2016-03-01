@@ -71,15 +71,28 @@ class UserDAO {
 	 * @return boolean true si encuentra un usuario con ese email/password|false en caso contrario
 	 */
 	public function isValidUser($login, $password) {
-        $stmt = $this->db->prepare ( "SELECT COUNT(login) FROM USER WHERE login=? and password=?" );
-        $stmt->execute(array($login,$password));
+            $stmt = $this->db->prepare ( "SELECT COUNT(login) FROM USER WHERE login=? and password=?" );
+            $stmt->execute ( array (
+            	$login,
+		$password 
+            ));
 		
-        if ($stmt->fetchColumn () == 0) {
-			return true;
-        }
-        return false;
+            if ($stmt->fetchColumn () > 0) {
+		return true;
+            }
 	}
 	
+
+
+	public function isNewLogin($login) {
+    	$stmt = $this->db->prepare("SELECT COUNT(login) FROM USER where login=?");
+    	$stmt->execute(array($login));
+    
+    	if ($stmt->fetchColumn() == 0) {   
+      		return true;
+    	} 
+  }
+
 	/**
 	 * Actualiza la password del usuario
 	 *
