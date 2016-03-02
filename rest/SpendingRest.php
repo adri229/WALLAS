@@ -55,12 +55,14 @@ class SpendingRest extends BaseRest
 		if ($spending == NULL) {
       		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
       		echo("Spending with id ".$idSpending." not found");
+      		return;
     	}
 
 
     	if($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
     		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
       		echo("you are not the owner of this spending");
+      		return;
     	}
 
     	if (isset($data->quantity)) {
@@ -80,12 +82,44 @@ class SpendingRest extends BaseRest
 
 	}
 
+
+	public function delete($idSpending)
+	{
+		$currentUser = parent::authenticateUser();
+		
+		$spending = $this->spendingDAO->findById($idSpending);
+		if ($spending == NULL) {
+      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		echo("Spending with id ".$idSpending." not found");
+      		return;
+    	}
+
+
+    	if($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+      		echo("you are not the owner of this spending");
+      		return;
+    	}
+
+    	try {
+      		$this->spendingDAO->delete($idSpending);
+      		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+    	}catch (ValidationException $e) {
+      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		echo(json_encode($e->getErrors()));
+    	}	
+
+
+	}
+
+
 }
 
 $spendingRest = new SpendingRest();
 URIDispatcher::getInstance()
 	->map("POST", "/spendings", array($spendingRest,"create"))
-	->map("PUT", "/spendings/$1", array($spendingRest, "update"));
+	->map("PUT", "/spendings/$1", array($spendingRest, "update"))
+	->map("DELETE", "/spendings/$1", array($spendingRest, "delete"));
 
 
 
