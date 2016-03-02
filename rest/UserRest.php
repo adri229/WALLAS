@@ -43,7 +43,7 @@ class UserRest extends BaseRest
 		    return;
         }
 
-        $user = new \User($data->login, $data->passwd, $data->fullname, 
+        $user = new \User(strtolower($data->login), $data->passwd, $data->fullname, 
                 $data->email, $data->phone, $data->address, $data->country);
         
         

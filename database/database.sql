@@ -67,6 +67,12 @@ INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`,`address`,`cou
 ('adri669','adri669','adrian vazquez','adri669@gmailcom','988102030','Ourense','Spain');    
 
 
+INSERT INTO `SPENDING` (`dateSpending`,`quantity`,`owner`) VALUES 
+('2014-11-10 23:00:00','100','adri229'),
+('2015-11-10 11:00:00','200','adri229'),
+('2014-12-10 20:59:00','540','adri229'),
+('2010-11-10 23:40:00','220','adri229'),
+('2016-11-10 13:00:00','170','adri229');
 
 
 

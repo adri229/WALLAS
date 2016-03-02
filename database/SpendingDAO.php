@@ -21,7 +21,7 @@ class SpendingDAO
         $spendings = array();
         
         foreach ($spendings_db as $spending) {
-            array_push($spendings, new Spending($spending["id"],$spending["date"],
+            array_push($spendings, new Spending($spending["idSpending"],$spending["dateSpending"],
                     $spending["quantity"], $spending["owner"]));
         }
         return $spendings;
@@ -29,7 +29,7 @@ class SpendingDAO
     
     public function findById($idSpending)
     {
-    	$stmt = $this->db->prepare("SELECT * FROM SPENDING WHERE id=?");
+    	$stmt = $this->db->prepare("SELECT * FROM SPENDING WHERE idSpending = ?");
     	$stmt->execute(array($idSpending));
     	$spending = $stmt->fetch(PDO::FETCH_ASSOC);
     	
@@ -54,7 +54,7 @@ class SpendingDAO
     public function update($spending)
     {
     	$stmt = $this->db->prepare("UPDATE SPPENDING SET dateSpending = ?, quantity = ?, owner = ? WHERE idSpending = ?");
-    	$stmt->execute(array($spending->getDateSpending(), $spending->getQuantity(), $spending->getOwner(), $spending->getIdSPending()));    	
+    	$stmt->execute(array($spending->getDateSpending(), $spending->getQuantity(), $spending->getOwner(), $spending->getIdSpending()));    	
     }
     
     public function delete($idSpending)

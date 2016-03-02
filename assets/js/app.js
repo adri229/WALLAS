@@ -1,6 +1,6 @@
 'use strict';
 
-var wallas = angular.module('wallasApp', ['ngRoute', 'ngCookies']);
+var wallas = angular.module('wallasApp', ['ngRoute', 'ngCookies', 'ui.bootstrap']);
 
 wallas.config(['$routeProvider', function ($routeProvider) {
 
@@ -19,3 +19,17 @@ wallas.config(['$routeProvider', function ($routeProvider) {
                 redirectTo: '/'
             });
     }]);
+/*
+wallas.constant('AUTH_EVENTS' {
+	loginSuccess : 'auth-login-success',
+    loginFailed : 'auth-login-failed',
+    logoutSuccess : 'auth-logout-success',
+    sessionTimeout : 'auth-session-timeout',
+    notAuthenticated : 'auth-not-authenticated',
+    notAuthorized : 'auth-not-authorized'
+
+
+})
+
+
+*/
