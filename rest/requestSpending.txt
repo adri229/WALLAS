@@ -1,0 +1,5 @@
+curl -i -X POST -H "Content-Type: application/json" -d '{"date":"2018-11-10 23:00:00","quantity":"100"}' -u adri229:adri229 http://localhost/wallas/rest/spendings
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"quantity":"500"}' -u adri229:adri229 http://localhost/wallas/rest/spendings/1
+
+

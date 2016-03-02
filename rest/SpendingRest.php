@@ -6,6 +6,9 @@ require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/../model/Spending.php");
 require_once(__DIR__."/../database/SpendingDAO.php");
 
+
+require_once(__DIR__."/../rest/BaseRest.php");
+
 class SpendingRest extends BaseRest 
 {
 	private $spendingDAO;
@@ -26,31 +29,63 @@ class SpendingRest extends BaseRest
     		$spending->setDateSpending($data->date);
     		$spending->setQuantity($data->quantity);
     		$spending->setOwner($currentUser->getLogin());
-    	}
     	
-    	try {
-    		//$spending->validate();	
-    		$idSpending = $this->spendingDAO->save($spending);
-    		header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-      		header('Location: '.$_SERVER['REQUEST_URI']."/".$idSpending);
-      		header('Content-Type: application/json');
+    	
+	    	try {
+	    		//$spending->validate();	
+	    		$idSpending = $this->spendingDAO->save($spending);
+	    		header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
+	      		header('Location: '.$_SERVER['REQUEST_URI']."/".$idSpending);
+	      		header('Content-Type: application/json');
 
-    	} catch (ValidationException $e) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-      		echo(json_encode($e->getErrors()));
-    	}
-
-
-	
+	    	} catch (ValidationException $e) {
+	    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	      		echo(json_encode($e->getErrors()));
+	    	}
+	    }
 	}
 
-        
-	
-	
+
+
+	public function update($idSpending, $data)
+	{
+		$currentUser = parent::authenticateUser();
+
+		$spending = $this->spendingDAO->findById($idSpending);
+		if ($spending == NULL) {
+      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		echo("Spending with id ".$idSpending." not found");
+    	}
+
+
+    	if($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+      		echo("you are not the owner of this spending");
+    	}
+
+    	if (isset($data->quantity)) {
+    		$spending->setQuantity($data->quantity);
+
+    		try {
+      			// validate Post object
+      			//$spending->validate(); // if it fails, ValidationException
+      			$this->spendingDAO->update($spending);
+      			header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+    		}catch (ValidationException $e) {
+      			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      			echo(json_encode($e->getErrors()));
+    		}
+    	}
+
+
+	}
+
 }
+
 $spendingRest = new SpendingRest();
 URIDispatcher::getInstance()
-	->map("POST", "/spendings", array($spendingRest,"create"));
+	->map("POST", "/spendings", array($spendingRest,"create"))
+	->map("PUT", "/spendings/$1", array($spendingRest, "update"));
 
 
 

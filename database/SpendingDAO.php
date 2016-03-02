@@ -53,8 +53,8 @@ class SpendingDAO
     
     public function update($spending)
     {
-    	$stmt = $this->db->prepare("UPDATE SPPENDING SET dateSpending = ?, quantity = ?, owner = ? WHERE idSpending = ?");
-    	$stmt->execute(array($spending->getDateSpending(), $spending->getQuantity(), $spending->getOwner(), $spending->getIdSpending()));    	
+    	$stmt = $this->db->prepare("UPDATE SPENDING SET dateSpending = ?, quantity = ?, owner = ? WHERE idSpending = ?");
+    	$stmt->execute(array($spending->getDateSpending(), $spending->getQuantity(), $spending->getOwner()->getLogin(), $spending->getIdSpending()));    	
     }
     
     public function delete($idSpending)
