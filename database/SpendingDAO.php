@@ -12,9 +12,9 @@ class SpendingDAO
         $this->db = PDOConnection::getInstance ();
     }
 	
-    public function findAllByUser($owner)
+    public function findByOwner($owner)
     {
-        $stmt = $this->db->prepare("SELECT * FROM USER SPENDING owner = ?");
+        $stmt = $this->db->prepare("SELECT * FROM SPENDING WHERE owner = ?");
         $stmt->execute(array($owner));
         $spendings_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -22,7 +22,7 @@ class SpendingDAO
         
         foreach ($spendings_db as $spending) {
             array_push($spendings, new Spending($spending["idSpending"],$spending["dateSpending"],
-                    $spending["quantity"], $spending["owner"]));
+                    $spending["quantity"], new User($spending["owner"])));
         }
         return $spendings;
     }

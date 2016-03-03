@@ -113,10 +113,33 @@ class SpendingRest extends BaseRest
 	}
 
 
+	public function getByOwner($owner)
+	{
+		$currentUser = parent::authenticateUser();
+
+		$spendings = $this->spendingDAO->findByOwner($owner);
+		$spending_array = array();
+		foreach ($spendings as $spending) {
+			array_push($spending_array, array(
+				"idSpending" => $spending->getIdSpending(),
+				"dateSpending" => $spending->getDateSpending(),
+				"quantity" => $spending->getQuantity(),
+				"owner" => $spending->getOwner()->getLogin()
+			));
+		}
+
+		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+    	header('Content-Type: application/json');
+    	echo(json_encode($spending_array));
+	}
+
+
+
 }
 
 $spendingRest = new SpendingRest();
 URIDispatcher::getInstance()
+	->map("GET", "/spendings/$1", array($spendingRest, "getByOwner"))	
 	->map("POST", "/spendings", array($spendingRest,"create"))
 	->map("PUT", "/spendings/$1", array($spendingRest, "update"))
 	->map("DELETE", "/spendings/$1", array($spendingRest, "delete"));
