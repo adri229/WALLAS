@@ -13,7 +13,7 @@ class TypeSpending
 		$this->type = $type;
 	}
 	
-	public function getIdSpending()
+	public function getIdTypeSpending()
 	{
 		return $this->idTypeSpending;	
 	}
@@ -25,7 +25,7 @@ class TypeSpending
 	
 	public function getType()
 	{
-		return $this->type = $type;
+		return $this->type;
 	}
 	
 	public function setIdTypeSpending($idTypeSpending)

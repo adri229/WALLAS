@@ -3,15 +3,13 @@
 class Stock
 {
 	private $idStock;
-	private $revenue;
 	private $dateStock;
 	private $total;
 	private $owner;
 	
-	public function __construct($idStock = NULL, $revenue = NULL, $dateStock = NULL, $total = NULL, $owner =NULL)
+	public function __construct($idStock = NULL, $dateStock = NULL, $total = NULL, $owner =NULL)
 	{
 		$this->idStock = $idStock;
-		$this->revenue = $revenue;
 		$this->dateStock = $dateStock;
 		$this->total = $total;
 		$this->owner = $owner;
@@ -20,11 +18,6 @@ class Stock
 	public function getIdStock()
 	{
 		return $this->idStock;
-	}
-	
-	public function getRevenue()
-	{
-		return $this->revenue;	
 	}
 	
 	public function getDateStock()
@@ -47,11 +40,6 @@ class Stock
 		$this->idStock = $idStock;
 	}
 	
-	public function setRevenue($revenue)
-	{
-		$this->revenue = $revenue;
-	}
-	
 	public function setDateStock($dateStock)
 	{
 		$this->dateStock = $dateStock;
@@ -66,7 +54,5 @@ class Stock
 	{
 		$this->owner = $owner;
 	}
-	
-	
 }
 ?>

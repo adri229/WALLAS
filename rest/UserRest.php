@@ -30,16 +30,16 @@ class UserRest extends BaseRest
     		isset($data->address)	 &&
 	    	isset($data->country);
 
-
+      //  die($required);
 	if (!$required || $data->passwd != $data->verifyPass) {
 		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-		echo(json_encode($e->getErrors()));
+		echo("The entered passwords do not match");
 		return;
 	}
 
         if (!$this->userDAO->isNewLogin($data->login)) {
 	       	header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-	    	echo(json_encode($e->getErrors()));
+	    	echo("This user already exits");
 		    return;
         }
 

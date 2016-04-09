@@ -6,13 +6,15 @@ class Spending
 	private $dateSpending;
 	private $quantity;
 	private $owner;
+	private $type;
 	
-	public function __construct($idSpending = NULL, $dateSpending = NULL, $quantity = NULL, $owner = NULL)
+	public function __construct($idSpending = NULL, $dateSpending = NULL, $quantity = NULL, $owner = NULL, $type = NULL)
 	{
 		$this->idSpending = $idSpending;
 		$this->dateSpending = $dateSpending;
 		$this->quantity = $quantity;
 		$this->owner = $owner;
+		$this->type = $type;
 	}
 	
 	public function getIdSpending()
@@ -35,7 +37,11 @@ class Spending
 		return $this->owner;
 	}
 	
-	
+	public function getType()
+	{
+		return $this->type;
+	}
+
 	public function setIdSpending($idSpending)
 	{
 		$this->idSpending = $idSpending;
@@ -56,14 +62,9 @@ class Spending
 		$this->owner = $owner;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public function setType(array $type)
+	{
+		$this->type = $type;
+	}
 }
 ?>

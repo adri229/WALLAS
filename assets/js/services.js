@@ -3,17 +3,47 @@
 var wallas = angular.module('wallasApp');
 
 wallas.factory('AuthenticationService',
-	['$http','$cookies', '$rootScope','$timeout',
-	function($http,$cookies, $rootScope,$timeOut){
+	['$http','$cookies','$rootScope','$timeout', 
+	function($http,$cookies, $rootScope,$timeout){
 		
 		var serviceLogin =  {};
 
+		serviceLogin.login = function(credentials) {
+			return $http.post('rest/users/login/'.concat(credentials.login), {login: credentials.login, password: credentials.password});
+				
+		};
+
+		serviceLogin.setCredentials = function (credentials) {
+			var authdata = btoa(credentials.login + ":" + credentials.password);
+
+			//Todos los controllers heredan estos datos
+			$rootScope.globals = {
+				currentUser: {
+					login: credentials.login,
+					authdata: authdata
+				}
+			};
+
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+			$cookies.putObject('globals',$rootScope.globals);
+			
+			var user = $cookies.getObject('globals');
+			var username = user.currentUser.login;
+			var password = user.currentUser.authdata;
+			console.log(username);
+			console.log(password);
+
+		};
+
+/*
 		serviceLogin.login = function(login, password, callback) {
-			alert(password);
-			$http.post('wallas/rest/user', {login: login, password: password}).
-				success(function(response) {
+			$http.post('rest/users/login/'.concat(login), {login: login, password: password})
+				.success(function(response) {
 					callback(response);
-				});
+				})
+				.error(function(response){
+					callback(response);	
+				})
 		};
 
 		serviceLogin.setCredentials = function (login, password) {
@@ -29,7 +59,7 @@ wallas.factory('AuthenticationService',
 			$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 			$cookies.put('globals',$rootScope.globals);
 		};
-
+*/
 		serviceLogin.clearCredentials = function() {
 			$rootScope.globals = {};
 			$cookies.remove('globals');
@@ -42,46 +72,25 @@ wallas.factory('AuthenticationService',
 }]);
 
 
+wallas.factory('UserService', ['$http', function($http){
 
-/*
-wallas.factory('AuthenticationService',
-	['$http', '$rootScope','Session','AUTH_EVENTS',
-	function($http, $rootScope, Session, AUTH_EVENTS) {
+	var userService = {};
+
+	userService.create = function(user) {
+		return $http.post('rest/users', {
+			login: user.login,
+			passwd: user.passwd,
+			verifyPass: user.verifyPass,
+			fullname: user.fullname,
+			email: user.email,
+			phone: user.phone,
+			address: user.address,
+			country: user.country
+		}); 
+
 		
-		var authService =  {};
+	}
 
-		authService.login = function(login, password, callback) {
-			alert(password);
-			$http.post('wallas/rest/users/login'.login, {login: login, password: password}).
-				success(function(response) {
-					callback(response);
-				});
-		};
+	return userService;
 
-		authService.isAuthenticated() {
-			return Session.user == null;
-		}
-
-		serviceLogin.setCredentials = function (login, password) {
-			var authdata = btoa(login + ":" + password);
-
-			//Todos los controllers heredan estos datos
-			$rootScope.globals = {
-				currentUser: {
-					login: login,
-					authdata: authdata
-				}
-			};
-			$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-			$cookies.put('globals',$rootScope.globals);
-		};
-
-		serviceLogin.clearCredentials = function() {
-			$rootScope.globals = {};
-			$cookies.remove('globals');
-			$http.defaults.headers.common['Authorization'] = 'Basic';
-		};
-
-		return serviceLogin;
-
-		*/
+}]);

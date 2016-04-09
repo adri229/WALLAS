@@ -19,17 +19,20 @@ wallas.config(['$routeProvider', function ($routeProvider) {
                 redirectTo: '/'
             });
     }]);
-/*
-wallas.constant('AUTH_EVENTS' {
-	loginSuccess : 'auth-login-success',
-    loginFailed : 'auth-login-failed',
-    logoutSuccess : 'auth-logout-success',
-    sessionTimeout : 'auth-session-timeout',
-    notAuthenticated : 'auth-not-authenticated',
-    notAuthorized : 'auth-not-authorized'
 
-
-})
-
-
-*/
+wallas.run(['$rootScope', '$location', '$cookieStore', '$http',
+    function ($rootScope, $location, $cookieStore, $http) {
+        // keep user logged in after page refresh
+        /*
+        $rootScope.globals = $cookieStore.get('globals') || {};
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        }
+ 
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in
+            if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+                $location.path('/login');
+            }
+        });*/
+    }]);
