@@ -164,7 +164,6 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
   }]);
 
 
-
 wallas.controller('TypeController' ['$scope', '$cookies', 'RevenueService',
 	function($scope, $cookies, TypeController) {
 
