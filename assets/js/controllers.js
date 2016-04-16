@@ -164,8 +164,8 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
   }]);
 
 
-wallas.controller('TypeController' ['$scope', '$cookies', 'RevenueService',
-	function($scope, $cookies, TypeController) {
+wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
+	function($scope, $cookies, TypeService) {
 
 	var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
@@ -183,7 +183,30 @@ wallas.controller('TypeController' ['$scope', '$cookies', 'RevenueService',
     	)
     };
 
+	TypeService.getByOwner(login).then(
+  		function(response) {
+			$scope.types = response;
+			console.log($scope.types.data);
+		},
+		function(response) {
+			alert("error");
+        	console.log(response);
+		}
 
+
+	);
+
+  	$scope.delete = function(idType) {
+  		TypeService.delete(idType).then(
+		function(response) {
+			alert("DELETE type");
+		},
+		function(response) {
+			alert("error delete");
+        	console.log(response);
+		}
+		)
+  	};
 
 
 

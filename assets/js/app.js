@@ -25,6 +25,11 @@ wallas.config(['$routeProvider', function ($routeProvider) {
             	templateUrl: 'assets/html/revenue.html',
             	controller: 'RevenueController'
             }).
+            when('/type', {
+            	pageTitle: 'Type - WALLAS',
+            	templateUrl: 'assets/html/type.html',
+            	controller: 'TypeController'
+            }).
             otherwise({
                 redirectTo: '/'
             });

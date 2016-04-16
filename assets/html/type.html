@@ -1,0 +1,31 @@
+<div class="type" ng-controller="TypeController">
+	<div class="type-body">
+		<form name="typeForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-fullname">
+					<input name="name" placeholder="Name" class="register-form-box" ng-model="type.name" type="text" required>
+				</div>
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" ng-click="create()">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div class="type-list">
+		
+    	<table>
+		  <tbody>
+		    <tr ng-repeat="type in types.data">
+		       <td>{{type.name}}</td>
+		       <td>{{type.quantity}}</td>
+		       <td>{{type.datetype}}</td>
+		       <td><button ng-click="delete(type.idType)" >DELETE</button></td>
+		      </tr>
+		  </tbody>
+		</table>
+
+	</div>
+</div>

@@ -135,12 +135,22 @@ wallas.factory('RevenueService', ['$http', function($http){
 
 wallas.factory('TypeService', ['$http', function($http) {
 
-	var TypeService = {};
+	var typeService = {};
 
 	typeService.create = function(type) {
 		return $http.post('rest/types', {
 			name: type.name
-		})
+		});
 	}
+
+	typeService.getByOwner = function(login) {
+		return $http.get('rest/types/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
+	};
+
+	typeService.delete = function(id) {
+		return $http.delete('rest/types/' + id);
+	};
+
+	return typeService;
 
 }]);
