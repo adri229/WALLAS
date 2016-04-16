@@ -119,11 +119,10 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
   function($scope, $cookies, RevenueService) {
 
     var user = $cookies.getObject('globals');
-
     var login = user.currentUser.login;
 
     $scope.create = function() {
-    	RevenueService.create(login, $scope.revenue).then(
+    	RevenueService.create($scope.revenue).then(
     		function(response) {
     			alert("Create revenue");
     		},
@@ -149,8 +148,8 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
 
 	);
 
-  	$scope.delete = function() {
-  		RevenueService.delete(login).then(
+  	$scope.delete = function(idRevenue) {
+  		RevenueService.delete(idRevenue).then(
 		function(response) {
 			alert("DELETE revenue");
 		},

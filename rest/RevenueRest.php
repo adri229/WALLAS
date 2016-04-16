@@ -33,11 +33,10 @@ class RevenueRest extends BaseRest
     	
 	    	try {
 	    		//$revenue->validate();	
-	    		$idRevenue = $this->revenueDAO->save($revenue);
-	    		header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
+	    		  $idRevenue = $this->revenueDAO->save($revenue);
+	    		  header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
 	      		header('Location: '.$_SERVER['REQUEST_URI']."/".$idRevenue);
-	      		header('Content-Type: application/json');
-
+	      		
 	    	} catch (ValidationException $e) {
 	    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
 	      		echo(json_encode($e->getErrors()));

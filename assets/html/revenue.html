@@ -18,15 +18,21 @@
 	</div>
 	
 	<div class="revenue-list">
-		<li ng-repeat="revenue in $scope.revenues.data">
-      		<p>Name: {{revenue.name}}</p>
-      		<p>Quantity: {{revenue.quantity}}</p>
-    	</li>
+		
+    	<table>
+		  <tbody>
+		    <tr ng-repeat="revenue in revenues.data">
+		       <td>{{revenue.name}}</td>
+		       <td>{{revenue.quantity}}</td>
+		       <td>{{revenue.dateRevenue}}</td>
+		       <td><button ng-click="delete(revenue.idRevenue)" >DELETE</button></td>
+		      </tr>
+		  </tbody>
+		</table>
 
+		
 
-	  		<p>Name: {{revenues.data[1].name}}</p>
-
-	  		<button ng-click="delete()" >DELETE</button>
+	  		
 
 
 	</div>

@@ -111,11 +111,10 @@ wallas.factory('RevenueService', ['$http', function($http){
 
 	var revenueService = {};
 
-	revenueService.create = function(login,revenue) {
+	revenueService.create = function(revenue) {
 		return $http.post('rest/revenues', {
 			quantity: revenue.quantity,
-			name: revenue.name,
-			owner: login
+			name: revenue.name
 		}); 
 	}
 
@@ -124,8 +123,8 @@ wallas.factory('RevenueService', ['$http', function($http){
 	}
 
 
-	revenueService.delete = function() {
-		return $http.delete('rest/revenues' + '/1');
+	revenueService.delete = function(id) {
+		return $http.delete('rest/revenues/' + id);
 	}
 
 	return revenueService;
