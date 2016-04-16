@@ -25,8 +25,6 @@ class StockRest extends BaseRest
     	$stock = new Stock();
 
     	if (isset($data->total)) {
-    		$date = new DateTime();
-    		$stock->setDateStock($date->getTimestamp());
     		$stock->setTotal($data->total);
     		$stock->setOwner($currentUser->getLogin());
     	
@@ -64,8 +62,6 @@ class StockRest extends BaseRest
     	}
 
     	if (isset($data->total)) {
-    		$date = new DateTime();
-    		$stock->setDateStock($date->getTimestamp());
     		$stock->setTotal($data->total);
 
     		try {

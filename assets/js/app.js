@@ -15,6 +15,16 @@ wallas.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'assets/html/register.html',
                 controller: 'RegisterController'
             }).
+            when('/user', {
+                pageTitle: 'User - WALLAS',
+                templateUrl: 'assets/html/user.html',
+                controller: 'UserController'
+            }).
+            when('/revenue', {
+            	pageTitle: 'Revenue - WALLAS',
+            	templateUrl: 'assets/html/revenue.html',
+            	controller: 'RevenueController'
+            }).
             otherwise({
                 redirectTo: '/'
             });

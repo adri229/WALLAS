@@ -25,10 +25,9 @@ class RevenueRest extends BaseRest
     	$currentUser = parent::authenticateUser();
     	$revenue = new Revenue();
 
-    	if (isset($data->quantity)) {
-    		$date = new DateTime();
-    		$revenue->setDateRevenue($date->getTimestamp());
+    	if (isset($data->quantity) && isset($data->name)) {
     		$revenue->setQuantity($data->quantity);
+        $revenue->setName($data->name);
     		$revenue->setOwner($currentUser->getLogin());
     	
     	
@@ -46,7 +45,7 @@ class RevenueRest extends BaseRest
 	    }
 	}
 
-	public function update($idRevenue, $data)
+	public function update($idRevenue, $attribute, $data)
 	{
 		$currentUser = parent::authenticateUser();
 
@@ -64,21 +63,27 @@ class RevenueRest extends BaseRest
       		return;
     	}
 
-    	if (isset($data->quantity)) {
-    		$date = new DateTime();
-    		$revenue->setDateRevenue($date->getTimestamp());
-    		$revenue->setQuantity($data->quantity);
 
-    		try {
-      			// validate Post object
-      			//$revenue->validate(); // if it fails, ValidationException
-      			$this->revenueDAO->update($revenue);
-      			header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-    		}catch (ValidationException $e) {
-      			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-      			echo(json_encode($e->getErrors()));
-    		}
-    	}
+      switch ($attribute) {
+        case 'quantity':
+          $revenue->setQuantity($data->quantity);
+          break;
+        case 'name':
+          $revenue->setName($data->name);
+          break;
+        default:
+          break;
+      }
+
+    	try {
+            // validate Post object
+            //$revenue->validate(); // if it fails, ValidationException
+            $this->revenueDAO->update($revenue);
+            header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+        }catch (ValidationException $e) {
+            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+            echo(json_encode($e->getErrors()));
+        }
 	}
 
 	public function delete($idRevenue)
@@ -136,6 +141,7 @@ class RevenueRest extends BaseRest
 				"idRevenue" => $revenue->getIdRevenue(),
 				"dateRevenue" => $revenue->getDateRevenue(),
 				"quantity" => $revenue->getQuantity(),
+        "name" => $revenue->getName(),
 				"owner" => $revenue->getOwner()->getLogin()
 			]);
 		}
@@ -152,7 +158,7 @@ $revenueRest = new RevenueRest();
 URIDispatcher::getInstance()
 	->map("GET", "/revenues/$1", [$revenueRest, "getByOwner"])	
 	->map("POST", "/revenues", [$revenueRest,"create"])
-	->map("PUT", "/revenues/$1", [$revenueRest, "update"])
+	->map("PUT", "/revenues/$1/$2", [$revenueRest, "update"])
 	->map("DELETE", "/revenues/$1", [$revenueRest, "delete"]);
 
 ?>

@@ -1,6 +1,14 @@
-<div ng-controller="UsersController">
+<div ng-controller="UserController">
+	<p>LOGIN: {{user.data.login}}></p>
+	<p>PASS: {{user.data.password}} </p>
+	<p>fullname: {{user.data.fullname}} </p>
+	<p>email: {{user.data.email}}</p>
+	<p>phone: {{user.data.phone}}</p>
+	<p>address: {{user.data.address}}</p>
+	<p>country: {{user.data.country}}</p>
+
 	
 
-
+	<button ng-click="delete()" >DELETE</button>
 
 </div>

@@ -28,8 +28,6 @@ class TypeRest extends BaseRest
 		$type = new Type();
 
 		if(isset($data->name)) {
-			$date = new DateTime();
-			$type->setDateType($date->getTimeStamp());
 			$type->setName($data->name);
 			$type->setOwner($currentUser->getLogin());
 
@@ -63,8 +61,6 @@ class TypeRest extends BaseRest
     	}
 
     	if (isset($data->name)) {
-    		$date = new DateTime();
-			$type->setDateType($date->getTimeStamp());
 			$type->setName($data->name);
 
     		try {
@@ -96,7 +92,7 @@ class TypeRest extends BaseRest
     	}
 
     	try {
-    		$this->typeSpendingDAO->deleteByType($idType);
+    		//$this->typeSpendingDAO->deleteByType($idType);
       		$this->typeDAO->delete($idType);
       		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
     	}catch (ValidationException $e) {

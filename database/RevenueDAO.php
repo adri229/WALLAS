@@ -21,7 +21,7 @@ class RevenueDAO
         
         foreach ($revenues_db as $revenue) {
             array_push($revenues, new Revenue($revenue["idRevenue"],$revenue["dateRevenue"],
-                    $revenue["quantity"], new User($revenue["owner"])));
+                    $revenue["quantity"], $revenue["name"], new User($revenue["owner"])));
         }
         return $revenues;
     }
@@ -37,7 +37,7 @@ class RevenueDAO
         
         foreach ($revenues_db as $revenue) {
             array_push($revenues, new Revenue($revenue["idRevenue"],$revenue["dateRevenue"],
-                    $revenue["quantity"], new User($revenue["owner"])));
+                    $revenue["quantity"], $revenue["name"], new User($revenue["owner"])));
         }
         return $revenues;
     }
@@ -55,6 +55,7 @@ class RevenueDAO
     			$revenue["idRevenue"],
     			$revenue["dateRevenue"],
     			$revenue["quantity"],
+                $revenue["name"],
     			new User($revenue["owner"]));
     	} else {
     		return NULL;
@@ -63,15 +64,15 @@ class RevenueDAO
     
     public function save($revenue)
     {
-    	$stmt = $this->db->prepare("INSERT INTO REVENUE(dateRevenue,quantity,owner) VALUES (?,?,?)");
-    	$stmt->execute(array($revenue->getDateRevenue(), $revenue->getQuantity(), $revenue->getOwner()));
+    	$stmt = $this->db->prepare("INSERT INTO REVENUE(quantity,name,owner) VALUES (?,?,?)");
+    	$stmt->execute(array($revenue->getQuantity(), $revenue->getName(),$revenue->getOwner()));
     	return $this->db->lastInsertId();
     }
     
     public function update($revenue)
     {
-    	$stmt = $this->db->prepare("UPDATE REVENUE SET dateRevenue = ?, quantity = ?, owner = ? WHERE idRevenue = ?");
-    	$stmt->execute(array($revenue->getDateRevenue(), $revenue->getQuantity(), $revenue->getOwner()->getLogin(), $revenue->getIdRevenue()));    	
+    	$stmt = $this->db->prepare("UPDATE REVENUE SET quantity = ?, name = ?, owner = ? WHERE idRevenue = ?");
+    	$stmt->execute(array($revenue->getQuantity(), $revenue->getName(), $revenue->getOwner()->getLogin(), $revenue->getIdRevenue()));    	
     }
     
     public function delete($idRevenue)

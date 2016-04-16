@@ -1,0 +1,36 @@
+<div class="revenue" ng-controller="RevenueController">
+	<div class="revenue-body">
+		<form name="revenueForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-login">
+					<input name="quantity" placeholder="Quantity" class="register-form-box" ng-model="revenue.quantity" type="number" required>
+				</div>
+				<div class="register-form-fullname">
+					<input name="name" placeholder="Name" class="register-form-box" ng-model="revenue.name" type="text" required>
+				</div>
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" ng-click="create()">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div class="revenue-list">
+		<li ng-repeat="revenue in $scope.revenues.data">
+      		<p>Name: {{revenue.name}}</p>
+      		<p>Quantity: {{revenue.quantity}}</p>
+    	</li>
+
+
+	  		<p>Name: {{revenues.data[1].name}}</p>
+
+	  		<button ng-click="delete()" >DELETE</button>
+
+
+	</div>
+</div>
+
+
+

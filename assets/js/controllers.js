@@ -14,7 +14,7 @@ wallas.controller('AuthenticationController',
 			AuthenticationService.login($scope.credentials).then(
 				function(response) {
 					//AuthenticationService.setCredentials($scope.credentials);
-					$location.path('/register');
+					$location.path('/user');
 				}, 
 				function(response) {
 					AuthenticationService.clearCredentials();
@@ -58,29 +58,135 @@ wallas.controller('RegisterController', ['$scope','UserService', function ($scop
 }]);
 
 
-wallas.controller('UserController', ['$scope','UserService', function($scope, UserService) {
+wallas.controller('UserController', ['$scope', '$cookies', 'UserService', function($scope, $cookies,UserService) {
+	var user = $cookies.getObject('globals');
 
+	var login = user.currentUser.login;
+	
+
+
+	UserService.getByLogin(login).then(
+		function(response) {
+			$scope.user = response;
+		},
+		function(response) {
+			alert("error");
+        	console.log(response);
+		}
+	);
+
+	$scope.delete = function() {
+		
+		UserService.delete(login).then(
+		function(response) {
+			alert("DELETE USER");
+		},
+		function(response) {
+			alert("error delete");
+        	console.log(response);
+		}
+
+	);
+	}
+
+  $scope.update = function(attribute) {
+
+    alert(attribute);
+
+    var data = $scope.attributes;
+
+    console.log(data);
+
+    UserService.update(login,attribute,data).then(
+        function(response) {
+            alert("UPDATE " + attribute);
+        },
+        function(response) {
+            alert("error delete");
+            console.log(response);
+        }        
+    );
+  }
+	
+
+	
 }]); 
 
 
 
-wallas.controller('DropdownCtrl', ['$scope', function($scope) {
 
-    $scope.items = [
-    'The first choice!',
-    'And another choice for you.',
-    'but wait! A third!'
-  ];
+wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService', 
+  function($scope, $cookies, RevenueService) {
 
-  $scope.status = {
-    isopen: false
-  };
+    var user = $cookies.getObject('globals');
 
-  $scope.toggleDropdown = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.status.isopen = !$scope.status.isopen;
-  };
+    var login = user.currentUser.login;
 
-  $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
+    $scope.create = function() {
+    	RevenueService.create(login, $scope.revenue).then(
+    		function(response) {
+    			alert("Create revenue");
+    		},
+    		function(response) {
+    			alert("error delete");
+            	console.log(response);
+    		}
+
+    		);
+    };
+
+
+  	RevenueService.getByOwner(login).then(
+  		function(response) {
+			$scope.revenues = response;
+			console.log($scope.revenues.data);
+		},
+		function(response) {
+			alert("error");
+        	console.log(response);
+		}
+
+
+	);
+
+  	$scope.delete = function() {
+  		RevenueService.delete(login).then(
+		function(response) {
+			alert("DELETE revenue");
+		},
+		function(response) {
+			alert("error delete");
+        	console.log(response);
+		}
+		)
+  	};
+
+
+  }]);
+
+
+
+wallas.controller('TypeController' ['$scope', '$cookies', 'RevenueService',
+	function($scope, $cookies, TypeController) {
+
+	var user = $cookies.getObject('globals');
+    var login = user.currentUser.login;
+
+    $scope.create = function() {
+    	TypeService.create($scope.type).then(
+    		function(response) {
+    			alert("Create type");
+    		},
+    		function(response) {
+    			alert("error create");
+            	console.log(response);
+    		}
+
+    	)
+    };
+
+
+
+
+
 }]);

@@ -1,0 +1,16 @@
+curl -i -X POST -H "Content-Type: application/json" -d '{"quantity":"100", "name":"dvd"}' -u adri229:adri229 http://localhost/wallas/rest/spendings
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"quantity":"500"}' -u adri229:adri229 http://localhost/wallas/rest/spendings/1/quantity
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"name":"chorizo"}' -u adri229:adri229 http://localhost/wallas/rest/spendings/1/name
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"types":["1","2","3"]}' -u adri229:adri229 http://localhost/wallas/rest/spendings/1/types
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"types":["3","4","5"]}' -u adri229:adri229 http://localhost/wallas/rest/spendings/5/types
+
+curl -i -X PUT -H "Content-Type: application/json" -u adri229:adri229 http://localhost/wallas/rest/spendings/5/types
+
+
+curl -i -X DELETE -u adri229:adri229 http://localhost/wallas/rest/spendings/20
+
+curl -i -X GET -u adri229:adri229 "http://localhost/wallas/rest/spendings/adri229?startDate=2016-02-10&endDate=2016-05-13"

@@ -24,42 +24,44 @@ CREATE TABLE IF NOT EXISTS `USER` (
 -- creacion de tabla SPENDING
 CREATE TABLE IF NOT EXISTS `SPENDING` (
     `idSpending` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del gasto, unico y auto incremental',
-    `dateSpending` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha y hora en la que es creado el gasto, no puede ser nulo',
+    `dateSpending` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha y hora en la que es creado el gasto, no puede ser nulo',
     `quantity` int(8) NOT NULL COMMENT 'cantidad del gasto',
+    `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
     `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del autor del gasto, no puede ser nulo, clave foranea a USER.email',
     PRIMARY KEY (`idSpending`),
-    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`)
+    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de posts' AUTO_INCREMENT=1;
 
 -- creacion de la tabla STOCK
 CREATE TABLE IF NOT EXISTS `STOCK` (
     `idStock` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del stock, unico y auto incremental',
-    `dateStock` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
+    `dateStock` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
     `total` int(8) NOT NULL COMMENT 'cantidad total de presupuesto del cual dispone el usuario', 
     `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
     PRIMARY KEY (`idStock`),
-    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`)
+    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de stock' AUTO_INCREMENT=1;
 
 -- creacion de la tabla REVENUE
 CREATE TABLE IF NOT EXISTS `REVENUE` (
     `idRevenue` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del ingreso, unico y auto incremental',
-    `dateRevenue` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
+    `dateRevenue` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
     `quantity` int(8) NOT NULL COMMENT 'cantidad del gasto',
+    `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
     `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
     PRIMARY KEY (`idRevenue`),
-    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`)
+    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de ingresos' AUTO_INCREMENT=1;
 
 
 -- creacion de la tabla TYPE
 CREATE TABLE IF NOT EXISTS `TYPE` (
     `idType` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del tipo de gasto, unico y auto incremental',
-    `dateType` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
+    `dateType` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
     `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
     `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
     PRIMARY KEY (`idType`),
-    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`)
+    FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de los tipos de gastos' AUTO_INCREMENT=1;
 
 -- creacion de la tabla TYPE
@@ -69,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     `type` int(9) NOT NULL COMMENT 'id del tipo de gasto, unico y auto incremental',
     `spending` int(9) NOT NULL COMMENT 'id del gasto, unico y auto incremental',
     PRIMARY KEY (`idTypeSpending`), 
-    FOREIGN KEY (`type`) REFERENCES `TYPE` (`idType`),
-    FOREIGN KEY (`spending`) REFERENCES `SPENDING` (`idSpending`)
+    FOREIGN KEY (`type`) REFERENCES `TYPE` (`idType`) ON DELETE CASCADE, 
+    FOREIGN KEY (`spending`) REFERENCES `SPENDING` (`idSpending`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto' AUTO_INCREMENT=1;
   
 INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`,`address`,`country`) VALUES
@@ -81,53 +83,38 @@ INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`,`address`,`cou
 ('adri669','adri669','adrian vazquez','adri669@gmailcom','988102030','Ourense','Spain');    
 
 
-INSERT INTO `SPENDING` (`dateSpending`,`quantity`,`owner`) VALUES 
-('2016-02-10 23:00:00', '20', 'adri229'),
-('2016-02-10 00:00:00', '40', 'adri229'),
-('2016-02-13 23:00:00', '25', 'adri229'),
-('2016-02-15 23:00:00', '10', 'adri229'),
-('2016-02-15 00:00:00', '50', 'adri229'),
-('2016-02-16 03:00:00', '20', 'adri229'),
-('2016-02-20 23:00:00', '45', 'adri229'),
-('2016-02-20 10:00:00', '15', 'adri229'),
-('2016-02-20 18:00:00', '60', 'adri229'),
-('2016-02-20 23:00:00', '50', 'adri229'),
-('2016-02-21 13:00:00', '100', 'adri229'),
-('2016-02-21 23:00:00', '25', 'adri229'),
-('2016-02-22 03:00:00', '0', 'adri229'),
-('2016-02-22 12:00:00', '0', 'adri229'),
-('2016-02-22 15:00:00', '10', 'adri229'),
-('2016-02-22 20:00:00', '200', 'adri229'),
-('2016-02-24 20:00:00', '5', 'adri229'),
-('2016-02-25 15:00:00', '25', 'adri229'),
-('2016-02-25 23:00:00', '60', 'adri229'),
-('2016-02-27 23:00:00', '20', 'adri229'),
-('2016-02-28 12:00:00', '100', 'adri229');
+INSERT INTO `SPENDING` (`dateSpending`,`quantity`,`name`,`owner`) VALUES 
+('2016-02-10 23:00:00', '20','desayuno','adri229'),
+('2016-02-10 00:00:00', '40','comida','adri229'),
+('2016-02-13 23:00:00', '25','merienda','adri229'),
+('2016-02-15 23:00:00', '10','cena','adri229'),
+('2016-02-15 00:00:00', '50','videojuegos','adri229'),
+('2016-02-16 03:00:00', '20','cine','adri229'),
+('2016-02-20 23:00:00', '45','gasolina','adri229'),
+('2016-02-20 10:00:00', '15','netflix','adri229'),
+('2016-02-20 18:00:00', '60','ropa','adri229'),
+('2016-02-20 23:00:00', '50','adsl','adri229'),
+('2016-02-21 13:00:00', '100','electricidad','adri229'),
+('2016-02-21 23:00:00', '25', 'concierto','adri229'),
+('2016-02-22 03:00:00', '5', 'desayuno','adri229'),
+('2016-02-22 12:00:00', '5', 'desayuno','adri229'),
+('2016-02-22 15:00:00', '10','cena','adri229'),
+('2016-02-22 20:00:00', '200','consola','adri229'),
+('2016-02-24 20:00:00', '5','cafe','adri229'),
+('2016-02-25 15:00:00', '25','comida','adri229'),
+('2016-02-25 23:00:00', '60','ropa','adri229'),
+('2016-02-27 23:00:00', '20','cena','adri229'),
+('2016-02-28 12:00:00', '100','alquiler','adri229');
 
 
 
-INSERT INTO `REVENUE` (`dateRevenue`,`quantity`,`owner`) VALUES
-('2016-02-10 23:00:00', '400', 'adri229'),
-('2016-02-10 00:00:00', '50', 'adri229'),
-('2016-02-13 23:00:00', '10', 'adri229'),
-('2016-02-15 23:00:00', '40', 'adri229'),
-('2016-02-15 00:00:00', '20', 'adri229'),
-('2016-02-16 03:00:00', '30', 'adri229'),
-('2016-02-20 23:00:00', '25', 'adri229'),
-('2016-02-20 10:00:00', '15', 'adri229'),
-('2016-02-20 18:00:00', '10', 'adri229'),
-('2016-02-20 23:00:00', '30', 'adri229'),
-('2016-02-21 13:00:00', '15', 'adri229'),
-('2016-02-21 23:00:00', '5', 'adri229'),
-('2016-02-22 03:00:00', '30', 'adri229'),
-('2016-02-22 12:00:00', '600', 'adri229'),
-('2016-02-22 15:00:00', '10', 'adri229'),
-('2016-02-22 20:00:00', '30', 'adri229'),
-('2016-02-24 20:00:00', '40', 'adri229'),
-('2016-02-25 15:00:00', '0', 'adri229'),
-('2016-02-25 23:00:00', '0', 'adri229'),
-('2016-02-27 23:00:00', '20', 'adri229'),
-('2016-02-28 12:00:00', '0', 'adri229');
+INSERT INTO `REVENUE` (`dateRevenue`,`quantity`,`name`,`owner`) VALUES
+('2016-02-10 23:00:00', '400','nomina','adri229'),
+('2016-02-10 00:00:00', '50','extra','adri229'),
+('2016-02-13 23:00:00', '400','nomina','adri229'),
+('2016-02-15 23:00:00', '400','nomina','adri229'),
+('2016-02-15 00:00:00', '20','extra','adri229'),
+('2016-02-28 12:00:00', '400','nomina','adri229');
 
 
 
@@ -156,13 +143,13 @@ INSERT INTO `STOCK` (`dateStock`,`total`,`owner`) VALUES
 
 
 
-INSERT INTO `TYPE` (`dateType`,`name`,`owner`) VALUES
-('2016-02-10 23:00:00','coffe','adri229'),
-('2016-02-13 23:00:00','underground','adri229'),
-('2016-02-15 23:00:00','bus','adri229'),
-('2016-02-20 23:00:00','taxi','adri229'),
-('2016-02-22 20:00:00','CocaCola','adri229'),
-('2016-02-22 20:00:00','loaf','adri229');
+INSERT INTO `TYPE` (`name`,`owner`) VALUES
+('coffe','adri229'),
+('underground','adri229'),
+('bus','adri229'),
+('taxi','adri229'),
+('CocaCola','adri229'),
+('loaf','adri229');
 
 
 INSERT INTO `TYPE_SPENDING` (`type`,`spending`) VALUES 

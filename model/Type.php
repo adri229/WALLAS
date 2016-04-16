@@ -7,13 +7,15 @@ class Type
 	private $dateType;
 	private $name;
 	private $owner;
+	private $spending;
 	
-	public function __construct($idType = NULL, $dateType = NULL, $name = NULL, $owner = NULL)
+	public function __construct($idType = NULL, $dateType = NULL, $name = NULL, $owner = NULL, $spending = NULL)
 	{
 		$this->idType = $idType;
 		$this->dateType = $dateType;
 		$this->name = $name;
 		$this->owner = $owner; 
+		$this->spending = $spending;
 	}
 	
 	public function getIdType()
@@ -34,6 +36,11 @@ class Type
 	public function getOwner()
 	{
 		return $this->owner;
+	}
+
+	public function getSpending()
+	{
+		return $this->spending;
 	}
 	
 	public function setIdType($idType)
@@ -56,6 +63,9 @@ class Type
 		$this->owner = $owner;
 	}
 	
-	
+	public function setSpending($spending)
+	{
+		$this->spending = $spending;
+	}
 }
 ?>

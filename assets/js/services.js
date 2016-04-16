@@ -87,10 +87,61 @@ wallas.factory('UserService', ['$http', function($http){
 			address: user.address,
 			country: user.country
 		}); 
+	}
 
-		
+	userService.getByLogin = function(login) {
+		return $http.get('rest/users/'.concat(login));
+	}
+
+	userService.delete = function(login) {
+		return $http.delete('rest/users/'.concat(login));
+	}
+
+
+	userService.update = function(attribute) {
+		return $http.put('rest/users/'.concat(login) + '/' . concat(attribute));
 	}
 
 	return userService;
+
+}]);
+
+
+wallas.factory('RevenueService', ['$http', function($http){
+
+	var revenueService = {};
+
+	revenueService.create = function(login,revenue) {
+		return $http.post('rest/revenues', {
+			quantity: revenue.quantity,
+			name: revenue.name,
+			owner: login
+		}); 
+	}
+
+	revenueService.getByOwner = function(login) {
+		return $http.get('rest/revenues/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
+	}
+
+
+	revenueService.delete = function() {
+		return $http.delete('rest/revenues' + '/1');
+	}
+
+	return revenueService;
+
+}]);
+
+
+
+wallas.factory('TypeService', ['$http', function($http) {
+
+	var TypeService = {};
+
+	typeService.create = function(type) {
+		return $http.post('rest/types', {
+			name: type.name
+		})
+	}
 
 }]);
