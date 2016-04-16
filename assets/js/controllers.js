@@ -208,6 +208,50 @@ wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
 		)
   	};
 
+}]);
 
+wallas.controller('StockController', ['$scope', '$cookies', 'StockService',
+	function($scope, $cookies, StockService) {
+
+	var user = $cookies.getObject('globals');
+    var login = user.currentUser.login;
+
+    $scope.create = function() {
+    	StockService.create($scope.stock).then(
+    		function(response) {
+    			alert("Create stock");
+    		},
+    		function(response) {
+    			alert("error create");
+            	console.log(response);
+    		}
+
+    	)
+    };
+
+	StockService.getByOwner(login).then(
+  		function(response) {
+			$scope.stocks = response;
+			console.log($scope.stocks.data);
+		},
+		function(response) {
+			alert("error");
+        	console.log(response);
+		}
+
+
+	);
+
+  	$scope.delete = function(idStock) {
+  		StockService.delete(idStock).then(
+		function(response) {
+			alert("DELETE type");
+		},
+		function(response) {
+			alert("error delete");
+        	console.log(response);
+		}
+		)
+  	};
 
 }]);

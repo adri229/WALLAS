@@ -154,3 +154,25 @@ wallas.factory('TypeService', ['$http', function($http) {
 	return typeService;
 
 }]);
+
+wallas.factory('StockService', ['$http', function($http) {
+
+	var stockService = {};
+
+	stockService.create = function(type) {
+		return $http.post('rest/stocks', {
+			total: stock.total
+		});
+	}
+
+	stockService.getByOwner = function(login) {
+		return $http.get('rest/stocks/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
+	};
+
+	stockService.delete = function(id) {
+		return $http.delete('rest/stocks/' + id);
+	};
+
+	return stockService;
+
+}]);

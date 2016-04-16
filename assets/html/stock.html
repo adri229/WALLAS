@@ -1,0 +1,30 @@
+<div class="stock" ng-controller="StockController">
+	<div class="stock-body">
+		<form name="stockForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-login">
+					<input name="total" placeholder="total" class="register-form-box" ng-model="stock.total" type="number" required>
+				</div>
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" ng-click="create()">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div class="stock-list">
+		
+    	<table>
+		  <tbody>
+		    <tr ng-repeat="stock in stocks.data">
+		       <td>{{stock.total}}</td>
+		       <td>{{stock.datestock}}</td>
+		       <td><button ng-click="delete(stock.idStock)" >DELETE</button></td>
+		      </tr>
+		  </tbody>
+		</table>
+
+	</div>
+</div>
