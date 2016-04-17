@@ -118,6 +118,14 @@ wallas.factory('RevenueService', ['$http', function($http){
 		}); 
 	}
 
+	revenueService.update = function(idRevenue, revenueUpdate) {
+		console.log(revenueUpdate);
+		return $http.put('rest/revenues/'.concat(idRevenue), {
+			quantity: revenueUpdate.quantity,
+			name: revenueUpdate.name
+		});
+	}
+
 	revenueService.getByOwner = function(login) {
 		return $http.get('rest/revenues/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
 	}

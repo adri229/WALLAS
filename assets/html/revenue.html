@@ -29,8 +29,27 @@
 		      </tr>
 		  </tbody>
 		</table>
-
 	</div>
+
+
+<div ng-repeat="revenue in revenues.data">
+	<form name="revenueForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-login">
+					<input name="quantity" value="{{revenue.quantity}}" class="register-form-box" ng-model="revenueUpdate.name" required>
+				</div>
+				<div class="register-form-login">
+					<input name="quantity" value="{{revenue.quantity}}" class="register-form-box" ng-model="revenueUpdate.quantity" type="number" required>
+				</div>
+				
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" ng-click="update(revenue.idRevenue,revenueUpdate)">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+		</div>
 </div>
 
 

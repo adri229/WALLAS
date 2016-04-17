@@ -127,11 +127,22 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
     			alert("Create revenue");
     		},
     		function(response) {
-    			alert("error delete");
+    			alert("error create");
             	console.log(response);
     		}
 
     		);
+    };
+
+    $scope.update = function(idRevenue,revenueUpdate) {
+        RevenueService.update(idRevenue, revenueUpdate).then(
+            function(response) {
+                alert("update revenue");
+            },
+            function(response) {
+                alert("error update")
+            }
+        )  
     };
 
 

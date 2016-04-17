@@ -27,7 +27,7 @@ class RevenueRest extends BaseRest
 
     	if (isset($data->quantity) && isset($data->name)) {
     		$revenue->setQuantity($data->quantity);
-        $revenue->setName($data->name);
+        	$revenue->setName($data->name);
     		$revenue->setOwner($currentUser->getLogin());
     	
     	
@@ -44,7 +44,7 @@ class RevenueRest extends BaseRest
 	    }
 	}
 
-	public function update($idRevenue, $attribute, $data)
+	public function update($idRevenue, $data)
 	{
 		$currentUser = parent::authenticateUser();
 
@@ -63,27 +63,22 @@ class RevenueRest extends BaseRest
     	}
 
 
-      switch ($attribute) {
-        case 'quantity':
-          $revenue->setQuantity($data->quantity);
-          break;
-        case 'name':
-          $revenue->setName($data->name);
-          break;
-        default:
-          break;
-      }
-
-    	try {
-            // validate Post object
-            //$revenue->validate(); // if it fails, ValidationException
-            $this->revenueDAO->update($revenue);
-            header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-        }catch (ValidationException $e) {
-            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-            echo(json_encode($e->getErrors()));
-        }
+      	if (isset($data->quantity) && isset($data->name)) {
+    		$revenue->setQuantity($data->quantity);
+        	$revenue->setName($data->name);
+    		
+	    	try {
+	            // validate Post object
+	            //$revenue->validate(); // if it fails, ValidationException
+	            $this->revenueDAO->update($revenue);
+	            header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	        }catch (ValidationException $e) {
+	            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	            echo(json_encode($e->getErrors()));
+	        }
+	    }
 	}
+
 
 	public function delete($idRevenue)
 	{
@@ -140,7 +135,7 @@ class RevenueRest extends BaseRest
 				"idRevenue" => $revenue->getIdRevenue(),
 				"dateRevenue" => $revenue->getDateRevenue(),
 				"quantity" => $revenue->getQuantity(),
-        "name" => $revenue->getName(),
+        		"name" => $revenue->getName(),
 				"owner" => $revenue->getOwner()->getLogin()
 			]);
 		}
@@ -157,7 +152,7 @@ $revenueRest = new RevenueRest();
 URIDispatcher::getInstance()
 	->map("GET", "/revenues/$1", [$revenueRest, "getByOwner"])	
 	->map("POST", "/revenues", [$revenueRest,"create"])
-	->map("PUT", "/revenues/$1/$2", [$revenueRest, "update"])
+	->map("PUT", "/revenues/$1", [$revenueRest, "update"])
 	->map("DELETE", "/revenues/$1", [$revenueRest, "delete"]);
 
 ?>
