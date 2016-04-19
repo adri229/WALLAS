@@ -134,8 +134,9 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
     		);
     };
 
-    $scope.update = function(idRevenue,revenueUpdate) {
-        RevenueService.update(idRevenue, revenueUpdate).then(
+    $scope.update = function(revenue) {
+        
+        RevenueService.update(revenue.id, revenue).then(
             function(response) {
                 alert("update revenue");
             },
@@ -144,25 +145,28 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
             }
         )  
     };
+    function refreshRevenues(){
+      RevenueService.getByOwner(login).then(
+                function(response) {
+                        $scope.revenues = response;
+                        console.log($scope.revenues.data);
+                },
+                function(response) {
+                        alert("error");
+                console.log(response);
+                }
 
 
-  	RevenueService.getByOwner(login).then(
-  		function(response) {
-			$scope.revenues = response;
-			console.log($scope.revenues.data);
-		},
-		function(response) {
-			alert("error");
-        	console.log(response);
-		}
-
-
-	);
+        );
+    }
+  refreshRevenues();
+  	
 
   	$scope.delete = function(idRevenue) {
   		RevenueService.delete(idRevenue).then(
 		function(response) {
 			alert("DELETE revenue");
+                         refreshRevenues();
 		},
 		function(response) {
 			alert("error delete");

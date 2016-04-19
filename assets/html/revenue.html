@@ -36,14 +36,14 @@
 	<form name="revenueForm" accept-charset="UTF-8" role="form">
 			<fieldset>
 				<div class="register-form-login">
-					<input name="quantity" value="{{revenue.quantity}}" class="register-form-box" ng-model="revenueUpdate.name" required>
+					<input name="name" value="{{revenue.name}}" class="register-form-box" ng-model="revenue.name" required>
 				</div>
 				<div class="register-form-login">
-					<input name="quantity" value="{{revenue.quantity}}" class="register-form-box" ng-model="revenueUpdate.quantity" type="number" required>
+					<input name="quantity" value="{{revenue.quantity}}" class="register-form-box" ng-model="revenue.quantity" type="number" required>
 				</div>
 				
 				<div class="register-form-submit">
-					<button class="register-form-submit-button" type="button" ng-click="update(revenue.idRevenue,revenueUpdate)">
+					<button class="register-form-submit-button" type="button" ng-click="update(revenue)">
                          Submit
                     </button>
 				</div>
