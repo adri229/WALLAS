@@ -50,7 +50,7 @@ class SpendingRest extends BaseRest {
         }
     }
 
-    public function update($idSpending, $attribute, $data) {
+    public function update($idSpending, $data) {
 
         $currentUser = parent::authenticateUser();
         
@@ -68,58 +68,47 @@ class SpendingRest extends BaseRest {
             return;
         }
 
-        switch ($attribute) {
-            case 'quantity':
-                $spending->setQuantity($data->quantity);
-                break;
-            case 'name':
-                $spending->setName($data->name);
-                break;
-            case 'types':
-                try {
-                    $this->typeSpendingDAO->deleteBySpending($idSpending);
-                    header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
-                } catch (ValidationException $e) {
-                    header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
-                    echo(json_encode($e->getErrors()));
-                }
-
-                if (isset($data)) {
-
-                    $arrayType = [];
-                    foreach ($data->types as $idType) {
-                        $type = $this->typeDAO->findById($idType);
+        if (isset($data)) {
+            $spending->setQuantity($data->quantity);
+            $spending->setName($data->name);
+            
+            try {
+                // validate Post object
+                //$spending->validate(); // if it fails, ValidationException
+                $this->typeSpendingDAO->deleteBySpending($idSpending);
+                header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+            } catch (ValidationException $e) {
+                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                echo(json_encode($e->getErrors()));
+            }
+            foreach ($data->types as $idType) {
+                $type = $this->typeDAO->findById($idType);
                         
 
-                        if ($type == NULL) {
-                            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
-                            echo("Type with id " . $idType . " not found");
-                            return;
-                        }
-                        $typeSpending = new TypeSpending();
-                        $typeSpending->setSpending($idSpending);
-                        $typeSpending->setType($type);
-                        $this->typeSpendingDAO->save($typeSpending);
-                    }
-                }   
-                break;
-            default:
-                break;
+                if ($type == NULL) {
+                    header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                    echo("Type with id " . $idType . " not found");
+                    return;
+                }
+                $typeSpending = new TypeSpending();
+                $typeSpending->setSpending($idSpending);
+                $typeSpending->setType($type);
+
+                $this->typeSpendingDAO->save($typeSpending);
+            }
+
+            try {
+            // validate Post object
+            //$spending->validate(); // if it fails, ValidationException
+                $this->spendingDAO->update($spending);
+                header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+            } catch (ValidationException $e) {
+                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                echo(json_encode($e->getErrors()));
+            }
         }
 
         
-            
-            
-
-        try {
-            // validate Post object
-            //$spending->validate(); // if it fails, ValidationException
-            $this->spendingDAO->update($spending);
-            header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
-        } catch (ValidationException $e) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
-            echo(json_encode($e->getErrors()));
-        }
         
     }
 
@@ -179,11 +168,10 @@ class SpendingRest extends BaseRest {
         foreach ($spendings as $spending) {
         	$types_array = [];
         	
-            if( $spending->getType() != NULL) {
-                foreach ($spending->getType() as $type) {
+            if( $spending->getTypes() != NULL) {
+                foreach ($spending->getTypes() as $type) {
                     array_push($types_array, [
                         "idType" => $type->getIdType(),
-                        "date" => $type->getDateType(),
                         "name" => $type->getName(),
                         "owner" => $currentUser->getLogin()
                     ]); 
@@ -214,6 +202,6 @@ $spendingRest = new SpendingRest();
 URIDispatcher::getInstance()
         ->map("GET", "/spendings/$1", [$spendingRest, "getByOwner"])
         ->map("POST", "/spendings", [$spendingRest, "create"])
-        ->map("PUT", "/spendings/$1/$2", [$spendingRest, "update"])
+        ->map("PUT", "/spendings/$1/", [$spendingRest, "update"])
         ->map("DELETE", "/spendings/$1", [$spendingRest, "delete"]);
 ?>

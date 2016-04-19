@@ -101,14 +101,12 @@ class TypeRest extends BaseRest
     	}	
 	}
 
-	public function getByOwnerAndFilter($owner)
+	public function getByOwner($owner)
 	{
 		$currentUser = parent::authenticateUser();
 
-		$startDate = $_GET["startDate"];
-		$endDate = $_GET["endDate"];
 
-		$types = $this->typeDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
+		$types = $this->typeDAO->findByOwner($owner);
 		if ($types == NULL) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
             echo("The defined interval time not contains Spendings");
@@ -127,7 +125,6 @@ class TypeRest extends BaseRest
 		foreach ($types as $type) {
 			array_push($type_array, array(
 				"idType" => $type->getIdType(),
-				"dateType" => $type->getDateType(),
 				"name" => $type->getName(),
 				"owner" => $type->getOwner()->getLogin()
 			));

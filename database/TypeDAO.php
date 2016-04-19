@@ -11,16 +11,16 @@ class TypeDAO
         $this->db = PDOConnection::getInstance ();
     }
 
-    public function findByOwnerAndFilter($owner, $startDate, $endDate)
+    public function findByOwner($owner)
     {
-        $stmt = $this->db->prepare("SELECT * FROM TYPE WHERE owner = ?  AND dateType BETWEEN ? AND ?");
-        $stmt->execute(array($owner, $startDate, $endDate));
+        $stmt = $this->db->prepare("SELECT * FROM TYPE WHERE owner = ?");
+        $stmt->execute(array($owner));
         $types_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         $types = array();
         
         foreach ($types_db as $type) {
-            array_push($types, new Type($type["idType"], $type["dateType"], $type["name"], new User($type["owner"])));
+            array_push($types, new Type($type["idType"], $type["name"], new User($type["owner"])));
         }
         return $types;
     }
@@ -34,7 +34,6 @@ class TypeDAO
         if ($type != NULL) {
             return new Type(
                 $type["idType"],
-                $type["dateType"],
                 $type["name"],
                 new User($type["owner"]));
         } else {

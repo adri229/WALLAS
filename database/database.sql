@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS `REVENUE` (
 -- creacion de la tabla TYPE
 CREATE TABLE IF NOT EXISTS `TYPE` (
     `idType` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del tipo de gasto, unico y auto incremental',
-    `dateType` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
     `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
     `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
     PRIMARY KEY (`idType`),
