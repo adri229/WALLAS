@@ -30,12 +30,11 @@ class UserRest extends BaseRest
     		isset($data->address)	 &&
 	    	isset($data->country);
 
-      //  die($required);
-	if (!$required || $data->passwd != $data->verifyPass) {
-		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-		echo("The entered passwords do not match");
-		return;
-	}
+    	if (!$required || $data->passwd != $data->verifyPass) {
+    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+    		echo("The entered passwords do not match");
+    		return;
+    	}
 
         if (!$this->userDAO->isNewLogin($data->login)) {
 	       	header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
@@ -60,7 +59,7 @@ class UserRest extends BaseRest
     
     
 
-    public function update($login, $attribute, $data)
+    public function update($login, $data)
     {
         $currentUser = parent::authenticateUser();
         if ($login != $currentUser->getLogin()) {
@@ -77,30 +76,27 @@ class UserRest extends BaseRest
             return;
         }
 
-        switch ($attribute) {
-            case 'passwd':
-		        if($data->passwd == $data->passwd){
-        		    $user->setPassword($data->passwd);	
-	            } else {
-	    	        header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-                	echo("The entered passwords do not match");			
-		        }
-                break;
-            case 'email':
-                $user->setEmail($data->email);
-                break;
-            case 'phone':
-                $user->setPhone($data->phone);
-                break;    
-            case 'address':
-                $user->setAddress($data->address);
-                break;    
-            case 'country':
-                $user->setCountry($data->country);
-                break;    
-            default:
-                break;
+        $required = 
+            isset($data->passwd)     &&
+            isset($data->verifyPass) &&
+            isset($data->email)      &&
+            isset($data->phone)      &&
+            isset($data->address)    &&
+            isset($data->country);
+
+        if (!$required || $data->passwd != $data->verifyPass) {
+            print_r($data->passwd);
+            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+            echo("The entered passwords do not match");
+            return;
         }
+
+        $user->setPassword($data->passwd);
+        $user->setEmail($data->email);
+        $user->setPhone($data->phone);
+        $user->setAddress($data->address);
+        $user->setCountry($data->country);
+
 
         try {
             //$user->validate();
@@ -187,7 +183,7 @@ $userRest = new UserRest();
     ->map("GET", "/users/$1", array($userRest, "get"))
     ->map("POST", "/users/login/$1", array($userRest, "login"))
     ->map("POST", "/users", array($userRest, "create"))
-    ->map("PUT", "/users/$1/$2", array($userRest, "update"))
+    ->map("PUT", "/users/$1", array($userRest, "update"))
     ->map("DELETE", "/users/$1", array($userRest, "delete"));
 	
 ?>

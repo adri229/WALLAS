@@ -17,7 +17,7 @@ curl -i -X PUT -H "Content-Type: application/json" -d '{"country":"England"}' -u
 curl -i -X DELETE -u adrian:wallas http://localhost/wallas/rest/users/adrian
 
 
-
+curl -i -X PUT -H "Content-Type: application/json" -d '{"passwd":"wallas", "verifyPass":"wallas","email":"adrian@hotmail.com", "phone":"988152545", "address":"London", "country":"England"}' -u adrian:adrian http://localhost/wallas/rest/users/adrian/
 
 
 
