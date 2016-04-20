@@ -105,7 +105,6 @@ class TypeRest extends BaseRest
 	{
 		$currentUser = parent::authenticateUser();
 
-
 		$types = $this->typeDAO->findByOwner($owner);
 		if ($types == NULL) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
@@ -139,7 +138,7 @@ class TypeRest extends BaseRest
 
 $typeRest = new TypeRest();
 URIDispatcher::getInstance()
-	->map("GET", "/types/$1", array($typeRest, "getByOwnerAndFilter"))	
+	->map("GET", "/types/$1", array($typeRest, "getByOwner"))	
 	->map("POST", "/types", array($typeRest,"create"))
 	->map("PUT", "/types/$1", array($typeRest, "update"))
 	->map("DELETE", "/types/$1", array($typeRest, "delete"));

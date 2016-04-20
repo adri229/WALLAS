@@ -152,7 +152,7 @@ wallas.factory('TypeService', ['$http', function($http) {
 	}
 
 	typeService.getByOwner = function(login) {
-		return $http.get('rest/types/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
+		return $http.get('rest/types/'.concat(login));
 	};
 
 	typeService.delete = function(id) {
