@@ -2,11 +2,11 @@
 	<div class="revenue-body">
 		<form name="revenueForm" accept-charset="UTF-8" role="form">
 			<fieldset>
-				<div class="register-form-login">
-					<input name="quantity" placeholder="Quantity" class="register-form-box" ng-model="revenue.quantity" type="number" required>
-				</div>
 				<div class="register-form-fullname">
 					<input name="name" placeholder="Name" class="register-form-box" ng-model="revenue.name" type="text" required>
+				</div>
+				<div class="register-form-login">
+					<input name="quantity" placeholder="Quantity" class="register-form-box" ng-model="revenue.quantity" type="number" required>
 				</div>
 				<div class="register-form-submit">
 					<button class="register-form-submit-button" type="button" ng-click="create()">
@@ -30,6 +30,7 @@
 		  </tbody>
 		</table>
 	</div>
+
 
 
 <div ng-repeat="revenue in revenues.data">

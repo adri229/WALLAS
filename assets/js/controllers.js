@@ -120,7 +120,8 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
     $scope.create = function() {
     	RevenueService.create($scope.revenue).then(
     		function(response) {
-    			alert("Create revenue");
+    			refreshRevenues();
+                console.log($scope.revenue);
     		},
     		function(response) {
     			alert("error create");
