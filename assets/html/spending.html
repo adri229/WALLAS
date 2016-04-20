@@ -1,0 +1,51 @@
+<div class="spending" ng-controller="SpendingController">
+	<div class="spending-body">
+		<form name="spendingForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-login">
+					<input name="quantity" placeholder="Quantity" class="register-form-box" ng-model="spending.quantity" type="number" required>
+				</div>
+				<div class="register-form-fullname">
+					<input name="name" placeholder="Name" class="register-form-box" ng-model="spending.name" type="text" required>
+				</div>
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" ng-click="create()">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div class="spending-list">
+		
+    	<table>
+		  <tbody>
+		    <tr ng-repeat="spending in spendings.data">
+		       <td>{{spending.name}}</td>
+		       <td>{{spending.quantity}}</td>
+		       <td>{{spending.dateSpending}}</td>
+		       <td>{{spending.types}}</td>
+		       		
+		       <td><button ng-click="delete(spending.idRevenue)" >DELETE</button></td>
+		      </tr>
+		       }
+		       }
+		  </tbody>
+
+
+<div ng-repeat="spending in spendings.data">
+   <div ng-repeat="type in spending.types">
+      {{type.name}}
+      
+   </div>
+</div>
+
+
+
+		</table>
+	</div>
+
+
+
+</div>

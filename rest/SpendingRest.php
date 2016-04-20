@@ -183,6 +183,7 @@ class SpendingRest extends BaseRest {
             array_push($spendings_array, [
                 "idSpending" => $spending->getIdSpending(),
                 "dateSpending" => $spending->getDateSpending(),
+                "name" => $spending->getName(),
                 "quantity" => $spending->getQuantity(),
                 "owner" => $currentUser->getLogin(),
                 "types" => $types_array

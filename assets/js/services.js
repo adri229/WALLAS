@@ -98,8 +98,14 @@ wallas.factory('UserService', ['$http', function($http){
 	}
 
 
-	userService.update = function(attribute) {
-		return $http.put('rest/users/'.concat(login) + '/' . concat(attribute));
+	userService.update = function(user) {
+		return $http.put('rest/users/'.concat(login), {
+			verifyPass: user.verifyPass,
+			email: user.email,
+			phone: user.phone,
+			address: user.address,
+			country: user.country
+		});
 	}
 
 	return userService;
@@ -118,11 +124,11 @@ wallas.factory('RevenueService', ['$http', function($http){
 		}); 
 	}
 
-	revenueService.update = function(idRevenue, revenueUpdate) {
-		console.log(revenueUpdate);
-		return $http.put('rest/revenues/'.concat(idRevenue), {
-			quantity: revenueUpdate.quantity,
-			name: revenueUpdate.name
+	revenueService.update = function(revenue) {
+		console.log(revenue);
+		return $http.put('rest/revenues/'.concat(revenue.idRevenue), {
+			quantity: revenue.quantity,
+			name: revenue.name
 		});
 	}
 
@@ -183,4 +189,25 @@ wallas.factory('StockService', ['$http', function($http) {
 
 	return stockService;
 
+}]);
+
+
+wallas.factory('SpendingService', ['$http', function($http) {
+
+	var spendingService = {};
+
+	spendingService.create = function(spending) {
+		return $http.post('rest/spendings', {
+			quantity: spending.quantity,
+			name: spending.name
+		});
+	}
+
+
+	spendingService.getByOwner = function(login) {
+		return $http.get('rest/spendings/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
+	}
+
+
+	return spendingService;
 }]);

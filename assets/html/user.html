@@ -8,6 +8,28 @@
 	<p>country: {{user.data.country}}</p>
 
 	
+		<form name="userForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-email">
+					<input name="email" value="{{user.data.email}}" class="register-form-box" ng-model="user.email" type="email" required>
+				</div>
+				<div class="register-form-phone">
+					<input name="phone" value="{{user.data.phone}}" class="register-form-box" ng-model="user.phone" type="number" required>
+				</div>
+				<div class="register-form-email">
+					<input name="address" value="{{user.data.address}}" class="register-form-box" ng-model="user.address" type="text" required>
+				</div>
+				<div class="register-form-login">
+					<input name="country" value="{{user.country}}" class="register-form-box" ng-model="user.country" type="text" required>
+				</div>
+				
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" ng-click="update(user)">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
 
 	<button ng-click="delete()" >DELETE</button>
 

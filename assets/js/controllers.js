@@ -58,7 +58,8 @@ wallas.controller('RegisterController', ['$scope','UserService', function ($scop
 }]);
 
 
-wallas.controller('UserController', ['$scope', '$cookies', 'UserService', function($scope, $cookies,UserService) {
+wallas.controller('UserController', ['$scope', '$cookies', 'UserService', 
+    function($scope, $cookies,UserService) {
 	var user = $cookies.getObject('globals');
 
 	var login = user.currentUser.login;
@@ -89,15 +90,10 @@ wallas.controller('UserController', ['$scope', '$cookies', 'UserService', functi
 	);
 	}
 
-  $scope.update = function(attribute) {
+  $scope.update = function(user) {
 
-    alert(attribute);
 
-    var data = $scope.attributes;
-
-    console.log(data);
-
-    UserService.update(login,attribute,data).then(
+    UserService.update(login,user).then(
         function(response) {
             alert("UPDATE " + attribute);
         },
@@ -136,7 +132,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
 
     $scope.update = function(revenue) {
         
-        RevenueService.update(revenue.id, revenue).then(
+        RevenueService.update(revenue).then(
             function(response) {
                 alert("update revenue");
             },
@@ -270,3 +266,40 @@ wallas.controller('StockController', ['$scope', '$cookies', 'StockService',
   	};
 
 }]);
+
+wallas.controller('SpendingController', ['$scope', '$cookies', 'SpendingService',
+    function($scope, $cookies, SpendingService) {
+
+    var user = $cookies.getObject('globals');
+    var login = user.currentUser.login;
+
+    $scope.create = function() {
+        SpendingService.create($scope.spending).then(
+            function(response) {
+                alert("Create Spending");
+            },
+            function(response) {
+                alert("error create");
+                console.log(response);
+            }
+        );
+    };
+
+    SpendingService.getByOwner(login).then(
+        function(response) {
+            $scope.spendings = response;
+            
+            console.log($scope.spendings.data[0].types[0]);
+
+        },
+        function(response) {
+            alert("error");
+            console.log(response);
+        }
+
+
+    );
+
+
+
+  }]);
