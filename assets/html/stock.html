@@ -3,10 +3,10 @@
 		<form name="stockForm" accept-charset="UTF-8" role="form">
 			<fieldset>
 				<div class="register-form-login">
-					<input name="total" placeholder="total" class="register-form-box" ng-model="stock.total" type="number" required>
+					<input name="total" placeholder="total" class="register-form-box" ng-model="stock.total" stock="text" required>
 				</div>
 				<div class="register-form-submit">
-					<button class="register-form-submit-button" type="button" ng-click="create()">
+					<button class="register-form-submit-button" stock="button" ng-click="create()">
                          Submit
                     </button>
 				</div>
@@ -25,6 +25,24 @@
 		      </tr>
 		  </tbody>
 		</table>
+
+
+<div ng-repeat="stock in stocks.data">
+	<form name="stockForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-login">
+					<input name="text" value="{{stock.total}}" class="register-form-box" ng-model="stock.total" required>
+				</div>
+				
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" stock="button" ng-click="update(stock)">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+		</div>
+</div>
 
 	</div>
 </div>

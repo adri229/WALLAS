@@ -249,6 +249,7 @@ wallas.controller('StockController', ['$scope', '$cookies', 'StockService',
     $scope.create = function() {
     	StockService.create($scope.stock).then(
     		function(response) {
+    			refreshStocks();
     			alert("Create stock");
     		},
     		function(response) {
@@ -259,28 +260,43 @@ wallas.controller('StockController', ['$scope', '$cookies', 'StockService',
     	)
     };
 
-	StockService.getByOwner(login).then(
-  		function(response) {
-			$scope.stocks = response;
-			console.log($scope.stocks.data);
-		},
-		function(response) {
-			alert("error");
-        	console.log(response);
-		}
+    function refreshStocks() {
+    	StockService.getByOwner(login).then(
+	  		function(response) {
+				$scope.stocks = response;
+				console.log($scope.stocks.data);
+			},
+			function(response) {
+				alert("error");
+	        	console.log(response);
+			}
+		);	
+    }
+    refreshStocks();
+	
+	$scope.update = function(stock) {
+		StockService.update(stock).then(
+			function(response) {
+				refreshStocks();
+				alert("update stocks");
+			},
+			function(response) {
+				alert("error");
+			}
+		)
 
-
-	);
+	}
 
   	$scope.delete = function(idStock) {
   		StockService.delete(idStock).then(
-		function(response) {
-			alert("DELETE type");
-		},
-		function(response) {
-			alert("error delete");
-        	console.log(response);
-		}
+			function(response) {
+				refreshStocks();
+				alert("DELETE type");
+			},
+			function(response) {
+				alert("error delete");
+	        	console.log(response);
+			}
 		)
   	};
 
