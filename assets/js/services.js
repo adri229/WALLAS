@@ -35,31 +35,6 @@ wallas.factory('AuthenticationService',
 
 		};
 
-/*
-		serviceLogin.login = function(login, password, callback) {
-			$http.post('rest/users/login/'.concat(login), {login: login, password: password})
-				.success(function(response) {
-					callback(response);
-				})
-				.error(function(response){
-					callback(response);	
-				})
-		};
-
-		serviceLogin.setCredentials = function (login, password) {
-			var authdata = btoa(login + ":" + password);
-
-			//Todos los controllers heredan estos datos
-			$rootScope.globals = {
-				currentUser: {
-					login: login,
-					authdata: authdata
-				}
-			};
-			$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-			$cookies.put('globals',$rootScope.globals);
-		};
-*/
 		serviceLogin.clearCredentials = function() {
 			$rootScope.globals = {};
 			$cookies.remove('globals');
@@ -215,6 +190,11 @@ wallas.factory('SpendingService', ['$http', function($http) {
 
 	spendingService.getByOwner = function(login) {
 		return $http.get('rest/spendings/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
+	}
+
+
+	spendingService.delete = function(idSpending) {
+		return $http.delete('rest/spendings/'.concat(idSpending));
 	}
 
 

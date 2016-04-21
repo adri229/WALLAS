@@ -311,6 +311,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', 'SpendingService'
     $scope.create = function() {
         SpendingService.create($scope.spending).then(
             function(response) {
+            	refreshSpendings();
                 alert("Create Spending");
             },
             function(response) {
@@ -320,21 +321,38 @@ wallas.controller('SpendingController', ['$scope', '$cookies', 'SpendingService'
         );
     };
 
-    SpendingService.getByOwner(login).then(
-        function(response) {
-            $scope.spendings = response;
-            
-            console.log($scope.spendings.data[0].types[0]);
+    
+	function refreshSpendings() {
+		SpendingService.getByOwner(login).then(
+	        function(response) {
+	            $scope.spendings = response;
+	            
+	            console.log($scope.spendings.data[0].types[0]);
 
-        },
-        function(response) {
-            alert("error");
-            console.log(response);
-        }
+	        },
+	        function(response) {
+	            alert("error");
+	            console.log(response);
+	        }
+    	);	
+	};
+    
+    refreshSpendings();
 
 
-    );
+    $scope.delete = function(idSpending) {
+    	SpendingService.delete(idSpending).then(
+    		function(response) {
+    			refreshSpendings();
+                alert("delete Spending");
+            },
+            function(response) {
+                alert("error delete");
+                console.log(response);
+            }
 
+    	)
+    };
 
 
   }]);
