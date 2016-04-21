@@ -27,5 +27,24 @@
 		  </tbody>
 		</table>
 
+<div ng-repeat="type in types.data">
+	<form name="typeForm" accept-charset="UTF-8" role="form">
+			<fieldset>
+				<div class="register-form-login">
+					<input name="name" value="{{type.name}}" class="register-form-box" ng-model="type.name" required>
+				</div>
+				
+				
+				<div class="register-form-submit">
+					<button class="register-form-submit-button" type="button" ng-click="update(type)">
+                         Submit
+                    </button>
+				</div>
+			</fieldset>
+		</form>
+		</div>
+</div>
+
+
 	</div>
 </div>

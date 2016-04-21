@@ -163,7 +163,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
   		RevenueService.delete(idRevenue).then(
 		function(response) {
 			alert("DELETE revenue");
-                         refreshRevenues();
+            refreshRevenues();
 		},
 		function(response) {
 			alert("error delete");
@@ -185,6 +185,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
     $scope.create = function() {
     	TypeService.create($scope.type).then(
     		function(response) {
+    			refreshTypes();
     			alert("Create type");
     		},
     		function(response) {
@@ -195,22 +196,39 @@ wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
     	)
     };
 
-	TypeService.getByOwner(login).then(
-  		function(response) {
-			$scope.types = response;
-			console.log($scope.types.data);
-		},
-		function(response) {
-			alert("error");
-        	console.log(response);
-		}
+	
+	function refreshTypes() {
+		TypeService.getByOwner(login).then(
+	  		function(response) {
+				$scope.types = response;
+				console.log($scope.types.data);
+			},
+			function(response) {
+				alert("error");
+	        	console.log(response);
+			}
+		)
+	}
+	refreshTypes();
 
+	$scope.update = function(type) {
+		TypeService.update(type).then(
+			function(response) {
+				refreshTypes();
+				alert("update types");
+			},
+			function(response) {
+				alert("error");
+			}
+		)
+	}
+	
 
-	);
 
   	$scope.delete = function(idType) {
   		TypeService.delete(idType).then(
 		function(response) {
+			refreshTypes();
 			alert("DELETE type");
 		},
 		function(response) {

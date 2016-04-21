@@ -157,6 +157,11 @@ wallas.factory('TypeService', ['$http', function($http) {
 		});
 	}
 
+	typeService.update = function(type) {
+		return $http.put('rest/types/'.concat(type.idType), {name: type.name});
+	}
+
+
 	typeService.getByOwner = function(login) {
 		return $http.get('rest/types/'.concat(login));
 	};

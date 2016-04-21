@@ -1,5 +1,5 @@
 <div ng-controller="UserController">
-	<p>LOGIN: {{user.data.login}}></p>
+	<p>LOGIN: {{user.data.login}}</p>
 	<p>PASS: {{user.data.password}} </p>
 	<p>fullname: {{user.data.fullname}} </p>
 	<p>email: {{user.data.email}}</p>
@@ -11,6 +11,7 @@
 		<form name="userForm" accept-charset="UTF-8" role="form">
 			<fieldset>
 				<div class="register-form-email">
+				{{user.data.email}}
 					<input name="email" value="{{user.data.email}}" class="register-form-box" ng-model="user.email" type="email" required>
 				</div>
 				<div class="register-form-phone">
