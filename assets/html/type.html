@@ -1,50 +1,38 @@
 <div class="type" ng-controller="TypeController">
-	<div class="type-body">
-		<form name="typeForm" accept-charset="UTF-8" role="form">
-			<fieldset>
-				<div class="register-form-fullname">
-					<input name="name" placeholder="Name" class="register-form-box" ng-model="type.name" type="text" required>
-				</div>
-				<div class="register-form-submit">
-					<button class="register-form-submit-button" type="button" ng-click="create()">
-                         Submit
-                    </button>
-				</div>
-			</fieldset>
-		</form>
-	</div>
-	
-	<div class="type-list">
-		
-    	<table>
+
+
+
+    	<table class="row-border table table-responsive table-hover">
+    		<thead>
+    			<tr>
+    				<th>
+    				<div class="form-group">
+						<input name="name" placeholder="Name" class="form-control" ng-model="type.name" type="text" required>
+					</div>
+					</th>
+					<th>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i></button>
+                    </div>
+                	</th>
+    			</tr>
+    			<tr>
+                    <th>Name</th>
+                    <th></th>	
+                </tr>
+    		</thead>
 		  <tbody>
 		    <tr ng-repeat="type in types.data">
-		       <td>{{type.name}}</td>
-		       <td>{{type.quantity}}</td>
-		       <td>{{type.datetype}}</td>
-		       <td><button ng-click="delete(type.idType)" >DELETE</button></td>
+		       <td>
+		       <div class="form-group">
+		       		<input name="name" value="{{type.name}}" class="form-control" ng-model="type.name" required></td>
+		       </div>
+		       <td>
+                    <button type="button" ng-click="update(type)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                    <button type="button" ng-click="delete(type.idType)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                </td>
 		      </tr>
 		  </tbody>
 		</table>
 
-<div ng-repeat="type in types.data">
-	<form name="typeForm" accept-charset="UTF-8" role="form">
-			<fieldset>
-				<div class="register-form-login">
-					<input name="name" value="{{type.name}}" class="register-form-box" ng-model="type.name" required>
-				</div>
-				
-				
-				<div class="register-form-submit">
-					<button class="register-form-submit-button" type="button" ng-click="update(type)">
-                         Submit
-                    </button>
-				</div>
-			</fieldset>
-		</form>
-		</div>
-</div>
-
-
-	</div>
 </div>

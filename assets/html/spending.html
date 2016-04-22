@@ -25,15 +25,25 @@
 		       <td>{{spending.name}}</td>
 		       <td>{{spending.quantity}}</td>
 		       <td>{{spending.dateSpending}}</td>
-		       <td>{{spending.types}}</td>
+		       <tr> 
+		       		<div ng-repeat="spending in spendings.data">
+   						<div ng-repeat="type in spending.types">
+      					{{type.name}}
+      
+				   		</div>
+					</div>
+
+		       
+		       </tr>
+		      
 		       		
 		       <td><button ng-click="delete(spending.idSpending)" >DELETE</button></td>
 		      </tr>
-		       }
-		       }
+		       
+		       
 		  </tbody>
 
-
+<!--
 <div ng-repeat="spending in spendings.data">
    <div ng-repeat="type in spending.types">
       {{type.name}}
@@ -41,7 +51,7 @@
    </div>
 </div>
 
-
+-->
 
 		</table>
 	</div>

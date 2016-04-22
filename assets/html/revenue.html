@@ -1,56 +1,58 @@
 <div class="revenue" ng-controller="RevenueController">
-	<div class="revenue-body">
-		<form name="revenueForm" accept-charset="UTF-8" role="form">
-			<fieldset>
-				<div class="register-form-fullname">
-					<input name="name" placeholder="Name" class="register-form-box" ng-model="revenue.name" type="text" required>
-				</div>
-				<div class="register-form-login">
-					<input name="quantity" placeholder="Quantity" class="register-form-box" ng-model="revenue.quantity" type="number" required>
-				</div>
-				<div class="register-form-submit">
-					<button class="register-form-submit-button" type="button" ng-click="create()">
-                         Submit
-                    </button>
-				</div>
-			</fieldset>
-		</form>
-	</div>
-	
-	<div class="revenue-list">
-		
-    	<table>
+
+
+
+
+		<table class="row-border table table-responsive table-hover">
+    		<thead>
+    			<tr>
+    				<th>
+	    				<div class="form-group">
+							<input name="name" placeholder="Name" class="form-control" ng-model="revenue.name" revenue="text" required>
+						</div>
+					</th>
+					<th>
+	    				<div class="form-group">
+							<input name="quantity" placeholder="Quantity" class="form-control" ng-model="revenue.quantity" revenue="text" required>
+						</div>
+					</th>
+					<th>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i></button>
+                    </div>
+                	</th>
+    			</tr>
+    			<tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th></th>	
+                </tr>
+    		</thead>
 		  <tbody>
 		    <tr ng-repeat="revenue in revenues.data">
-		       <td>{{revenue.name}}</td>
-		       <td>{{revenue.quantity}}</td>
-		       <td>{{revenue.dateRevenue}}</td>
-		       <td><button ng-click="delete(revenue.idRevenue)" >DELETE</button></td>
+		       <td>
+		       <div class="form-group">
+		       		<input name="name" value="{{revenue.name}}" class="form-control" ng-model="revenue.name" required>
+		       </div>
+		       </td>
+		       <td>
+		       <div class="form-group">
+		       		<input name="quantity" value="{{revenue.quantity | currency }}" class="form-control" ng-model="revenue.quantity" required>
+		       </div>
+		       </td>
+		       <td>
+		       <div class="form-group">
+		       		{{revenue.dateRevenue}}
+		       </div>
+		       </td>
+		       <td>
+                    <button type="button" ng-click="update(revenue)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                    <button type="button" ng-click="delete(revenue.idRevenue)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                </td>
 		      </tr>
 		  </tbody>
 		</table>
-	</div>
-
-
-
-<div ng-repeat="revenue in revenues.data">
-	<form name="revenueForm" accept-charset="UTF-8" role="form">
-			<fieldset>
-				<div class="register-form-login">
-					<input name="name" value="{{revenue.name}}" class="register-form-box" ng-model="revenue.name" required>
-				</div>
-				<div class="register-form-login">
-					<input name="quantity" value="{{revenue.quantity}}" class="register-form-box" ng-model="revenue.quantity" type="number" required>
-				</div>
-				
-				<div class="register-form-submit">
-					<button class="register-form-submit-button" type="button" ng-click="update(revenue)">
-                         Submit
-                    </button>
-				</div>
-			</fieldset>
-		</form>
-		</div>
 </div>
 
 

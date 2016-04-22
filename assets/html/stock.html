@@ -1,48 +1,40 @@
 <div class="stock" ng-controller="StockController">
-	<div class="stock-body">
-		<form name="stockForm" accept-charset="UTF-8" role="form">
-			<fieldset>
-				<div class="register-form-login">
-					<input name="total" placeholder="total" class="register-form-box" ng-model="stock.total" stock="text" required>
-				</div>
-				<div class="register-form-submit">
-					<button class="register-form-submit-button" stock="button" ng-click="create()">
-                         Submit
-                    </button>
-				</div>
-			</fieldset>
-		</form>
-	</div>
-	
-	<div class="stock-list">
-		
-    	<table>
+
+
+    	<table class="row-border table table-responsive table-hover">
+    		<thead>
+    			<tr>
+    				<th>
+    				<div class="form-group">
+						<input name="name" placeholder="Total" class="form-control" ng-model="stock.total" type="text" required>
+					</div>
+					</th>
+					<th>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i></button>
+                    </div>
+                	</th>
+    			</tr>
+    			<tr>
+                    <th>Total</th>
+                    <th></th>	
+                </tr>
+    		</thead>
 		  <tbody>
 		    <tr ng-repeat="stock in stocks.data">
-		       <td>{{stock.total}}</td>
-		       <td>{{stock.datestock}}</td>
-		       <td><button ng-click="delete(stock.idStock)" >DELETE</button></td>
+		       <td>
+		       <div class="form-group">
+		       		<input name="name" value="{{stock.total}}" class="form-control" ng-model="stock.total" required></td>
+		       </div>
+		       <td>
+                    <button type="button" ng-click="update(stock)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                    <button type="button" ng-click="delete(stock.idStock)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                </td>
 		      </tr>
 		  </tbody>
 		</table>
 
 
-<div ng-repeat="stock in stocks.data">
-	<form name="stockForm" accept-charset="UTF-8" role="form">
-			<fieldset>
-				<div class="register-form-login">
-					<input name="text" value="{{stock.total}}" class="register-form-box" ng-model="stock.total" required>
-				</div>
-				
-				<div class="register-form-submit">
-					<button class="register-form-submit-button" stock="button" ng-click="update(stock)">
-                         Submit
-                    </button>
-				</div>
-			</fieldset>
-		</form>
-		</div>
-</div>
 
-	</div>
+
 </div>

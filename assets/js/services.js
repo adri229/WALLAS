@@ -153,7 +153,7 @@ wallas.factory('StockService', ['$http', function($http) {
 
 	var stockService = {};
 
-	stockService.create = function(type) {
+	stockService.create = function(stock) {
 		return $http.post('rest/stocks', {
 			total: stock.total
 		});
@@ -197,6 +197,13 @@ wallas.factory('SpendingService', ['$http', function($http) {
 		return $http.delete('rest/spendings/'.concat(idSpending));
 	}
 
+	spendingService.update = function(spending) {
+		return $http.put('rest/spendings/'.concat(spending.idSpending), {
+			quantity: spending.quantity,
+			name: spending.name,
+			types: spending.types
+		});
+	}
 
 	return spendingService;
 }]);

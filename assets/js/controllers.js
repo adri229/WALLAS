@@ -135,7 +135,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
         
         RevenueService.update(revenue).then(
             function(response) {
-                alert("update revenue");
+                
             },
             function(response) {
                 alert("error update")
@@ -162,7 +162,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService',
   	$scope.delete = function(idRevenue) {
   		RevenueService.delete(idRevenue).then(
 		function(response) {
-			alert("DELETE revenue");
+			
             refreshRevenues();
 		},
 		function(response) {
@@ -186,7 +186,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
     	TypeService.create($scope.type).then(
     		function(response) {
     			refreshTypes();
-    			alert("Create type");
+    			
     		},
     		function(response) {
     			alert("error create");
@@ -215,7 +215,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
 		TypeService.update(type).then(
 			function(response) {
 				refreshTypes();
-				alert("update types");
+				
 			},
 			function(response) {
 				alert("error");
@@ -229,7 +229,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
   		TypeService.delete(idType).then(
 		function(response) {
 			refreshTypes();
-			alert("DELETE type");
+			
 		},
 		function(response) {
 			alert("error delete");
@@ -250,7 +250,7 @@ wallas.controller('StockController', ['$scope', '$cookies', 'StockService',
     	StockService.create($scope.stock).then(
     		function(response) {
     			refreshStocks();
-    			alert("Create stock");
+    			
     		},
     		function(response) {
     			alert("error create");
@@ -278,7 +278,7 @@ wallas.controller('StockController', ['$scope', '$cookies', 'StockService',
 		StockService.update(stock).then(
 			function(response) {
 				refreshStocks();
-				alert("update stocks");
+				
 			},
 			function(response) {
 				alert("error");
@@ -291,7 +291,7 @@ wallas.controller('StockController', ['$scope', '$cookies', 'StockService',
   		StockService.delete(idStock).then(
 			function(response) {
 				refreshStocks();
-				alert("DELETE type");
+				
 			},
 			function(response) {
 				alert("error delete");
@@ -353,6 +353,19 @@ wallas.controller('SpendingController', ['$scope', '$cookies', 'SpendingService'
 
     	)
     };
+
+    $scope.update = function(spending) {
+        SpendingService.update(spending).then(
+            function(response) {
+                refreshSpendings();
+                alert("update Spending");
+            },
+            function(response) {
+                alert("error update");
+                console.log(response);
+            }            
+        )
+    }
 
 
   }]);
