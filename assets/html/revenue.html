@@ -1,9 +1,5 @@
 <div class="revenue" ng-controller="RevenueController">
-
-
-
-
-		<table class="row-border table table-responsive table-hover">
+		<table class="row-border table table-condensed table-responsive table-hover">
     		<thead>
     			<tr>
     				<th>
@@ -32,19 +28,18 @@
 		  <tbody>
 		    <tr ng-repeat="revenue in revenues.data">
 		       <td>
-		       <div class="form-group">
+	
 		       		<input name="name" value="{{revenue.name}}" class="form-control" ng-model="revenue.name" required>
-		       </div>
+		      
 		       </td>
 		       <td>
-		       <div class="form-group">
+		      
 		       		<input name="quantity" value="{{revenue.quantity | currency }}" class="form-control" ng-model="revenue.quantity" required>
-		       </div>
+		      
 		       </td>
 		       <td>
-		       <div class="form-group">
+		
 		       		{{revenue.dateRevenue}}
-		       </div>
 		       </td>
 		       <td>
                     <button type="button" ng-click="update(revenue)" class="btn btn-warning"><i class="fa fa-edit"></i></button>

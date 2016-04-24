@@ -198,7 +198,7 @@ wallas.factory('SpendingService', ['$http', function($http) {
 	}
 
 	spendingService.update = function(spending) {
-		return $http.put('rest/spendings/'.concat(spending.idSpending), {
+		return $http.put('rest/spendings/'.concat(spending.idSpending) + '/', {
 			quantity: spending.quantity,
 			name: spending.name,
 			types: spending.types

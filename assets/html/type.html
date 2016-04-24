@@ -2,18 +2,16 @@
 
 
 
-    	<table class="row-border table table-responsive table-hover">
+    	<table class="row-border table table-condensed table-responsive table-hover">
     		<thead>
     			<tr>
-    				<th>
-    				<div class="form-group">
+    				<th>		
 						<input name="name" placeholder="Name" class="form-control" ng-model="type.name" type="text" required>
-					</div>
 					</th>
 					<th>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i></button>
-                    </div>
+                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i>
+
+                        </button>
                 	</th>
     			</tr>
     			<tr>
@@ -24,10 +22,11 @@
 		  <tbody>
 		    <tr ng-repeat="type in types.data">
 		       <td>
-		       <div class="form-group">
-		       		<input name="name" value="{{type.name}}" class="form-control" ng-model="type.name" required></td>
-		       </div>
+		      
+		       		<input name="name" value="{{type.name}}" class="form-control" ng-model="type.name" ng-disabled="isChecked" required>
+		    
 		       <td>
+		       		<md-checkbox ng-model="isChecked" ng-init="isChecked=true">
                     <button type="button" ng-click="update(type)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
                     <button type="button" ng-click="delete(type.idType)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                 </td>

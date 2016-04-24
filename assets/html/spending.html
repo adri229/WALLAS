@@ -1,60 +1,51 @@
 <div class="spending" ng-controller="SpendingController">
-	<div class="spending-body">
-		<form name="spendingForm" accept-charset="UTF-8" role="form">
-			<fieldset>
-				<div class="register-form-login">
-					<input name="quantity" placeholder="Quantity" class="register-form-box" ng-model="spending.quantity" type="number" required>
-				</div>
-				<div class="register-form-fullname">
-					<input name="name" placeholder="Name" class="register-form-box" ng-model="spending.name" type="text" required>
-				</div>
-				<div class="register-form-submit">
-					<button class="register-form-submit-button" type="button" ng-click="create()">
-                         Submit
-                    </button>
-				</div>
-			</fieldset>
-		</form>
-	</div>
 	
-	<div class="spending-list">
-		
-    	<table>
+
+
+<table class="row-border table table-condensed table-responsive table-hover">
+    		<thead>
+    			<tr>
+    				<th>
+	    				<div class="form-group">
+							<input name="name" placeholder="Name" class="form-control" ng-model="spending.name" spending="text" required>
+						</div>
+					</th>
+					<th>
+	    				<div class="form-group">
+							<input name="quantity" placeholder="Quantity" class="form-control" ng-model="spending.quantity" spending="text" required>
+						</div>
+					</th>
+					<th>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i></button>
+                    </div>
+                	</th>
+    			</tr>
+    			<tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th></th>	
+                </tr>
+    		</thead>
 		  <tbody>
 		    <tr ng-repeat="spending in spendings.data">
-		       <td>{{spending.name}}</td>
-		       <td>{{spending.quantity}}</td>
-		       <td>{{spending.dateSpending}}</td>
-		       <tr> 
-		       		<div ng-repeat="spending in spendings.data">
-   						<div ng-repeat="type in spending.types">
-      					{{type.name}}
-      
-				   		</div>
-					</div>
-
-		       
-		       </tr>
-		      
-		       		
-		       <td><button ng-click="delete(spending.idSpending)" >DELETE</button></td>
+		       <td>
+		       		<input name="name" value="{{spending.name}}" class="form-control" ng-model="spending.name" required>
+		       </td>
+		       <td>
+		       		<input name="quantity" value="{{spending.quantity | currency }}" class="form-control" ng-model="spending.quantity" required>
+		       </td>
+		       <td>
+		       		{{spending.dateSpending}}
+		       </td>
+		       <td>
+                    <button type="button" ng-click="update(spending)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                    <button type="button" ng-click="delete(spending.idSpending)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                </td>
 		      </tr>
-		       
-		       
 		  </tbody>
-
-<!--
-<div ng-repeat="spending in spendings.data">
-   <div ng-repeat="type in spending.types">
-      {{type.name}}
-      
-   </div>
-</div>
-
--->
-
 		</table>
-	</div>
 
 
 
