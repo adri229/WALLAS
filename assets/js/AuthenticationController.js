@@ -25,21 +25,3 @@ wallas.controller('AuthenticationController',
         };
     
 }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
