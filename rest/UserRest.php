@@ -27,7 +27,6 @@ class UserRest extends BaseRest
 	    	isset($data->fullname)	 &&
 		    isset($data->email)	     &&
 		    isset($data->phone)	     &&
-    		isset($data->address)	 &&
 	    	isset($data->country);
 
     	if (!$required || $data->passwd != $data->verifyPass) {
@@ -43,7 +42,7 @@ class UserRest extends BaseRest
         }
 
         $user = new \User(strtolower($data->login), $data->passwd, $data->fullname, 
-                $data->email, $data->phone, $data->address, $data->country);
+                $data->email, $data->phone, $data->country);
         
         
         try {
@@ -81,7 +80,6 @@ class UserRest extends BaseRest
             isset($data->verifyPass) &&
             isset($data->email)      &&
             isset($data->phone)      &&
-            isset($data->address)    &&
             isset($data->country);
 
         if (!$required || $data->passwd != $data->verifyPass) {
@@ -94,7 +92,6 @@ class UserRest extends BaseRest
         $user->setPassword($data->passwd);
         $user->setEmail($data->email);
         $user->setPhone($data->phone);
-        $user->setAddress($data->address);
         $user->setCountry($data->country);
 
 
@@ -151,7 +148,6 @@ class UserRest extends BaseRest
             "fullname" => $user->getFullname(),
             "email" => $user->getEmail(),
             "phone" => $user->getPhone(),
-            "address" => $user->getAddress(),
             "country" => $user->getCountry()
         );
         

@@ -14,7 +14,6 @@ wallas.factory('UserService', ['$http', function($http){
 			fullname: user.fullname,
 			email: user.email,
 			phone: user.phone,
-			address: user.address,
 			country: user.country
 		}); 
 	}
@@ -33,7 +32,6 @@ wallas.factory('UserService', ['$http', function($http){
 			verifyPass: user.verifyPass,
 			email: user.email,
 			phone: user.phone,
-			address: user.address,
 			country: user.country
 		});
 	}

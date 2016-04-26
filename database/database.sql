@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS `USER` (
     `fullname` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre y apellidos del usuario. No puede ser nulo.',
     `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario',
     `phone` int(9) NOT NULL COMMENT 'Numero de telefono del usuario.',
-    `address` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Direccion del usuario. No puede ser nula.',
     `country` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Pais del usuario. No puede ser nulo.',
     PRIMARY KEY (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de usuarios';
@@ -74,12 +73,12 @@ CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     FOREIGN KEY (`spending`) REFERENCES `SPENDING` (`idSpending`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto' AUTO_INCREMENT=1;
   
-INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`,`address`,`country`) VALUES
-('adri229','adri229','adrian gonzalez','adri229@gmailcom','988102030','Ourense','Spain'),
-('adri339','adri339','adrian dominguez','adri339@gmailcom','988102030','Ourense','Spain'),
-('adri449','adri449','adrian perez','adri449@gmailcom','988102030','Ourense','Spain'),
-('adri559','adri559','adrian martinez','adri559@gmailcom','988102030','Ourense','Spain'),
-('adri669','adri669','adrian vazquez','adri669@gmailcom','988102030','Ourense','Spain');    
+INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`, `country`) VALUES
+('adri229','adri229','adrian gonzalez','adri229@gmailcom','988102030','Spain'),
+('adri339','adri339','adrian dominguez','adri339@gmailcom','988102030','Spain'),
+('adri449','adri449','adrian perez','adri449@gmailcom','988102030','Spain'),
+('adri559','adri559','adrian martinez','adri559@gmailcom','988102030','Spain'),
+('adri669','adri669','adrian vazquez','adri669@gmailcom','988102030','Spain');    
 
 
 INSERT INTO `SPENDING` (`dateSpending`,`quantity`,`name`,`owner`) VALUES 

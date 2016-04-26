@@ -25,14 +25,13 @@ class UserDAO {
 	 */
 	public function save(User $user) {
             $stmt = $this->db->prepare ( "INSERT INTO `USER` (`login`,`password`,`fullname`,
-	    	`email`,`phone`,`address`,`country`) VALUES (?,?,?,?,?,?,?)" );
+	    	`email`,`phone`,`country`) VALUES (?,?,?,?,?,?)" );
             $stmt->execute ( array (
 		$user->getLogin(),
 		$user->getPassword(),
                 $user->getFullName(),
                 $user->getEmail(),
 		$user->getPhone(),
-		$user->getAddress(),
 		$user->getCountry() 
             ) );
 	}
@@ -53,7 +52,7 @@ class UserDAO {
             $user = $stmt->fetch ( PDO::FETCH_ASSOC );
 	
             if (! sizeof ( $user ) == 0) {
-		return new User ( $user ["login"], $user ["password"], $user ["fullname"], $user ["email"], $user ["phone"], $user ["address"], $user ["country"] );
+		return new User ( $user ["login"], $user ["password"], $user ["fullname"], $user ["email"], $user ["phone"], $user ["country"] );
             } else {
 		return NULL;
             }
@@ -106,9 +105,9 @@ class UserDAO {
 	public function update($user)
 	{
             $stmt = $this->db->prepare("UPDATE USER SET password = ?, email = ?, phone = ?,"
-                . "address = ?, country = ? WHERE login = ?");
+                . "country = ? WHERE login = ?");
             $stmt->execute(array($user->getPassword(), $user->getEmail(), $user->getPhone(), 
-            	$user->getAddress(), $user->getCountry(), $user->getLogin()));	
+            	$user->getCountry(), $user->getLogin()));	
 	}
 	
 	public function delete($login)
