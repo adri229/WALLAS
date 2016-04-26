@@ -41,8 +41,10 @@ class UserRest extends BaseRest
 		    return;
         }
 
+
+
         $user = new \User(strtolower($data->login), $data->passwd, $data->fullname, 
-                $data->email, $data->phone, $data->country);
+                $data->email, str_replace(" ", "", $data->phone), $data->country);
         
         
         try {

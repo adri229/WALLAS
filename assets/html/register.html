@@ -5,43 +5,52 @@
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-xs>
             <label>Login</label>
-            <input ng-model="user.login" type="text" md-maxlength="30" required name="login">
+            <input ng-model="user.login" type="text" md-maxlength="30" required="" name="login">
           <div ng-messages="userForm.login.$error">
-            <div ng-message="required">Name is required.</div>
             <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
           </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-xs>
             <label>Password</label>
-            <input ng-model="user.passwd" type="password">
+            <input ng-model="user.passwd" type="password" required="" minlength="8" md-maxlength="50" name="password">
+          <div ng-messages="userForm.password.$error" role="alert">
+            <div ng-message-exp="['required', 'minlength', 'md-maxlength']">
+            Your password must be between 8 and 50 characters long</div>
+          </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-xs>
             <label>Repeat password</label>
-            <input ng-model="user.verifyPass" type="password">
+            <input ng-model="user.verifyPass" type="password" required="" minlength="8" md-maxlength="100" name="verifyPass">
+            <div ng-messages="userForm.verifyPass.$error" role="alert">
+              <div ng-message-exp="['required', 'minlength', 'md-maxlength']">
+              Your password must be between 8 and 100 characters long</div>
+            </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-xs>
             <label>Fullname</label>
-            <input ng-model="user.fullname" type="text">
+            <input ng-model="user.fullname" type="text" required="" name="fullname">
           </md-input-container>
           <md-input-container class="md-block" flex-gt-xs>
             <label>Email</label>
-            <input ng-model="user.email" type="email">
+            <input ng-model="user.email" type="email" required="" name="email" minlength="10" md-maxlength="100" ng-pattern="/^.+@.+\..+$/">
+            <div ng-messages="userForm.email.$error" role="alert">
+                <div ng-message-exp="['required', 'minlength', 'md-maxlength', 'pattern']">
+                Your email must be between 10 and 100 characters long and look like an e-mail address.
+                </div>
+            </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-xs>
             <label>Phone</label>
-            <input ng-model="user.phone" type="text">
-          </md-input-container>
-          <md-input-container class="md-block" flex-gt-xs>
-            <label>Address</label>
-            <input ng-model="user.address" type="text">
+            <input ng-model="user.phone" type="text" required="" name="phone" ng-pattern="/[0-9]{3} [0-9]{3} [0-9]{3}/">
+            <div ng-messages="userForm.phone.$error" role="alert">
+                <div ng-message="pattern">### ### ### Please enter a valid phone number.</div>
+            </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-xs>
             <label>Country</label>
             <input ng-model="user.country" type="text">
           </md-input-container>
         </div>
-       
-          
         <button class="btn btn-success" type="button" ng-click="register()">
             <span class="fa fa-sign-in fa-lg">Sign Up</span> 
         </button>

@@ -8,6 +8,7 @@ wallas.controller('RegisterController', ['$scope','UserService', function ($scop
       	UserService.create($scope.user).then(
        		function(response) {
        			alert("success");
+            $location.path('/login');
        		},
        		function(response) {
        			alert("error");
