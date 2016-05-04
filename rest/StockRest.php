@@ -24,7 +24,8 @@ class StockRest extends BaseRest
     	$currentUser = parent::authenticateUser();
     	$stock = new Stock();
 
-    	if (isset($data->total)) {
+    	if (isset($data->total) && isset($data->date)) {
+        $stock->setDateStock($data->date);
     		$stock->setTotal($data->total);
     		$stock->setOwner($currentUser->getLogin());
     	
@@ -61,7 +62,8 @@ class StockRest extends BaseRest
       		return;
     	}
 
-    	if (isset($data->total)) {
+    	if (isset($data->total) && isset($data->date)) {
+        $stock->setDateStock($data->date);
     		$stock->setTotal($data->total);
 
     		try {

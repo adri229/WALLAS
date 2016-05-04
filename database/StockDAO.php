@@ -63,15 +63,15 @@ class StockDAO
     
     public function save($stock)
     {
-    	$stmt = $this->db->prepare("INSERT INTO STOCK(total,owner) VALUES (?,?)");
-    	$stmt->execute(array($stock->getTotal(), $stock->getOwner()));
+    	$stmt = $this->db->prepare("INSERT INTO STOCK(dateStock,total,owner) VALUES (?,?,?)");
+    	$stmt->execute(array($stock->getDateStock(), $stock->getTotal(), $stock->getOwner()));
     	return $this->db->lastInsertId();
     }
     
     public function update($stock)
     {
-    	$stmt = $this->db->prepare("UPDATE STOCK SET total = ?, owner = ? WHERE idStock = ?");
-    	$stmt->execute(array($stock->getTotal(), $stock->getOwner()->getLogin(), $stock->getIdStock()));    	
+    	$stmt = $this->db->prepare("UPDATE STOCK SET dateStock = ?, total = ?, owner = ? WHERE idStock = ?");
+    	$stmt->execute(array($stock->getDateStock(), $stock->getTotal(), $stock->getOwner()->getLogin(), $stock->getIdStock()));    	
     }
     
     public function delete($idStock)

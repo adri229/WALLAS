@@ -1,6 +1,6 @@
-curl -i -X POST -H "Content-Type: application/json" -d '{"total":"1000"}' -u adri229:adri229 http://localhost/wallas/rest/stocks
+curl -i -X POST -H "Content-Type: application/json" -d '{"date":"2016-05-10" ,"total":"1000"}' -u adri229:adri229 http://localhost/wallas/rest/stocks
 
-curl -i -X PUT -H "Content-Type: application/json" -d '{"total":"500"}' -u adri229:adri229 http://localhost/wallas/rest/stocks/1
+curl -i -X PUT -H "Content-Type: application/json" -d '{"date":"2016-05-10", "total":"500"}' -u adri229:adri229 http://localhost/wallas/rest/stocks/1
 
 curl -i -X DELETE -u adri229:adri229 http://localhost/wallas/rest/stocks/1
 
