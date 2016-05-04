@@ -1,0 +1,20 @@
+    <div class="modalAddStock" controller='StockModalController' layout="column">
+        <div class="modalCreateStockBox md-whiteframe-z3" layout="column">
+            <md-toolbar>
+                <h2 class="md-toolbar-tools">
+                    <span>Create new stock</span>
+                </h2>
+            </md-toolbar>
+            <md-content layout-padding>
+                <form name="createStockForm" accept-charset="UTF-8" role="form" >
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label>Total</label>
+                        <input ng-model="stock.total" type="text" required="" name="total" autofocus>
+                    </md-input-container>
+                  </md-input-container>
+                </form>
+            </md-content>
+       <button type="button" class="btn btn-primary" ng-disabled="createStockForm.$invalid" ng-click="create(stock)">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>  

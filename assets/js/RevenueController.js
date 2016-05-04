@@ -2,66 +2,101 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('RevenueController', ['$scope', '$cookies', 'RevenueService', 
-  function($scope, $cookies, RevenueService) {
+wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','RevenueService', 
+  function($scope, $cookies, $uibModal, RevenueService) {
 
     var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
 
-    $scope.create = function() {
-    	RevenueService.create($scope.revenue).then(
-    		function(response) {
-    			refreshRevenues();
-                console.log($scope.revenue);
-    		},
-    		function(response) {
-    			alert("error create");
-            	console.log(response);
-    		}
-
-    		);
-    };
-
-    $scope.update = function(revenue) {
-        
-        RevenueService.update(revenue).then(
-            function(response) {
-                
-            },
-            function(response) {
-                alert("error update")
-            }
-        )  
-    };
     function refreshRevenues(){
-      RevenueService.getByOwner(login).then(
+    	RevenueService.getByOwner(login).then(
                 function(response) {
-                        $scope.revenues = response;
-                        console.log($scope.revenues.data);
+                    $scope.revenues = response;
+                    console.log($scope.revenues.data);
                 },
                 function(response) {
-                        alert("error");
+                    alert("error");
                 console.log(response);
                 }
 
 
         );
     }
-  refreshRevenues();
-  	
+ 	refreshRevenues();
 
-  	$scope.delete = function(idRevenue) {
-  		RevenueService.delete(idRevenue).then(
-		function(response) {
-			
-            refreshRevenues();
-		},
-		function(response) {
-			alert("error delete");
-        	console.log(response);
-		}
-		)
-  	};
+    $scope.create = function() {
+    	var uibmodalInstance = $uibModal.open({
+  			templateUrl: 'assets/html/modalNewRevenue.html',
+  			controller: 'RevenueModalController',
+  			scope: $scope,
+            resolve: {
+                items: function() {
+
+                }    
+            }
+  		});
+
+  		uibmodalInstance.result.then(
+  			function(response) {
+  				refreshRevenues();
+  				console.log("RESPONSE" + response);
+  			},
+  			function() {
+  				alert("error");
+  			}
+  		)
+    };
+
+    $scope.update = function(revenue) {
+        var uibmodalInstance = $uibModal.open({
+            templateUrl: 'assets/html/modalUpdateRevenue.html',
+            controller: 'RevenueModalController',
+            scope: $scope,
+            resolve: {
+                items: function() {
+                    return {
+                        idRevenue: revenue.idRevenue
+                    }
+                     
+                }
+            }
+        });
+
+        uibmodalInstance.result.then(
+            function(response) {
+                refreshRevenues();
+            },
+            function() {
+                alert("error update");
+            }
+        )
+    };
+
+  	$scope.delete = function(revenue) {
+  		var uibmodalInstance = $uibModal.open({
+            templateUrl: 'assets/html/modalDeleteRevenue.html',
+            controller: 'RevenueModalController',
+            scope: $scope,
+            resolve: {
+                items: function() {
+                    return {
+                        idRevenue: revenue.idRevenue
+                    }
+                     
+                }
+            }
+        });
+
+        uibmodalInstance.result.then(
+            function(response) {
+                refreshRevenues();
+            },
+            function() {
+                alert("error delete");
+            }
+        )
+    };
+  	
 
 
   }]);

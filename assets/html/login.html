@@ -18,8 +18,9 @@
 		          </md-input-container>
 				</form>
 			</md-content>
-			 <button class="btn btn-success" type="button" ng-click="login()">
-	            <span class="fa fa-sign-in fa-lg">Sign In</span> 
+			 
+	        <button class="btn btn-success" id="loginButton" type="button" ng-disabled="loginForm.$invalid" ng-click="login()">
+	        	<span class="fa fa-sign-in fa-lg">Sign In</span>
 	        </button>
 		</div>
 	</div>	

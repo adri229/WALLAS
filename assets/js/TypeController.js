@@ -2,25 +2,11 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
-	function($scope, $cookies, TypeService) {
+wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeService',
+	function($scope, $cookies, $uibmodal, TypeService) {
 
-	var user = $cookies.getObject('globals');
+  	var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
-
-    $scope.create = function() {
-    	TypeService.create($scope.type).then(
-    		function(response) {
-    			refreshTypes();
-    			
-    		},
-    		function(response) {
-    			alert("error create");
-            	console.log(response);
-    		}
-
-    	)
-    };
 
 	
 	function refreshTypes() {
@@ -37,31 +23,82 @@ wallas.controller('TypeController', ['$scope', '$cookies', 'TypeService',
 	}
 	refreshTypes();
 
-	$scope.update = function(type) {
-		TypeService.update(type).then(
-			function(response) {
-				refreshTypes();
-				
-			},
-			function(response) {
-				alert("error");
-			}
-		)
-	}
-	
+  	$scope.addNewType = function() {
+  		var uibmodalInstance = $uibmodal.open({
+  			templateUrl: 'assets/html/modalNewType.html',
+  			controller: 'TypeModalController',
+  			scope: $scope,
+            resolve: {
+                items: function() {
+
+                }    
+            }
+  		});
+
+  		uibmodalInstance.result.then(
+  			function(response) {
+  				refreshTypes();
+  				console.log("RESPONSE" + response);
+  			},
+  			function() {
+  				alert("error");
+  			}
+  		)
+  	}
 
 
-  	$scope.delete = function(idType) {
-  		TypeService.delete(idType).then(
-		function(response) {
-			refreshTypes();
-			
-		},
-		function(response) {
-			alert("error delete");
-        	console.log(response);
-		}
-		)
-  	};
+    $scope.editType = function(type) {
+        var uibmodalInstance = $uibmodal.open({
+            templateUrl: 'assets/html/modalEditType.html',
+            controller: 'TypeModalController',
+            scope: $scope,
+            resolve: {
+                items: function() {
+                    return {
+                           idType:type.idType
+                    }
+                     
+                }
+            }
+        });
+
+        uibmodalInstance.result.then(
+            function(response) {
+                refreshTypes();
+            },
+            function() {
+                alert("error update");
+            }
+        )
+        
+    }
+
+
+    $scope.deleteType = function(type) {
+        var uibmodalInstance = $uibmodal.open({
+            templateUrl: 'assets/html/modalDeleteType.html',
+            controller: 'TypeModalController',
+            scope: $scope,
+            resolve: {
+                items: function() {
+                    return {
+                           idType:type.idType
+                    }
+                     
+                }
+            }
+        });
+
+        uibmodalInstance.result.then(
+            function(response) {
+                refreshTypes();
+            },
+            function() {
+                alert("error delete");
+            }
+        )
+    }
+
+
 
 }]);

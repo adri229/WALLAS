@@ -25,6 +25,7 @@ wallas.controller('UserController', ['$scope', '$cookies', 'UserService',
 		UserService.delete(login).then(
 		function(response) {
 			alert("DELETE USER");
+			$location.path('/register');
 		},
 		function(response) {
 			alert("error delete");
@@ -35,14 +36,13 @@ wallas.controller('UserController', ['$scope', '$cookies', 'UserService',
 	}
 
   $scope.update = function(user) {
-
-
+  	
     UserService.update(login,user).then(
         function(response) {
-            alert("UPDATE " + attribute);
+            alert("UPDATE ");
         },
         function(response) {
-            alert("error delete");
+            alert("error update");
             console.log(response);
         }        
     );

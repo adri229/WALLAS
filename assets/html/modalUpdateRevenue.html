@@ -1,0 +1,25 @@
+    <div class="modalUpdateRevenue" controller='RevenueModalController' layout="column">
+        <div class="modalUpdateRevenueBox md-whiteframe-z3" layout="column">
+            <md-toolbar>
+                <h2 class="md-toolbar-tools">
+                    <span>Update revenue</span>
+                </h2>
+            </md-toolbar>
+            <md-content layout-padding>
+                <form name="updateRevenueForm" accept-charset="UTF-8" role="form" >
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label>Name</label>
+                        <input ng-model="revenue.name" type="text" required="" name="name" autofocus>
+                    </md-input-container>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-xs>
+                        <label>Quantity</label>
+                        <input ng-model="revenue.quantity" type="text" required="" name="quantity" autofocus>
+                    </md-input-container>
+                  </md-input-container>
+                </form>
+            </md-content>
+       <button type="button" class="btn btn-primary" ng-disabled="updateRevenueForm.$invalid" ng-click="update(revenue)">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>

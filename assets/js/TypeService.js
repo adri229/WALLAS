@@ -12,8 +12,8 @@ wallas.factory('TypeService', ['$http', function($http) {
 		});
 	}
 
-	typeService.update = function(type) {
-		return $http.put('rest/types/'.concat(type.idType), {name: type.name});
+	typeService.update = function(type,idType) {
+		return $http.put('rest/types/'.concat(idType), {name: type.name});
 	}
 
 

@@ -17,8 +17,8 @@ wallas.factory('StockService', ['$http', function($http) {
 		return $http.get('rest/stocks/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
 	};
 
-	stockService.update = function(stock) {
-		return $http.put('rest/stocks/'.concat(stock.idStock), {total: stock.total});
+	stockService.update = function(stock, idStock) {
+		return $http.put('rest/stocks/'.concat(idStock), {total: stock.total});
 	}
 
 	stockService.delete = function(id) {

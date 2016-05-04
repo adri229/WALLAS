@@ -1,35 +1,30 @@
 <div class="type" ng-controller="TypeController">
 
+<button class="btn btn-primary" ng-click="addNewType()">Add new type</button>
 
-
-    	<table class="row-border table table-condensed table-responsive table-hover">
+    	<table class="row-border table table-condensed table-responsive table-hover table-striped">
     		<thead>
     			<tr>
-    				<th>		
-						<input name="name" placeholder="Name" class="form-control" ng-model="type.name" type="text" required>
-					</th>
-					<th>
-                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i>
-
-                        </button>
-                	</th>
-    			</tr>
-    			<tr>
                     <th>Name</th>
-                    <th></th>	
+                    <th></th>
+                    
                 </tr>
     		</thead>
 		  <tbody>
 		    <tr ng-repeat="type in types.data">
-		       <td>
-		      
-		       		<input name="name" value="{{type.name}}" class="form-control" ng-model="type.name" ng-disabled="isChecked" required>
-		    
-		       <td>
-		       		<md-checkbox ng-model="isChecked" ng-init="isChecked=true">
-                    <button type="button" ng-click="update(type)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                    <button type="button" ng-click="delete(type.idType)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+		       <td>{{type.name}}</td>
+               <td>
+                    
+                        <button class="btn btn-warning btn-xs" ng-click="editType(type)" >
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                         <button class="btn btn-danger btn-xs" ng-click="deleteType(type)" >
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    
                 </td>
+                
+                
 		      </tr>
 		  </tbody>
 		</table>

@@ -93,7 +93,7 @@ class UserRest extends BaseRest
 
         $user->setPassword($data->passwd);
         $user->setEmail($data->email);
-        $user->setPhone($data->phone);
+        $user->setPhone(str_replace(" ", "", $data->phone));
         $user->setCountry($data->country);
 
 

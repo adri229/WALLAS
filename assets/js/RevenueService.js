@@ -13,9 +13,9 @@ wallas.factory('RevenueService', ['$http', function($http){
 		}); 
 	}
 
-	revenueService.update = function(revenue) {
+	revenueService.update = function(revenue, idRevenue) {
 		console.log(revenue);
-		return $http.put('rest/revenues/'.concat(revenue.idRevenue), {
+		return $http.put('rest/revenues/'.concat(idRevenue), {
 			quantity: revenue.quantity,
 			name: revenue.name
 		});

@@ -27,8 +27,10 @@ wallas.factory('UserService', ['$http', function($http){
 	}
 
 
-	userService.update = function(user) {
+	userService.update = function(login, user) {
+		console.log(user);
 		return $http.put('rest/users/'.concat(login), {
+			passwd: user.passwd,
 			verifyPass: user.verifyPass,
 			email: user.email,
 			phone: user.phone,
