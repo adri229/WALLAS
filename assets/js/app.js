@@ -1,6 +1,6 @@
 'use strict';
 
-var wallas = angular.module('wallasApp', ['ngMaterial','ngRoute', 'ngCookies', 'ngMessages','ui.bootstrap', 'highcharts-ng']);
+var wallas = angular.module('wallasApp', ['ngMaterial','ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages','ui.bootstrap', 'highcharts-ng']);
 
 wallas.config(['$routeProvider', function ($routeProvider) {
 

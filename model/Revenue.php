@@ -3,15 +3,15 @@
 class Revenue
 {
 	private $idRevenue;
-	private $dateRevenue;
+	private $date;
 	private $quantity;
 	private $name;
 	private $owner;
 	
-	public function __construct($idRevenue = NULL, $dateRevenue = NULL, $quantity = NULL, $name = NULL, $owner = NULL)
+	public function __construct($idRevenue = NULL, $date = NULL, $quantity = NULL, $name = NULL, $owner = NULL)
 	{
 		$this->idRevenue = $idRevenue;
-		$this->dateRevenue = $dateRevenue;
+		$this->date = $date;
 		$this->quantity = $quantity;
 		$this->name = $name;
 		$this->owner = $owner;
@@ -22,9 +22,9 @@ class Revenue
 		return $this->idRevenue;
 	}
 	
-	public function getdateRevenue() 
+	public function getDate() 
 	{
-		return $this->dateRevenue;
+		return $this->date;
 	}
 	
 	public function getQuantity()
@@ -46,9 +46,9 @@ class Revenue
 		$this->idRevenue = $idRevenue;
 	}
 	
-	public function setdateRevenue($dateRevenue)
+	public function setDate($date)
 	{
-		$this->dateRevenue = $dateRevenue;
+		$this->date = $date;
 	}
 	
 	public function setQuantity($quantity)

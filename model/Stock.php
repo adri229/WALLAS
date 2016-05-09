@@ -3,14 +3,14 @@
 class Stock
 {
 	private $idStock;
-	private $dateStock;
+	private $date;
 	private $total;
 	private $owner;
 	
-	public function __construct($idStock = NULL, $dateStock = NULL, $total = NULL, $owner =NULL)
+	public function __construct($idStock = NULL, $date = NULL, $total = NULL, $owner =NULL)
 	{
 		$this->idStock = $idStock;
-		$this->dateStock = $dateStock;
+		$this->date = $date;
 		$this->total = $total;
 		$this->owner = $owner;
 	}
@@ -20,9 +20,9 @@ class Stock
 		return $this->idStock;
 	}
 	
-	public function getDateStock()
+	public function getDate()
 	{
-		return $this->dateStock;
+		return $this->date;
 	}
 	
 	public function getTotal()
@@ -40,9 +40,9 @@ class Stock
 		$this->idStock = $idStock;
 	}
 	
-	public function setDateStock($dateStock)
+	public function setDate($date)
 	{
-		$this->dateStock = $dateStock;
+		$this->date = $date;
 	}
 	
 	public function setTotal($total)

@@ -3,16 +3,16 @@
 class Spending 
 {
 	private $idSpending;
-	private $dateSpending;
+	private $date;
 	private $quantity;
 	private $name;
 	private $owner;
 	private $types;
 	
-	public function __construct($idSpending = NULL, $dateSpending = NULL, $quantity = NULL,  $name = NULL, $owner = NULL)
+	public function __construct($idSpending = NULL, $date = NULL, $quantity = NULL,  $name = NULL, $owner = NULL)
 	{
 		$this->idSpending = $idSpending;
-		$this->dateSpending = $dateSpending;
+		$this->date = $date;
 		$this->quantity = $quantity;
 		$this->name = $name;
 		$this->owner = $owner;
@@ -24,9 +24,9 @@ class Spending
 		return $this->idSpending;
 	}
 	
-	public function getDateSpending() 
+	public function getDate() 
 	{
-		return $this->dateSpending;
+		return $this->date;
 	}
 	
 	public function getQuantity()
@@ -53,9 +53,9 @@ class Spending
 		$this->idSpending = $idSpending;
 	}
 	
-	public function setDateSpending($dateSpending)
+	public function setDate($date)
 	{
-		$this->dateSpending = $dateSpending;
+		$this->date = $date;
 	}
 	
 	public function setQuantity($quantity)

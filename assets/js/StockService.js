@@ -9,6 +9,7 @@ wallas.factory('StockService', ['$http', function($http) {
 
 	stockService.create = function(stock) {
 		return $http.post('rest/stocks', {
+			date: stock.date,
 			total: stock.total
 		});
 	}
@@ -18,7 +19,10 @@ wallas.factory('StockService', ['$http', function($http) {
 	};
 
 	stockService.update = function(stock, idStock) {
-		return $http.put('rest/stocks/'.concat(idStock), {total: stock.total});
+		return $http.put('rest/stocks/'.concat(idStock), {
+			date: stock.date,
+			total: stock.total
+		});
 	}
 
 	stockService.delete = function(id) {

@@ -1,53 +1,36 @@
 <div class="spending" ng-controller="SpendingController">
-	
+<button class="btn btn-primary" ng-click="create()">Add new spending</button>
+<table class="row-border table table-condensed table-responsive table-hover table-striped">
+    <thead>
+    	<tr>
+    	   <th>Name</th>
+           <th>Quantity</th>
+           <th>Date</th>
+           <th>Types</th>
+           <th></th>
+        </tr>
+    </thead>
+	<tbody>
+    {{spendings.data.length}}
+	    <tr ng-repeat="spending in spendings.data">
+	       <td>{{spending.name}}</td>
+	       <td>{{spending.quantity | currency }}</td>
+		   <td>{{spending.date}}</td>
+		   <td ng-repeat="type in spending.types">
+		   		<span ng-bind="type.name"></span>
 
-
-<table class="row-border table table-condensed table-responsive table-hover">
-    		<thead>
-    			<tr>
-    				<th>
-	    				<div class="form-group">
-							<input name="name" placeholder="Name" class="form-control" ng-model="spending.name" spending="text" required>
-						</div>
-					</th>
-					<th>
-	    				<div class="form-group">
-							<input name="quantity" placeholder="Quantity" class="form-control" ng-model="spending.quantity" spending="text" required>
-						</div>
-					</th>
-					<th>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success" ng-click="create()" ><i class="fa fa-plus"></i></button>
-                    </div>
-                	</th>
-    			</tr>
-    			<tr>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Date</th>
-                    <th></th>	
-                </tr>
-    		</thead>
-		  <tbody>
-		    <tr ng-repeat="spending in spendings.data">
-		       <td>
-		       		<input name="name" value="{{spending.name}}" class="form-control" ng-model="spending.name" required>
-		       </td>
-		       <td>
-		       		<input name="quantity" value="{{spending.quantity | currency }}" class="form-control" ng-model="spending.quantity" required>
-		       </td>
-		       <td>
-		       		{{spending.dateSpending}}
-		       </td>
-		       
-		       		
-		       <td>
-                    <button type="button" ng-click="update(spending)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                    <button type="button" ng-click="delete(spending.idSpending)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                </td>
-		      </tr>
-		  </tbody>
-		</table>
+		   </td>
+		   <td>
+                    <button class="btn btn-warning btn-xs" ng-click="update(spending)" >
+                        <span class="glyphicon glyphicon-pencil"></span>
+                   </button>
+                   <button class="btn btn-danger btn-xs" ng-click="delete(spending)" >
+                        <span class="glyphicon glyphicon-trash"></span>
+                   </button>
+		   </td>
+		 </tr>
+	</tbody>
+</table>
 
 
 

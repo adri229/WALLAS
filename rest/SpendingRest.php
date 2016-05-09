@@ -31,15 +31,36 @@ class SpendingRest extends BaseRest {
         $currentUser = parent::authenticateUser();
         $spending = new Spending();
 
-        if (isset($data->quantity) && isset($data->name)) {
+        if (isset($data->quantity) && isset($data->name) && isset($data->date)) {
+            $spending->setDate($data->date);
             $spending->setQuantity($data->quantity);
             $spending->setName($data->name);
             $spending->setOwner($currentUser->getLogin());
 
 
             try {
-                //$spending->validate();	
+                //$spending->validate();
                 $idSpending = $this->spendingDAO->save($spending);
+
+                foreach ($data->types as $type_loop) {
+
+                    $type = $this->typeDAO->findById($type_loop->idType);
+
+
+                    if ($type == NULL) {
+                        $this->spendingDAO->delete($idSpending);
+                        header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                        echo("Type with id " . $type_loop->idType . " not found");
+                        return;
+                    }
+                    $typeSpending = new TypeSpending();
+                    $typeSpending->setSpending($idSpending);
+                    $typeSpending->setType($type);
+
+                    $this->typeSpendingDAO->save($typeSpending);
+                }
+
+
                 header($_SERVER['SERVER_PROTOCOL'] . ' 201 Created');
                 header('Location: ' . $_SERVER['REQUEST_URI'] . "/" . $idSpending);
                 header('Content-Type: application/json');
@@ -53,7 +74,7 @@ class SpendingRest extends BaseRest {
     public function update($idSpending, $data) {
 
         $currentUser = parent::authenticateUser();
-        
+
         $spending = $this->spendingDAO->findById($idSpending);
         if ($spending == NULL) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
@@ -68,10 +89,11 @@ class SpendingRest extends BaseRest {
             return;
         }
 
-        if (isset($data)) {
+        if (isset($data->quantity) && isset($data->name) && isset($data->date)) {
+            $spending->setDate($data->date);
             $spending->setQuantity($data->quantity);
             $spending->setName($data->name);
-            
+
             try {
                 // validate Post object
                 //$spending->validate(); // if it fails, ValidationException
@@ -81,13 +103,13 @@ class SpendingRest extends BaseRest {
                 header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
                 echo(json_encode($e->getErrors()));
             }
-            foreach ($data->types as $idType) {
-                $type = $this->typeDAO->findById($idType);
-                        
+            foreach ($data->types as $type_loop) {
+                $type = $this->typeDAO->findById($type_loop->idType);
+
 
                 if ($type == NULL) {
                     header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
-                    echo("Type with id " . $idType . " not found");
+                    echo("Type with id " . $type_loop->idType . " not found");
                     return;
                 }
                 $typeSpending = new TypeSpending();
@@ -100,7 +122,9 @@ class SpendingRest extends BaseRest {
             try {
             // validate Post object
             //$spending->validate(); // if it fails, ValidationException
+
                 $this->spendingDAO->update($spending);
+
                 header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
             } catch (ValidationException $e) {
                 header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
@@ -108,8 +132,8 @@ class SpendingRest extends BaseRest {
             }
         }
 
-        
-        
+
+
     }
 
 
@@ -130,7 +154,7 @@ class SpendingRest extends BaseRest {
             return;
         }
 
-        try {        	
+        try {
             //$this->typeSpendingDAO->deleteBySpending($idSpending);
             $this->spendingDAO->delete($idSpending);
             header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
@@ -162,37 +186,37 @@ class SpendingRest extends BaseRest {
             }
         }
 
-
+        //print_r($spendings);
 
         $spendings_array = [];
         foreach ($spendings as $spending) {
         	$types_array = [];
-        	
+
             if( $spending->getTypes() != NULL) {
                 foreach ($spending->getTypes() as $type) {
                     array_push($types_array, [
                         "idType" => $type->getIdType(),
                         "name" => $type->getName(),
                         "owner" => $currentUser->getLogin()
-                    ]); 
-                }    
+                    ]);
+                }
             }
-            
-            
-            
+
+
+
             array_push($spendings_array, [
                 "idSpending" => $spending->getIdSpending(),
-                "dateSpending" => $spending->getDateSpending(),
+                "date" => $spending->getDate(),
                 "name" => $spending->getName(),
                 "quantity" => $spending->getQuantity(),
                 "owner" => $currentUser->getLogin(),
                 "types" => $types_array
             ]);
-            
+
         }
 
-       
-        
+
+
         header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
         header('Content-Type: application/json');
         echo(json_encode($spendings_array));

@@ -8,8 +8,10 @@ wallas.factory('SpendingService', ['$http', function($http) {
 
 	spendingService.create = function(spending) {
 		return $http.post('rest/spendings', {
+			date: spending.date,
 			quantity: spending.quantity,
-			name: spending.name
+			name: spending.name,
+			types: spending.types
 		});
 	}
 
@@ -23,8 +25,9 @@ wallas.factory('SpendingService', ['$http', function($http) {
 		return $http.delete('rest/spendings/'.concat(idSpending));
 	}
 
-	spendingService.update = function(spending) {
-		return $http.put('rest/spendings/'.concat(spending.idSpending) + '/', {
+	spendingService.update = function(spending,idSpending) {
+		return $http.put('rest/spendings/'.concat(idSpending) + '/', {
+			date: spending.date,
 			quantity: spending.quantity,
 			name: spending.name,
 			types: spending.types

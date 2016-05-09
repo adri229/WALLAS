@@ -64,15 +64,17 @@ class RevenueDAO
     
     public function save($revenue)
     {
-    	$stmt = $this->db->prepare("INSERT INTO REVENUE(quantity,name,owner) VALUES (?,?,?)");
-    	$stmt->execute(array($revenue->getQuantity(), $revenue->getName(),$revenue->getOwner()));
+    	$stmt = $this->db->prepare("INSERT INTO REVENUE(dateRevenue,quantity,name,owner) VALUES (?,?,?,?)");
+    	$stmt->execute(array($revenue->getDate(), $revenue->getQuantity(), $revenue->getName(),$revenue->getOwner()));
     	return $this->db->lastInsertId();
     }
     
     public function update($revenue)
     {
-    	$stmt = $this->db->prepare("UPDATE REVENUE SET quantity = ?, name = ?, owner = ? WHERE idRevenue = ?");
-    	$stmt->execute(array($revenue->getQuantity(), $revenue->getName(), $revenue->getOwner()->getLogin(), $revenue->getIdRevenue()));    	
+    	$stmt = $this->db->prepare("UPDATE REVENUE SET dateRevenue = ?, quantity = ?, 
+            name = ?, owner = ? WHERE idRevenue = ?");
+    	$stmt->execute(array($revenue->getDate(),$revenue->getQuantity(), $revenue->getName(), 
+            $revenue->getOwner()->getLogin(), $revenue->getIdRevenue()));    	
     }
     
     public function delete($idRevenue)

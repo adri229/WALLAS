@@ -25,7 +25,8 @@ class RevenueRest extends BaseRest
     	$currentUser = parent::authenticateUser();
     	$revenue = new Revenue();
 
-    	if (isset($data->quantity) && isset($data->name)) {
+    	if (isset($data->quantity) && isset($data->name) && isset($data->date)) {
+    		$revenue->setDate($data->date);
     		$revenue->setQuantity($data->quantity);
         	$revenue->setName($data->name);
     		$revenue->setOwner($currentUser->getLogin());
@@ -63,7 +64,8 @@ class RevenueRest extends BaseRest
     	}
 
 
-      	if (isset($data->quantity) && isset($data->name)) {
+      	if (isset($data->quantity) && isset($data->name) && isset($data->date)) {
+      		$revenue->setDate($data->date);
     		$revenue->setQuantity($data->quantity);
         	$revenue->setName($data->name);
     		
@@ -133,7 +135,7 @@ class RevenueRest extends BaseRest
 		foreach ($revenues as $revenue) {
 			array_push($revenue_array, [
 				"idRevenue" => $revenue->getIdRevenue(),
-				"dateRevenue" => $revenue->getDateRevenue(),
+				"date" => $revenue->getDate(),
 				"quantity" => $revenue->getQuantity(),
         		"name" => $revenue->getName(),
 				"owner" => $revenue->getOwner()->getLogin()

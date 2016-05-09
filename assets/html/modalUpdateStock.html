@@ -12,6 +12,7 @@
                         <input ng-model="stock.total" type="text" required="" name="total" autofocus>
                     </md-input-container>
                   </md-input-container>
+                  <input type="text" ng-model="stock.date"></input>
                 </form>
             </md-content>
        <button type="button" class="btn btn-primary" ng-disabled="updateStockForm.$invalid" ng-click="update(stock)">OK</button>

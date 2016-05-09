@@ -60,7 +60,7 @@ class UserRest extends BaseRest
     
     
 
-    public function update($login, $data)
+    public function update($login, $attribute, $data)
     {
         $currentUser = parent::authenticateUser();
         if ($login != $currentUser->getLogin()) {
@@ -71,31 +71,50 @@ class UserRest extends BaseRest
 
         $user = $this->userDAO->findByID($login);
 
+
         if ($user == NULL) {
             header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
             echo("User with id ".$login." not found");
             return;
         }
 
-        $required = 
-            isset($data->passwd)     &&
-            isset($data->verifyPass) &&
-            isset($data->email)      &&
-            isset($data->phone)      &&
-            isset($data->country);
 
-        if (!$required || $data->passwd != $data->verifyPass) {
-            print_r($data->passwd);
-            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-            echo("The entered passwords do not match");
-            return;
+
+        switch ($attribute) {
+            case 'account':
+                $required = 
+                    isset($data->fullname)   &&
+                    isset($data->email)      &&
+                    isset($data->phone)      &&
+                    isset($data->country);
+                
+                if (!$required) {
+                    header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+                    echo("The entered data is not valid");
+                    return;
+                }
+                $user->setFullname($data->fullname);
+                $user->setEmail($data->email);
+                $user->setPhone(str_replace(" ", "", $data->phone));
+                $user->setCountry($data->country);
+
+                break;
+            case 'password':
+
+                if ($data->passwd != $data->verifyPass) {
+                   
+                    header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+                    echo("The entered passwords do not match");
+                    return;
+                }
+
+                $user->setPassword($data->passwd);
+                
+                break;
+            default:
+                # code...
+                break;
         }
-
-        $user->setPassword($data->passwd);
-        $user->setEmail($data->email);
-        $user->setPhone(str_replace(" ", "", $data->phone));
-        $user->setCountry($data->country);
-
 
         try {
             //$user->validate();
@@ -181,7 +200,7 @@ $userRest = new UserRest();
     ->map("GET", "/users/$1", array($userRest, "get"))
     ->map("POST", "/users/login/$1", array($userRest, "login"))
     ->map("POST", "/users", array($userRest, "create"))
-    ->map("PUT", "/users/$1", array($userRest, "update"))
+    ->map("PUT", "/users/$1/$2", array($userRest, "update"))
     ->map("DELETE", "/users/$1", array($userRest, "delete"));
 	
 ?>

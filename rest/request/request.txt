@@ -4,7 +4,10 @@ curl -i -X POST -H "Content-Type: application/json" -u adrian:adrian http://loca
 
 curl -i -X GET -H "Content-Type: application/json" -u adrian:adrian http://localhost/wallas/rest/users/adrian
 
-curl -i -X PUT -H "Content-Type: application/json" -d '{"passwd":"wallas", "verifyPass":"wallas","email":"adrian@hotmail.com", "phone":"988152545", "country":"England"}' -u adrian:adrian http://localhost/wallas/rest/users/adrian
+curl -i -X PUT -H "Content-Type: application/json" -d '{"fullname":"Adrian Fernandez Fernandez","email":"adrian@hotmail.com", "phone":"988152545", "country":"England"}' -u adri559:adri559 http://localhost/wallas/rest/users/adri559/account
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"passwd":"wallas", "verifyPass":"wallas"}' -u adri339:adri339 http://localhost/wallas/rest/users/adri339/password
+
+curl -i -X PUT -H "Content-Type: application/json" -d '{"passwd":"wallas", "verifyPass":"wallas"}' -u adri229:adri229 http://localhost/wallas/rest/users/adri229/password
 
 curl -i -X DELETE -u adrian:wallas http://localhost/wallas/rest/users/adrian
-

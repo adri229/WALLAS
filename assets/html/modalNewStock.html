@@ -12,9 +12,22 @@
                         <input ng-model="stock.total" type="text" required="" name="total" autofocus>
                     </md-input-container>
                   </md-input-container>
+                  <p class="input-group">
+
+                    {{stock.date | date: 'fullDate'}}
+                    <input type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="stock.date" is-open="datepopupOpened" ng-required="true" close-text="Close" />
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-default" ng-click="opendate()"><i class="glyphicon glyphicon-calendar"></i></button>
+  </span>
+                  <!--
+                      <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="stock.date" is-open="$parent.opened" ng-required="true" close-text="Close" />
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span> -->
+                  </p>
                 </form>
             </md-content>
        <button type="button" class="btn btn-primary" ng-disabled="createStockForm.$invalid" ng-click="create(stock)">OK</button>
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
-    </div>  
+    </div>

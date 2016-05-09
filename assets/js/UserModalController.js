@@ -2,51 +2,48 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'RevenueService', 'items',
-	function($scope, $uibModalInstance, RevenueService, items) {
-
-		$scope.create = function(revenue) {
-			console.log(revenue);
-			RevenueService.create(revenue).then(
-				function(response) {
-					$uibModalInstance.close('closed');
-				},
-				function(response) {
-					alert("error create");
-				}
-			)
-		}
+wallas.controller('UserModalController', ['$scope', '$uibModalInstance', 'UserService', 'users',
+	function($scope, $uibModalInstance, UserService, users) {
 
 
-		$scope.update = function(revenue) {
-			RevenueService.update(revenue, items.idRevenue).then(
+		$scope.update = function(user) {
+			UserService.update(users.login, user).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
 					alert("error update");
 				}
+			)
+		}
 
+		$scope.updatePass = function(user) {
+			UserService.updatePass(users.login, user).then(
+				function(response) {
+					$uibModalInstance.close('closed');
+				},
+				function(response) {
+					alert("error update");
+				}
 			)
 		}
 
 
-		$scope.delete = function(revenue) {
-			RevenueService.delete(items.idRevenue).then(
+
+		$scope.delete = function() {
+			UserService.delete(users.login).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
 					alert("error delete");
 				}
-
 			)
 		}
-
 
 		$scope.cancel = function () {
 	        $uibModalInstance.dismiss('cancel');
 	    };
 
-
-	}]);
+	   
+}]);

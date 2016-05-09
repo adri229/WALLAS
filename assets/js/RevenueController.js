@@ -10,14 +10,14 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
     function refreshRevenues(){
     	RevenueService.getByOwner(login).then(
-                function(response) {
-                    $scope.revenues = response;
-                    console.log($scope.revenues.data);
-                },
-                function(response) {
-                    alert("error");
+            function(response) {
+                $scope.revenues = response;
+                console.log($scope.revenues.data);
+            },
+            function(response) {
+                alert("error");
                 console.log(response);
-                }
+            }
 
 
         );

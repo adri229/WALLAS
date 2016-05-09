@@ -1,4 +1,9 @@
-curl -i -X POST -H "Content-Type: application/json" -d '{"quantity":"100", "name":"dvd"}' -u adri229:adri229 http://localhost/wallas/rest/spendings
+curl -i -X POST -H "Content-Type: application/json" -d '{"date":"2016-05-01","quantity":"100", "name":"dvd","types":[{"idType":"1"},{"idType":"2"}]}' -u adri229:adri229 http://localhost/wallas/rest/spendings
+
+curl -i -X POST -H "Content-Type: application/json" -d '{"date":"2016-05-01","quantity":"100", "name":"dvd","types":[{"idType":"2"},{"idType":"3"}]}' -u adri229:adri229 http://localhost/wallas/rest/spendings
+
+curl -i -X POST -H "Content-Type: application/json" -d '{"date":"2016-05-01","quantity":"100", "name":"dvd","types":["2","5","30"]}' -u adri229:adri229 http://localhost/wallas/rest/spendings
+
 
 curl -i -X PUT -H "Content-Type: application/json" -d '{"quantity":"500","name":"chorizo","types":["1","2","3"]}' -u adri229:adri229 http://localhost/wallas/rest/spendings/1/
 

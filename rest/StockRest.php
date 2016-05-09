@@ -25,7 +25,7 @@ class StockRest extends BaseRest
     	$stock = new Stock();
 
     	if (isset($data->total) && isset($data->date)) {
-        $stock->setDateStock($data->date);
+        $stock->setDate(date('Y-m-d', strtotime($data->date)));
     		$stock->setTotal($data->total);
     		$stock->setOwner($currentUser->getLogin());
     	
@@ -63,7 +63,7 @@ class StockRest extends BaseRest
     	}
 
     	if (isset($data->total) && isset($data->date)) {
-        $stock->setDateStock($data->date);
+        $stock->setDate($data->date);
     		$stock->setTotal($data->total);
 
     		try {
@@ -135,7 +135,7 @@ class StockRest extends BaseRest
 		foreach ($stocks as $stock) {
 			array_push($stock_array, [
 				"idStock" => $stock->getIdStock(),
-				"dateStock" => $stock->getDateStock(),
+				"date" => $stock->getDate(),
 				"total" => $stock->getTotal(),
 				"owner" => $stock->getOwner()->getLogin()
 			]);

@@ -8,6 +8,7 @@ wallas.factory('RevenueService', ['$http', function($http){
 
 	revenueService.create = function(revenue) {
 		return $http.post('rest/revenues', {
+			date: revenue.date,
 			quantity: revenue.quantity,
 			name: revenue.name
 		}); 
@@ -16,6 +17,7 @@ wallas.factory('RevenueService', ['$http', function($http){
 	revenueService.update = function(revenue, idRevenue) {
 		console.log(revenue);
 		return $http.put('rest/revenues/'.concat(idRevenue), {
+			date: revenue.date,
 			quantity: revenue.quantity,
 			name: revenue.name
 		});

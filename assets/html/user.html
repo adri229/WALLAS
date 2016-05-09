@@ -1,10 +1,5 @@
 <div class="user" ng-controller="UserController" layout="column">
-	<p>LOGIN: {{user.data.login}}</p>
-	<p>PASS: {{user.data.password}} </p>
-	<p>fullname: {{user.data.fullname}} </p>
-	<p>email: {{user.data.email}}</p>
-	<p>phone: {{user.data.phone}}</p>
-	<p>country: {{user.data.country}}</p>
+	
 	<div class="userBox md-whiteframe-z3" layout="column">
 			<md-toolbar>
 				<h2 class="md-toolbar-tools">
@@ -12,52 +7,31 @@
 				</h2>
 			</md-toolbar>
 			<md-content layout-padding>
-				<form name="userForm" accept-charset="UTF-8" role="form">
-					<md-input-container class="md-block" flex-gt-xs>
-			            <label>Password</label>
-			            <input ng-model="user.passwd" type="password" required="" minlength="8" md-maxlength="50" name="password">
-			          <div ng-messages="userForm.password.$error" role="alert">
-			            <div ng-message-exp="['required', 'minlength', 'md-maxlength']">
-			            Your password must be between 8 and 50 characters long</div>
-			          </div>
-			          </md-input-container>
-			          <md-input-container class="md-block" flex-gt-xs>
-			            <label>Repeat password</label>
-			            <input ng-model="user.verifyPass" type="password" required="" minlength="8" md-maxlength="100" name="verifyPass">
-			            <div ng-messages="userForm.verifyPass.$error" role="alert">
-			              <div ng-message-exp="['required', 'minlength', 'md-maxlength']">
-			              Your password must be between 8 and 100 characters long</div>
-			            </div>
-			          </md-input-container>
-					<md-input-container class="md-block" flex-gt-xs>
-			            <label>Email</label>
-			            <input ng-model="user.email" type="email" required="" name="email" minlength="10" md-maxlength="100" ng-pattern="/^.+@.+\..+$/">
-			            <div ng-messages="userForm.email.$error" role="alert">
-			                <div ng-message-exp="['required', 'minlength', 'md-maxlength', 'pattern']">
-			                Your email must be between 10 and 100 characters long and look like an e-mail address.
-			                </div>
-			            </div>
-          			</md-input-container>
-          			 <md-input-container class="md-block" flex-gt-xs>
-			            <label>Phone</label>
-			            <input ng-model="user.phone" type="text" required="" name="phone" ng-pattern="/[0-9]{3} [0-9]{3} [0-9]{3}/">
-			            <div ng-messages="userForm.phone.$error" role="alert">
-			                <div ng-message="pattern">### ### ### Please enter a valid phone number.</div>
-			            </div>
-			          </md-input-container>
-			          <md-input-container class="md-block" flex-gt-xs>
-			            <label>Country</label>
-			            <input ng-model="user.country" type="text">
-			          </md-input-container>
-				</form>
+				 <ul class="list-group">
+				  <li class="list-group-item"><label>Fullname: </label> {{user.data.fullname}}</li>
+				  <li class="list-group-item"><label>Email: </label> {{user.data.email}}</li>
+				  <li class="list-group-item"><label>Phone: </label> {{user.data.phone}}</li>
+				  <li class="list-group-item"><label>Country: </label> {{user.data.country}}</li>
+				</ul>
 			</md-content>
-			 <button class="btn btn-success" type="button" ng-click="update(user)">
-	            <span class="fa fa-sign-in fa-lg">Update</span> 
-	        </button>
+
+			 <div id="editUser" class="btn-group">
+
+
+				 <button id="updateUser" class="btn btn-default" type="button" ng-click="update(user)">
+		            <span class="fa fa-pencil-square-o fa-lg">Update account</span> 
+		        </button>
+
+				 <button id="updatePass" class="btn btn-warning" type="button" ng-click="updatePass(user)">
+		            <span class="fa fa-pencil-square-o fa-lg">Update password</span> 
+		        </button>
+
+		        <button id="deleteUser" class="btn btn-danger" type="button" ng-click="delete()">
+				    <span class="fa fa-trash-o fa-lg">Delete</span> 
+				</button>
+			</div>
 		</div>
 	
 		
-	<button class="btn btn-danger" type="button" ng-click="delete()">
-	    <span class="fa fa-trash-o fa-lg">Delete</span> 
-	</button>
+	
 </div>

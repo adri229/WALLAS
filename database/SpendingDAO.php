@@ -29,10 +29,6 @@ class SpendingDAO
             return NULL;
         }
     }
-
-
-        
-
     
 
      public function findByOwnerWithTypes($owner)
@@ -87,15 +83,15 @@ class SpendingDAO
     
     public function save($spending)
     {
-    	$stmt = $this->db->prepare("INSERT INTO SPENDING(quantity,name,owner) VALUES (?,?,?)");
-    	$stmt->execute(array($spending->getQuantity(), $spending->getName(),$spending->getOwner()));
+    	$stmt = $this->db->prepare("INSERT INTO SPENDING(dateSpending,quantity,name,owner) VALUES (?,?,?,?)");
+    	$stmt->execute(array($spending->getDate(), $spending->getQuantity(), $spending->getName(),$spending->getOwner()));
     	return $this->db->lastInsertId();
     }
     
     public function update($spending)
     {
-    	$stmt = $this->db->prepare("UPDATE SPENDING SET quantity = ?, name = ?,owner = ? WHERE idSpending = ?");
-    	$stmt->execute(array($spending->getQuantity(), $spending->getName(), 
+    	$stmt = $this->db->prepare("UPDATE SPENDING SET dateSpending = ?, quantity = ?, name = ?,owner = ? WHERE idSpending = ?");
+    	$stmt->execute(array($spending->getDate(), $spending->getQuantity(), $spending->getName(), 
             $spending->getOwner()->getLogin(), $spending->getIdSpending()));    	
     }
     

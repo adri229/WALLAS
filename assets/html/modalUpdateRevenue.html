@@ -17,6 +17,7 @@
                         <input ng-model="revenue.quantity" type="text" required="" name="quantity" autofocus>
                     </md-input-container>
                   </md-input-container>
+                  <input type="text" ng-model="revenue.date"></input>
                 </form>
             </md-content>
        <button type="button" class="btn btn-primary" ng-disabled="updateRevenueForm.$invalid" ng-click="update(revenue)">OK</button>

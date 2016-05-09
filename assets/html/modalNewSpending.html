@@ -1,0 +1,39 @@
+    <div class="modalAddSpending" controller='SpendingModalController' layout="column">
+        <div class="modalCreateSpendingBox md-whiteframe-z3" layout="column">
+            <md-toolbar>
+                <h2 class="md-toolbar-tools">
+                    <span>Create new spending</span>
+                </h2>
+            </md-toolbar>
+            <md-content layout-padding>
+                <form name="createSpendingForm" accept-charset="UTF-8" role="form" >
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label>Name</label>
+                        <input ng-model="spending.name" type="text" required="" name="name" autofocus>
+                    </md-input-container>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-xs>
+                        <label>Quantity</label>
+                        <input ng-model="spending.quantity" type="text" required="" name="quantity" autofocus>
+                    </md-input-container>
+                  </md-input-container>
+                  <p class="input-group">
+                  <input type="text" ng-model="spending.date"></input>
+                  <!--
+                      <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="spending.date" is-open="$parent.opened" ng-required="true" close-text="Close" />
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span> -->
+                  </p>
+                  <label>Select types</label>
+                  <p class="input-types" ng-repeat="type in types">
+                    <md-checkbox ng-click="toggle(type)">
+                        {{ type.name }} 
+                    </md-checkbox>
+                  </p>  
+                </form>
+            </md-content>
+       <button type="button" class="btn btn-primary" ng-disabled="createStockForm.$invalid" ng-click="create(spending)">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>  

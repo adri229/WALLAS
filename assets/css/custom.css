@@ -24,6 +24,21 @@
    
 
 }
+
+.user {
+    margin-top: 10%;
+    position: center;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+
+#editUser {
+    margin-bottom: 0.5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
 /*
 html {
     min-height : 100%; 

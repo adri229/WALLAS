@@ -23,17 +23,18 @@ class UserDAO {
 	 * @throws PDOException si ocurre algun error en la BD
 	 * @return void
 	 */
-	public function save(User $user) {
-            $stmt = $this->db->prepare ( "INSERT INTO `USER` (`login`,`password`,`fullname`,
+	public function save(User $user) 
+	{
+        $stmt = $this->db->prepare ( "INSERT INTO `USER` (`login`,`password`,`fullname`,
 	    	`email`,`phone`,`country`) VALUES (?,?,?,?,?,?)" );
-            $stmt->execute ( array (
-		$user->getLogin(),
-		$user->getPassword(),
-                $user->getFullName(),
-                $user->getEmail(),
-		$user->getPhone(),
-		$user->getCountry() 
-            ) );
+        $stmt->execute(array(
+			$user->getLogin(),
+			$user->getPassword(),
+            $user->getFullName(),
+            $user->getEmail(),
+			$user->getPhone(),
+			$user->getCountry() 
+        ));
 	}
 	
 	/**
@@ -45,17 +46,16 @@ class UserDAO {
 	 * @return User instancia del objeto User
 	 */
 	public function findByID($login) {
-            $stmt = $this->db->prepare ( "SELECT * FROM USER WHERE login=?" );
-            $stmt->execute ( array (
-		$login 
-            ));
-            $user = $stmt->fetch ( PDO::FETCH_ASSOC );
+        $stmt = $this->db->prepare ( "SELECT * FROM USER WHERE login=?" );
+        $stmt->execute (array($login));
+        $user = $stmt->fetch ( PDO::FETCH_ASSOC );
 	
-            if (! sizeof ( $user ) == 0) {
-		return new User ( $user ["login"], $user ["password"], $user ["fullname"], $user ["email"], $user ["phone"], $user ["country"] );
-            } else {
-		return NULL;
-            }
+        if (! sizeof ( $user ) == 0) {
+			return new User($user ["login"], $user["password"], $user["fullname"], 
+				$user ["email"], $user["phone"], $user["country"] );
+        } else {
+			return NULL;
+        }
 	}
 	
 	/**
@@ -70,15 +70,12 @@ class UserDAO {
 	 * @return boolean true si encuentra un usuario con ese email/password|false en caso contrario
 	 */
 	public function isValidUser($login, $password) {
-            $stmt = $this->db->prepare ( "SELECT COUNT(login) FROM USER WHERE login=? and password=?" );
-            $stmt->execute ( array (
-            	$login,
-		$password 
-            ));
+        $stmt = $this->db->prepare ( "SELECT COUNT(login) FROM USER WHERE login=? and password=?" );
+        $stmt->execute ( array($login, $password ));
 		
-            if ($stmt->fetchColumn () > 0) {
-		return true;
-            }
+        if ($stmt->fetchColumn() > 0) {
+			return true;
+        }
 	}
 	
 
@@ -104,16 +101,18 @@ class UserDAO {
 	
 	public function update($user)
 	{
-            $stmt = $this->db->prepare("UPDATE USER SET password = ?, email = ?, phone = ?,"
-                . "country = ? WHERE login = ?");
-            $stmt->execute(array($user->getPassword(), $user->getEmail(), $user->getPhone(), 
-            	$user->getCountry(), $user->getLogin()));	
+		print_r($user);
+        $stmt = $this->db->prepare("UPDATE USER SET password = ?, fullname = ?,"
+            . "email = ?, phone = ?, country = ? WHERE login = ?");
+        $stmt->execute(array($user->getPassword(), $user->getFullName(),
+        	$user->getEmail(), $user->getPhone(), 
+            $user->getCountry(), $user->getLogin()));	
 	}
 	
 	public function delete($login)
-        {
-            $stmt = $this->db->prepare("DELETE FROM USER WHERE login = ?");
-            $stmt->execute(array($login));
-        }
+    {
+        $stmt = $this->db->prepare("DELETE FROM USER WHERE login = ?");
+        $stmt->execute(array($login));
+    }
   
 }

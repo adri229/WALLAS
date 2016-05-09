@@ -14,7 +14,7 @@
 		    <tr ng-repeat="revenue in revenues.data">
 		       <td>{{revenue.name}}</td>
 		       <td>{{revenue.quantity | currency }}</td>
-		       <td>{{revenue.dateRevenue}}</td>
+		       <td>{{revenue.date}}</td>
 		          <td>
                    <button class="btn btn-warning btn-xs" ng-click="update(revenue)" >
                         <span class="glyphicon glyphicon-pencil"></span>
