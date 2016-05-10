@@ -43,7 +43,7 @@ wallas.config(['$routeProvider', function ($routeProvider) {
             when('/home', {
                 pageTitle: 'Home - WALLAS',
                 templateUrl: 'assets/html/home.html',
-                controller: 'SpenRevChartController'
+                controller: 'ChartController'
             }).
             otherwise({
                 redirectTo: '/'

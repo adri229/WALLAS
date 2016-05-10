@@ -11,7 +11,7 @@
 		  <tbody>
 		    <tr ng-repeat="stock in stocks.data">
 		       <td>{{stock.total}}</td>
-               <td>{{stock.date | date: 'shortDate'}}</td>
+               <td>{{stock.date | date: 'fullDate'}}</td>
                <td>
                     <button class="btn btn-warning btn-xs" ng-click="update(stock)" >
                         <span class="glyphicon glyphicon-pencil"></span>

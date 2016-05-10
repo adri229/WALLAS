@@ -23,7 +23,7 @@ class SpendingDAO
         $spending = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($spending != NULL) {
-            return new Spending($spending["idSpending"],$spending["dateSpending"],
+            return new Spending($spending["idSpending"],str_replace(" ", "T", $spending["dateSpending"])."Z",
                     $spending["quantity"], $spending["name"], new User($spending["owner"]));
         } else {
             return NULL;
@@ -55,7 +55,7 @@ class SpendingDAO
                 if ($currentSpending == NULL || ($currentSpending != NULL && 
                     $spending_loop["spending.id"] != $currentSpending->getIdSpending())) {
                         $currentSpending = new Spending($spending_loop["spending.id"],
-                            $spending_loop["spending.date"],
+                            str_replace(" ", "T", $spending_loop["spending.date"])."Z",
                             $spending_loop["spending.quantity"],
                             $spending_loop["spending.name"],
                             new User($spending_loop["spending.owner"]));

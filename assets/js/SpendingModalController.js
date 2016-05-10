@@ -66,5 +66,16 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 	        $uibModalInstance.dismiss('cancel');
 	    };
 
+	    $scope.dateOptions = {
+			formatYear: 'yy',
+			maxDate: new Date(2020, 5, 22),
+			minDate: new Date(1982, 7, 21),
+			startingDay: 1
+		};
+
+		$scope.datepopupOpened = false;
+		$scope.opendate = function() {
+		    $scope.datepopupOpened = true;
+		};
 
 }]);

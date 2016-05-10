@@ -26,6 +26,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
     	var uibmodalInstance = $uibModal.open({
   			templateUrl: 'assets/html/modalNewStock.html',
   			controller: 'StockModalController',
+        windowClass: 'large-Modal',
   			scope: $scope,
             resolve: {
                 stocks: function() {

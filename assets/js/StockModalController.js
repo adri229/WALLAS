@@ -2,8 +2,8 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'StockService', 'stocks', '$timeout',
-	function($scope, $uibModalInstance, StockService, stocks, $timeout) {
+wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'StockService', 'stocks',
+	function($scope, $uibModalInstance, StockService, stocks) {
 
 		$scope.create = function(stock) {
 			StockService.create(stock).then(
@@ -45,18 +45,16 @@ wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'Stock
 	        $uibModalInstance.dismiss('cancel');
 	    };
 
-				$scope.dateOptions = {
+		$scope.dateOptions = {
+			formatYear: 'yy',
+			maxDate: new Date(2020, 5, 22),
+			minDate: new Date(1982, 7, 21),
+			startingDay: 1
+		};
 
-					formatYear: 'yy',
-					maxDate: new Date(2020, 5, 22),
-					minDate: new Date(1982, 7, 21),
-					startingDay: 1
-				};
-
-			$scope.datepopupOpened = false;
-			$scope.opendate = function() {
-
+		$scope.datepopupOpened = false;
+		$scope.opendate = function() {
 		    $scope.datepopupOpened = true;
-		 };
+		};
 
 	}]);

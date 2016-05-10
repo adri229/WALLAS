@@ -39,6 +39,17 @@
     margin-right: 5%;
 }
 
+.modal-dialog {
+    height: auto;
+
+}
+
+
+.large-Modal .modal-dialog{
+    height: 50%;
+    width: 50%;
+}
+
 /*
 html {
     min-height : 100%; 

@@ -17,7 +17,12 @@
                         <input ng-model="spending.quantity" type="text" required="" name="quantity" autofocus>
                     </md-input-container>
                   </md-input-container>
-                  <input type="text" ng-model="spending.date"></input>
+                  <p class="input-group">
+                    <input type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="spending.date" is-open="datepopupOpened" ng-required="true" close-text="Close" />
+                      <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="opendate()"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                  </p>
                   <label>Select types</label>
                   <p class="input-types" ng-repeat="type in types">
                     <md-checkbox ng-click="toggle(type)">

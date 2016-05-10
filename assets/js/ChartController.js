@@ -2,7 +2,7 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('SpenRevChartController', ['$scope', '$cookies', 'SpendingService', 'RevenueService',
+wallas.controller('ChartController', ['$scope', '$cookies', 'SpendingService', 'RevenueService',
 	function($scope, $cookies, SpendingService, RevenueService) {
 
           

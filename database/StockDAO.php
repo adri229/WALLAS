@@ -53,7 +53,7 @@ class StockDAO
         if ($stock != NULL) {
             return new Stock(
                 $stock["idStock"],
-                $stock["date"],
+                str_replace(" ","T", $stock["dateStock"])."Z",
                 $stock["total"],
                 new User($stock["owner"]));
         } else {

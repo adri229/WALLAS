@@ -15,7 +15,7 @@
 	    <tr ng-repeat="spending in spendings.data">
 	       <td>{{spending.name}}</td>
 	       <td>{{spending.quantity | currency }}</td>
-		   <td>{{spending.date}}</td>
+		   <td>{{spending.date | date: 'fullDate'}}</td>
 		   <td ng-repeat="type in spending.types">
 		   		<span ng-bind="type.name"></span>
 

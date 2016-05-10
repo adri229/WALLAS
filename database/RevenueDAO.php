@@ -11,20 +11,6 @@ class RevenueDAO
         $this->db = PDOConnection::getInstance ();
     }
 	
-    public function findByOwner($owner)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM REVENUE WHERE owner = ?");
-        $stmt->execute(array($owner));
-        $revenues_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        $revenues = array();
-        
-        foreach ($revenues_db as $revenue) {
-            array_push($revenues, new Revenue($revenue["idRevenue"],$revenue["dateRevenue"],
-                    $revenue["quantity"], $revenue["name"], new User($revenue["owner"])));
-        }
-        return $revenues;
-    }
 
     public function findByOwnerAndFilter($owner, $startDate, $endDate)
     {
@@ -36,8 +22,11 @@ class RevenueDAO
         $revenues = array();
         
         foreach ($revenues_db as $revenue) {
-            array_push($revenues, new Revenue($revenue["idRevenue"],$revenue["dateRevenue"],
-                    $revenue["quantity"], $revenue["name"], new User($revenue["owner"])));
+            array_push($revenues, new Revenue($revenue["idRevenue"],
+                                str_replace(" ", "T", $revenue["dateRevenue"])."Z",
+                                $revenue["quantity"], 
+                                $revenue["name"], 
+                                new User($revenue["owner"])));
         }
         return $revenues;
     }
@@ -53,7 +42,7 @@ class RevenueDAO
     	if ($revenue != NULL) {
     		return new Revenue(
     			$revenue["idRevenue"],
-    			$revenue["dateRevenue"],
+    			str_replace(" ", "T", $revenue["dateRevenue"])."Z",
     			$revenue["quantity"],
                 $revenue["name"],
     			new User($revenue["owner"]));
