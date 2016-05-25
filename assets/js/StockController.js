@@ -8,8 +8,8 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 	var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
 
-    function refreshStocks() {
-    	StockService.getByOwner(login).then(
+    function refreshStocks(startDate, endDate) {
+    	StockService.getByOwner(login, startDate, endDate).then(
 	  		function(response) {
 				$scope.stocks = response;
 				console.log($scope.stocks.data);
@@ -20,7 +20,26 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 			}
 		);	
     }
-    refreshStocks();
+    var defaultStartDate = new Date();
+    defaultStartDate.setHours(0);
+    defaultStartDate.setMinutes(0);
+    defaultStartDate.setSeconds(0);
+    var defaultStartDateUTC = defaultStartDate.getUTCFullYear() + '-' + (defaultStartDate.getUTCMonth() + 1)+ '-' 
+        + defaultStartDate.getUTCDate()+'T'+defaultStartDate.getUTCHours()+':'+defaultStartDate.getUTCMinutes()+'Z';
+    
+    var defaultEndDate = new Date();
+    defaultEndDate.setHours(0);
+    defaultEndDate.setMinutes(0);
+    defaultEndDate.setSeconds(0);
+    var defaultStartDateUTC = defaultEndDate.getUTCFullYear() + '-' + (defaultEndDate.getUTCMonth() + 1)+ '-' 
+        + defaultEndDate.getUTCDate()+'T'+defaultEndDate.getUTCHours()+':'+defaultEndDate.getUTCMinutes()+'Z';
+    
+
+    refreshStocks(defaultStartDate, defaultEndDate);
+
+    $scope.changeIntervalStocks = function() {
+        refreshStocks($scope.startDate, $scope.endDate);  
+    }
 
     $scope.create = function() {
     	var uibmodalInstance = $uibModal.open({
@@ -37,8 +56,11 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 
   		uibmodalInstance.result.then(
   			function(response) {
-  				refreshStocks();
-  				console.log("RESPONSE" + response);
+  				if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshStocks(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshStocks($scope.startDate, $scope.endDate);  
+                }
   			},
   			function() {
   				alert("error");
@@ -56,7 +78,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
             resolve: {
                 stocks: function() {
                     return {
-                        idStock: stock.idStock
+                        stock: stock
                     }
                      
                 }
@@ -65,7 +87,11 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshStocks();
+                if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshStocks(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshStocks($scope.startDate, $scope.endDate);  
+                }
             },
             function() {
                 alert("error update");
@@ -90,12 +116,31 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshStocks();
+                if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshStocks(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshStocks($scope.startDate, $scope.endDate);  
+                }
             },
             function() {
                 alert("error delete");
             }
         )
   	};
+
+    $scope.dateOptions = {
+            formatYear: 'yy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(1982, 7, 21),
+            startingDay: 1
+        };
+
+        
+        $scope.openInitDate = function() {
+            $scope.datepopupInitOpened = true;
+        };
+        $scope.openEndDate = function() {
+            $scope.datepopupEndOpened = true;
+        };
 
 }]);

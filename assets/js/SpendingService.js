@@ -16,8 +16,17 @@ wallas.factory('SpendingService', ['$http', function($http) {
 	}
 
 
-	spendingService.getByOwner = function(login) {
-		return $http.get('rest/spendings/'.concat(login) + '?startDate=0000-00-00&endDate=2016-05-13');
+	spendingService.getByOwner = function(login,startDate,endDate) {
+		var startDateUTC = startDate.getUTCFullYear() + '-' + (startDate.getUTCMonth() + 1)+ '-' 
+		+ startDate.getUTCDate()+'T'+startDate.getUTCHours()+':'+startDate.getUTCMinutes()+'Z';
+        var endDateUTC  = endDate.getUTCFullYear() + '-' + (endDate.getUTCMonth() + 1)+ '-' 
+        + endDate.getUTCDate()+'T'+endDate.getUTCHours()+':'+endDate.getUTCMinutes()+'Z';
+
+		return $http.get('rest/spendings/'.concat(login) + '/crud' + '?startDate=' + startDateUTC + '&endDate=' + endDateUTC);
+	}
+
+	spendingService.getDataChartSpenRev = function(login, startDate, endDate) {
+		return $http.get('rest/spendings/'.concat(login) + '/chart' + '?startDate=' + startDate + '&endDate=' + endDate);
 	}
 
 

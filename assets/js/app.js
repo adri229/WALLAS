@@ -40,10 +40,15 @@ wallas.config(['$routeProvider', function ($routeProvider) {
             	templateUrl: 'assets/html/spending.html',
             	controller: 'SpendingController'
             }).
-            when('/home', {
-                pageTitle: 'Home - WALLAS',
-                templateUrl: 'assets/html/home.html',
-                controller: 'ChartController'
+            when('/spenrev', {
+                pageTitle: 'Spendings-Revenues - WALLAS',
+                templateUrl: 'assets/html/spenrev.html',
+                controller: 'SpenRevController'
+            }).
+            when('/positions', {
+                pageTitle: 'Positions - WALLAS',
+                templateUrl: 'assets/html/positions.html',
+                controller: 'PositionController'
             }).
             otherwise({
                 redirectTo: '/'

@@ -53,6 +53,8 @@ class RevenueDAO
     
     public function save($revenue)
     {
+        $aux = str_replace("T", " ", $revenue->getDate());
+        $revenue->setDate(str_replace("Z", "", $aux));
     	$stmt = $this->db->prepare("INSERT INTO REVENUE(dateRevenue,quantity,name,owner) VALUES (?,?,?,?)");
     	$stmt->execute(array($revenue->getDate(), $revenue->getQuantity(), $revenue->getName(),$revenue->getOwner()));
     	return $this->db->lastInsertId();
@@ -60,6 +62,8 @@ class RevenueDAO
     
     public function update($revenue)
     {
+        $aux = str_replace("T", " ", $revenue->getDate());
+        $revenue->setDate(str_replace("Z", "", $aux));
     	$stmt = $this->db->prepare("UPDATE REVENUE SET dateRevenue = ?, quantity = ?, 
             name = ?, owner = ? WHERE idRevenue = ?");
     	$stmt->execute(array($revenue->getDate(),$revenue->getQuantity(), $revenue->getName(), 

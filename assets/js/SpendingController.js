@@ -9,20 +9,11 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
     var login = user.currentUser.login;
 
 
-    function refreshSpendings() {
-        SpendingService.getByOwner(login).then(
+    function refreshSpendings(startDate, endDate) {
+        SpendingService.getByOwner(login, startDate, endDate).then(
             function(response) {
 
                 $scope.spendings = response;
-            //    alert(JSON.stringify(response.data));
-                console.log(response);
-
-                $scope.variable = "hola";
-
-
-                console.log($scope.spendings.data[0].types[0]);
-
-
             },
             function(response) {
                 alert("error");
@@ -30,7 +21,27 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             }
         );
     };
-    refreshSpendings();
+
+    var defaultStartDate = new Date();
+    defaultStartDate.setHours(0);
+    defaultStartDate.setMinutes(0);
+    defaultStartDate.setSeconds(0);
+    var defaultStartDateUTC = defaultStartDate.getUTCFullYear() + '-' + (defaultStartDate.getUTCMonth() + 1)+ '-' 
+        + defaultStartDate.getUTCDate()+'T'+defaultStartDate.getUTCHours()+':'+defaultStartDate.getUTCMinutes()+'Z';
+    
+    var defaultEndDate = new Date();
+    defaultEndDate.setHours(0);
+    defaultEndDate.setMinutes(0);
+    defaultEndDate.setSeconds(0);
+    var defaultStartDateUTC = defaultEndDate.getUTCFullYear() + '-' + (defaultEndDate.getUTCMonth() + 1)+ '-' 
+        + defaultEndDate.getUTCDate()+'T'+defaultEndDate.getUTCHours()+':'+defaultEndDate.getUTCMinutes()+'Z';
+    
+
+    refreshSpendings(defaultStartDate, defaultEndDate);
+
+    $scope.changeIntervalSpendings = function() {
+        refreshSpendings($scope.startDate, $scope.endDate);  
+    }
 
     function getTypes() {
         TypeService.getByOwner(login).then(
@@ -59,8 +70,11 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshSpendings();
-                console.log("RESPONSE" + response);
+                if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshSpendings(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshSpendings($scope.startDate, $scope.endDate);  
+                }
             },
             function() {
                 alert("error");
@@ -77,7 +91,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             resolve: {
                 spendings: function() {
                     return {
-                        idSpending: spending.idSpending
+                        spending: spending
                     }
 
                 }
@@ -86,7 +100,11 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshSpendings();
+                if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshSpendings(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshSpendings($scope.startDate, $scope.endDate);  
+                }
             },
             function() {
                 alert("error update");
@@ -112,7 +130,11 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshSpendings();
+                if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshSpendings(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshSpendings($scope.startDate, $scope.endDate);  
+                }
             },
             function() {
                 alert("error delete");
@@ -120,6 +142,20 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
         )
     };
 
+    $scope.dateOptions = {
+            formatYear: 'yy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(1982, 7, 21),
+            startingDay: 1
+        };
+
+        
+        $scope.openInitDate = function() {
+            $scope.datepopupInitOpened = true;
+        };
+        $scope.openEndDate = function() {
+            $scope.datepopupEndOpened = true;
+        };
 
 
 

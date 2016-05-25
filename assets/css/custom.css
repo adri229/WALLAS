@@ -4,15 +4,15 @@
 }
 
 .revenue {
-    margin-top: 5%;
+    margin-top: 1%;
 }
 
 .stock {
-    margin-top: 5%;
+    margin-top: 1%;
 }
 
 .spending {
-    margin-top: 5%;
+    margin-top: 1%;
 }
 
 .register {
@@ -22,7 +22,10 @@
 .login {
     margin-top: 10%;
    
+}
 
+.register {
+    margin-top: 10%;
 }
 
 .user {
@@ -50,6 +53,23 @@
     width: 50%;
 }
 
+.inputStock {
+    margin-bottom: 5%;  
+}
+
+.interval {
+    margin-top: 5%;     
+}
+
+#loginButton {
+    margin-bottom: 1%;
+    margin-left: 1%;
+}
+
+#registerButton {
+    margin-bottom: 1%;
+    margin-left: 1%;
+}
 /*
 html {
     min-height : 100%; 

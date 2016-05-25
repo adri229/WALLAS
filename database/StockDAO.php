@@ -61,8 +61,27 @@ class StockDAO
         }
     }
 
+    public function findByOwnerAndDate($owner, $date)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM STOCK WHERE owner = ? AND dateStock < ? ORDER BY dateStock DESC LIMIT 1");
+        $stmt->execute(array($owner, $date));
+        $stock = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($stock != NULL) {
+            return new Stock(
+                $stock["idStock"],
+                $stock["dateStock"],
+                $stock["total"],
+                new User($stock["owner"]));
+        } else {
+            return NULL;
+        }    
+    }
+
     public function save($stock)
     {
+        $aux = str_replace("T", " ", $stock->getDate());
+        $stock->setDate(str_replace("Z", "", $aux));
         $stmt = $this->db->prepare("INSERT INTO STOCK(dateStock,total,owner) VALUES (?,?,?)");
         $stmt->execute(array($stock->getDate(), $stock->getTotal(), $stock->getOwner()));
         return $this->db->lastInsertId();
@@ -70,6 +89,8 @@ class StockDAO
 
     public function update($stock)
     {
+        $aux = str_replace("T", " ", $stock->getDate());
+        $stock->setDate(str_replace("Z", "", $aux));
         $stmt = $this->db->prepare("UPDATE STOCK SET dateStock = ?, total = ?, owner = ? WHERE idStock = ?");
         $stmt->execute(array($stock->getDate(), $stock->getTotal(), $stock->getOwner()->getLogin(), $stock->getIdStock()));
     }

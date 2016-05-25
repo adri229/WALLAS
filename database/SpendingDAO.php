@@ -31,7 +31,7 @@ class SpendingDAO
     }
     
 
-     public function findByOwnerWithTypes($owner)
+     public function findByOwnerAndFilterWithTypes($owner, $startDate, $endDate)
     {
         $stmt = $this->db->prepare("SELECT s.idSpending as 'spending.id',
                 s.dateSpending as 'spending.date',
@@ -42,8 +42,8 @@ class SpendingDAO
                 t.name as 'type.name',
                 t.owner as 'type.owner'
             FROM SPENDING s LEFT JOIN TYPE_SPENDING ts  ON s.idSpending = ts.spending LEFT JOIN TYPE t on ts.type = t.idType 
-            WHERE s.owner = ? ");
-        $stmt->execute(array($owner));
+            WHERE s.owner = ? AND s.dateSpending BETWEEN ? AND ? ORDER BY s.idSpending");
+        $stmt->execute(array($owner, $startDate, $endDate));
         $spendings_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 
@@ -74,15 +74,29 @@ class SpendingDAO
             return NULL;
         }
 
-     
-        
-        
+    }
 
+
+    public function findByOwnerAndFilter($owner, $startDate, $endDate)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM SPENDING WHERE owner = ? AND dateSpending BETWEEN ? AND ?");
+        $stmt->execute(array($owner, $startDate, $endDate));
+        $spendings_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $spendings = array();
+
+        foreach ($spendings_db as $spending) {
+            array_push($spendings, new Spending($spending["idSpending"],$spending["dateSpending"], 
+                $spending["quantity"], $spending["name"], new User($spending["owner"])));
+        }
+        return $spendings;
     }
 
     
     public function save($spending)
     {
+        $aux = str_replace("T", " ", $spending->getDate());
+        $spending->setDate(str_replace("Z", "", $aux));
     	$stmt = $this->db->prepare("INSERT INTO SPENDING(dateSpending,quantity,name,owner) VALUES (?,?,?,?)");
     	$stmt->execute(array($spending->getDate(), $spending->getQuantity(), $spending->getName(),$spending->getOwner()));
     	return $this->db->lastInsertId();
@@ -90,6 +104,8 @@ class SpendingDAO
     
     public function update($spending)
     {
+        $aux = str_replace("T", " ", $spending->getDate());
+        $spending->setDate(str_replace("Z", "", $aux));
     	$stmt = $this->db->prepare("UPDATE SPENDING SET dateSpending = ?, quantity = ?, name = ?,owner = ? WHERE idSpending = ?");
     	$stmt->execute(array($spending->getDate(), $spending->getQuantity(), $spending->getName(), 
             $spending->getOwner()->getLogin(), $spending->getIdSpending()));    	

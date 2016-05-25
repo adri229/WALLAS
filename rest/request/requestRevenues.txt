@@ -7,3 +7,6 @@ curl -i -X PUT -H "Content-Type: application/json" -d '{"date":"2016-10-10","nam
 curl -i -X DELETE -u adri229:adri229 http://localhost/wallas/rest/revenues/1
 
 curl -i -X GET -u adri229:adri229 "http://localhost/wallas/rest/revenues/adri229?startDate=2016-02-10&endDate=2016-06-13"
+
+
+curl -i -X GET -u adri229:adri229 http://localhost/wallas/rest/revenues/adri229?startDate=1456700400&endDate=1463522400

@@ -16,9 +16,15 @@ wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'Stock
 			)
 		}
 
+		
+		if (stocks != null) {
+			$scope.stock = stocks.stock;	
+		}
+		
 
 		$scope.update = function(stock) {
-			StockService.update(stock, stocks.idStock).then(
+			
+			StockService.update(stock, stocks.stock.idStock).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},

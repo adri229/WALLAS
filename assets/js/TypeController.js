@@ -13,7 +13,6 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
 		TypeService.getByOwner(login).then(
 	  		function(response) {
 				$scope.types = response;
-				console.log($scope.types.data);
 			},
 			function(response) {
 				alert("error");
@@ -29,7 +28,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
   			controller: 'TypeModalController',
   			scope: $scope,
             resolve: {
-                items: function() {
+                types: function() {
 
                 }    
             }
@@ -47,15 +46,15 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
   	}
 
 
-    $scope.editType = function(type) {
+    $scope.update = function(type) {
         var uibmodalInstance = $uibmodal.open({
-            templateUrl: 'assets/html/modalEditType.html',
+            templateUrl: 'assets/html/modalUpdateType.html',
             controller: 'TypeModalController',
             scope: $scope,
             resolve: {
-                items: function() {
+                types: function() {
                     return {
-                           idType:type.idType
+                        type: type
                     }
                      
                 }
@@ -74,13 +73,13 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
     }
 
 
-    $scope.deleteType = function(type) {
+    $scope.delete = function(type) {
         var uibmodalInstance = $uibmodal.open({
             templateUrl: 'assets/html/modalDeleteType.html',
             controller: 'TypeModalController',
             scope: $scope,
             resolve: {
-                items: function() {
+                types: function() {
                     return {
                            idType:type.idType
                     }

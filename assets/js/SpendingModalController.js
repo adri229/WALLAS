@@ -33,10 +33,11 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 		}
 
 
+
 		$scope.update = function(spending) {
 			spending.types = types;
 
-			SpendingService.update(spending, spendings.idSpending).then(
+			SpendingService.update(spending, spendings.spending.idSpending).then(
 				function(response) {
 					clearArray();
 					$uibModalInstance.close('closed');

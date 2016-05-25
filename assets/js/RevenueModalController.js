@@ -2,8 +2,8 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'RevenueService', 'items',
-	function($scope, $uibModalInstance, RevenueService, items) {
+wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'RevenueService', 'revenues',
+	function($scope, $uibModalInstance, RevenueService, revenues) {
 
 		$scope.create = function(revenue) {
 			console.log(revenue);
@@ -17,9 +17,13 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 			)
 		}
 
+		if (revenues != null) {
+			$scope.revenue = revenues.revenue;	
+		}
+		
 
 		$scope.update = function(revenue) {
-			RevenueService.update(revenue, items.idRevenue).then(
+			RevenueService.update(revenue, revenues.revenue.idRevenue).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},
@@ -32,7 +36,7 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 
 
 		$scope.delete = function(revenue) {
-			RevenueService.delete(items.idRevenue).then(
+			RevenueService.delete(revenues.idRevenue).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},

@@ -5,9 +5,11 @@ var wallas = angular.module('wallasApp');
 wallas.controller('UserModalController', ['$scope', '$uibModalInstance', 'UserService', 'users',
 	function($scope, $uibModalInstance, UserService, users) {
 
+		
 
 		$scope.update = function(user) {
-			UserService.update(users.login, user).then(
+
+			UserService.update(users.user.currentUser.login, user).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},

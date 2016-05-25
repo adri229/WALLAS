@@ -8,8 +8,8 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
     var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
 
-    function refreshRevenues(){
-    	RevenueService.getByOwner(login).then(
+    function refreshRevenues(startDate, endDate){
+    	RevenueService.getByOwner(login, startDate, endDate).then(
             function(response) {
                 $scope.revenues = response;
                 console.log($scope.revenues.data);
@@ -22,7 +22,28 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
         );
     }
- 	refreshRevenues();
+ 	var defaultStartDate = new Date();
+    defaultStartDate.setHours(0);
+    defaultStartDate.setMinutes(0);
+    defaultStartDate.setSeconds(0);
+    var defaultStartDateUTC = defaultStartDate.getUTCFullYear() + '-' + (defaultStartDate.getUTCMonth() + 1)+ '-' 
+        + defaultStartDate.getUTCDate()+'T'+defaultStartDate.getUTCHours()+':'+defaultStartDate.getUTCMinutes()+'Z';
+    
+    var defaultEndDate = new Date();
+    defaultEndDate.setHours(0);
+    defaultEndDate.setMinutes(0);
+    defaultEndDate.setSeconds(0);
+    var defaultStartDateUTC = defaultEndDate.getUTCFullYear() + '-' + (defaultEndDate.getUTCMonth() + 1)+ '-' 
+        + defaultEndDate.getUTCDate()+'T'+defaultEndDate.getUTCHours()+':'+defaultEndDate.getUTCMinutes()+'Z';
+    
+
+    refreshRevenues(defaultStartDate, defaultEndDate);
+
+    $scope.changeIntervalRevenues = function() {
+        refreshRevenues($scope.startDate, $scope.endDate);  
+    }
+
+
 
     $scope.create = function() {
     	var uibmodalInstance = $uibModal.open({
@@ -30,16 +51,19 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
   			controller: 'RevenueModalController',
   			scope: $scope,
             resolve: {
-                items: function() {
-
+                revenues: function() {
+                    
                 }    
             }
   		});
 
   		uibmodalInstance.result.then(
   			function(response) {
-  				refreshRevenues();
-  				console.log("RESPONSE" + response);
+  				if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshRevenues(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshRevenues($scope.startDate, $scope.endDate);  
+                }
   			},
   			function() {
   				alert("error");
@@ -53,9 +77,9 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
             controller: 'RevenueModalController',
             scope: $scope,
             resolve: {
-                items: function() {
+                revenues: function() {
                     return {
-                        idRevenue: revenue.idRevenue
+                        revenue: revenue
                     }
                      
                 }
@@ -64,7 +88,11 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshRevenues();
+                if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshRevenues(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshRevenues($scope.startDate, $scope.endDate);  
+                }
             },
             function() {
                 alert("error update");
@@ -78,7 +106,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
             controller: 'RevenueModalController',
             scope: $scope,
             resolve: {
-                items: function() {
+                revenues: function() {
                     return {
                         idRevenue: revenue.idRevenue
                     }
@@ -89,7 +117,11 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshRevenues();
+                if ($scope.startDate == null || $scope.endDate == null) {
+                    refreshRevenues(defaultStartDate, defaultEndDate);
+                } else {
+                    refreshRevenues($scope.startDate, $scope.endDate);  
+                }
             },
             function() {
                 alert("error delete");
@@ -97,6 +129,21 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
         )
     };
   	
+
+    $scope.dateOptions = {
+            formatYear: 'yy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(1982, 7, 21),
+            startingDay: 1
+        };
+
+        
+        $scope.openInitDate = function() {
+            $scope.datepopupInitOpened = true;
+        };
+        $scope.openEndDate = function() {
+            $scope.datepopupEndOpened = true;
+        };
 
 
   }]);

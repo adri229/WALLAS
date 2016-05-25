@@ -6,17 +6,27 @@ require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/../model/Stock.php");
 require_once(__DIR__."/../database/StockDAO.php");
 
+require_once(__DIR__."/../model/Spending.php");
+require_once(__DIR__."/../database/SpendingDAO.php");
+
+require_once(__DIR__."/../model/Revenue.php");
+require_once(__DIR__."/../database/RevenueDAO.php");
+
 
 require_once(__DIR__."/../rest/BaseRest.php");
 
 class StockRest extends BaseRest
 {
 	private $stockDAO;
+	private $spendingDAO;
+	private $revenueDAO;
 	
 	public function __construct()
 	{
         parent::__construct();
         $this->stockDAO = new StockDAO();
+        $this->spendingDAO = new SpendingDAO();
+        $this->revenueDAO = new RevenueDAO();
 	}
 
 	public function create($data)
@@ -25,7 +35,7 @@ class StockRest extends BaseRest
     	$stock = new Stock();
 
     	if (isset($data->total) && isset($data->date)) {
-        $stock->setDate(date('Y-m-d', strtotime($data->date)));
+        	$stock->setDate($data->date);
     		$stock->setTotal($data->total);
     		$stock->setOwner($currentUser->getLogin());
     	
@@ -63,7 +73,7 @@ class StockRest extends BaseRest
     	}
 
     	if (isset($data->total) && isset($data->date)) {
-        $stock->setDate($data->date);
+        	$stock->setDate($data->date);
     		$stock->setTotal($data->total);
 
     		try {
@@ -111,16 +121,19 @@ class StockRest extends BaseRest
 
 	public function getByOwner($owner)
 	{
+
 		$currentUser = parent::authenticateUser();
 
-		$startDate = $_GET["startDate"];
-		$endDate = $_GET["endDate"];
+        $startDate = $_GET['startDate'];
+        $endDate = $_GET['endDate'];
 
-		$stocks = $this->stockDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
-		if ($stocks == NULL) {
+
+       
+        $stocks = $this->stockDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
+        if ($stocks == NULL) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
             echo("The defined interval time not contains stocks");
-            return;
+        	return;
         }
 
         foreach ($stocks as $stock) {
@@ -131,27 +144,28 @@ class StockRest extends BaseRest
             }
         }
 
-		$stock_array = [];
-		foreach ($stocks as $stock) {
-			array_push($stock_array, [
-				"idStock" => $stock->getIdStock(),
-				"date" => $stock->getDate(),
-				"total" => $stock->getTotal(),
-				"owner" => $stock->getOwner()->getLogin()
-			]);
-		}
+        $stock_array = [];
+            foreach ($stocks as $stock) {
+        	    array_push($stock_array, [
+            	    "idStock" => $stock->getIdStock(),
+                    "date" => $stock->getDate(),
+                    "total" => $stock->getTotal(),
+                    "owner" => $stock->getOwner()->getLogin()
+                ]);
+            }
+                
 
 		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
     	header('Content-Type: application/json');
     	echo(json_encode($stock_array));
 	}
 
-
 }
+
 
 $stockRest = new StockRest();
 URIDispatcher::getInstance()
-	->map("GET", "/stocks/$1", array($stockRest, "getByOwner"))	
+  ->map("GET", "/stocks/$1", array($stockRest, "getByOwner"))	
 	->map("POST", "/stocks", array($stockRest,"create"))
 	->map("PUT", "/stocks/$1", array($stockRest, "update"))
 	->map("DELETE", "/stocks/$1", array($stockRest, "delete"));

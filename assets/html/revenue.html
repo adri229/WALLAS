@@ -1,3 +1,16 @@
+<form class="interval" accept-charset="UTF-8" role="form">
+<p class="input-group">
+    <input placeholder="Since" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="startDate" is-open="datepopupInitOpened" ng-required="true" close-text="Close" />
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default" ng-click="openInitDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+  </span>
+  <input placeholder="Until" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="endDate" is-open="datepopupEndOpened" ng-required="true" close-text="Close" ng-change="changeIntervalRevenues()"/>
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default" ng-click="openEndDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+  </span>
+</p>
+</form>
+
 <div class="revenue" ng-controller="RevenueController">
 <button class="btn btn-primary" ng-click="create()">Add new revenue</button>
 

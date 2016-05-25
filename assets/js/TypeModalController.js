@@ -2,14 +2,10 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeService', 'items',
-	function($scope, $uibModalInstance, TypeService, items) {
-
-		console.log(items);
+wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeService', 'types',
+	function($scope, $uibModalInstance, TypeService, types) {
 		
 		$scope.insert = function(type) {
-			console.log("insert type");
-			console.log(type);
 			TypeService.create(type).then(
 	    		function(response) {
 	    			$uibModalInstance.close('closed');
@@ -22,8 +18,13 @@ wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeSe
     		)
 		}
 
+		if (types != null) {
+			$scope.type = types.type;	
+		}
+		
+
 		$scope.update = function(type) {
-			TypeService.update(type,items.idType).then(
+			TypeService.update(type,types.type.idType).then(
 				function(response) {
 	    			$uibModalInstance.close('closed');
 	    		},
@@ -36,7 +37,7 @@ wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeSe
 		}
 
 		$scope.delete = function() {
-			TypeService.delete(items.idType).then(
+			TypeService.delete(types.idType).then(
 				function(response) {
 					$uibModalInstance.close('closed');	
 				},

@@ -2,8 +2,8 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserService', 
-    function($scope, $cookies, $uibModal, UserService) {
+wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserService', '$location', 
+    function($scope, $cookies, $uibModal, UserService, $location) {
 	var user = $cookies.getObject('globals');
 
 	var login = user.currentUser.login;
@@ -32,7 +32,7 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
             resolve: {
                 users: function() {
                     return {
-                        login: login
+                        user: user
                     }
                      
                 }
@@ -67,7 +67,7 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshUser();
+                $location.path('/login');
             },
             function() {
                 alert("error update");
@@ -93,7 +93,7 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
 
         uibmodalInstance.result.then(
             function(response) {
-                refreshUser();
+                $location.path('/login');
             },
             function() {
                 alert("error delete");

@@ -164,56 +164,98 @@ class SpendingRest extends BaseRest {
         }
     }
 
-    public function getByOwner($owner) {
+    public function getByOwner($owner, $param) {
         $currentUser = parent::authenticateUser();
 
         $startDate = $_GET["startDate"];
         $endDate = $_GET["endDate"];
 
-        $spendings = $this->spendingDAO->findByOwnerWithTypes($owner);
-
-        if ($spendings == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
-            echo("The defined interval time not contains spendings");
-            return;
-        }
-
-        foreach ($spendings as $spending) {
-            if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
-                echo("you are not the owner of this spending");
-                return;
-            }
-        }
-
-        //print_r($spendings);
-
+        $spendings = [];
         $spendings_array = [];
-        foreach ($spendings as $spending) {
-        	$types_array = [];
 
-            if( $spending->getTypes() != NULL) {
-                foreach ($spending->getTypes() as $type) {
-                    array_push($types_array, [
-                        "idType" => $type->getIdType(),
-                        "name" => $type->getName(),
+        switch ($param) {
+            case 'crud':
+                $spendings = $this->spendingDAO->findByOwnerAndFilterWithTypes($owner, $startDate, $endDate);
+
+                if ($spendings == NULL) {
+                    header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                    echo("The defined interval time not contains spendings");
+                    return;
+                }
+
+                foreach ($spendings as $spending) {
+                    if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
+                        header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+                        echo("you are not the owner of this spending");
+                        return;
+                    }
+                }
+
+
+                $spendings_array = [];
+                foreach ($spendings as $spending) {
+                    $types_array = [];
+
+                    if( $spending->getTypes() != NULL) {
+                        foreach ($spending->getTypes() as $type) {
+                            array_push($types_array, [
+                                "idType" => $type->getIdType(),
+                                "name" => $type->getName(),
+                                "owner" => $currentUser->getLogin()
+                            ]);
+                        }
+                    }
+
+
+
+                    array_push($spendings_array, [
+                        "idSpending" => $spending->getIdSpending(),
+                        "date" => $spending->getDate(),
+                        "name" => $spending->getName(),
+                        "quantity" => $spending->getQuantity(),
+                        "owner" => $currentUser->getLogin(),
+                        "types" => $types_array
+                    ]);
+
+                }
+                break;
+            case 'chart':
+                $spendings = $this->spendingDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
+
+                if ($spendings == NULL) {
+                    header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                    echo("The defined interval time not contains spendings");
+                    return;
+                }
+
+                foreach ($spendings as $spending) {
+                    if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
+                        header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+                        echo("you are not the owner of this spending");
+                        return;
+                    }
+                }
+
+
+                $spendings_array = [];
+                foreach ($spendings as $spending) {
+
+                    array_push($spendings_array, [
+                        "idSpending" => $spending->getIdSpending(),
+                        "date" => $spending->getDate(),
+                        "name" => $spending->getName(),
+                        "quantity" => $spending->getQuantity(),
                         "owner" => $currentUser->getLogin()
                     ]);
+
                 }
-            }
-
-
-
-            array_push($spendings_array, [
-                "idSpending" => $spending->getIdSpending(),
-                "date" => $spending->getDate(),
-                "name" => $spending->getName(),
-                "quantity" => $spending->getQuantity(),
-                "owner" => $currentUser->getLogin(),
-                "types" => $types_array
-            ]);
-
+                break;
+            default:
+                # code...
+                break;
         }
+
+        
 
 
 
@@ -225,7 +267,7 @@ class SpendingRest extends BaseRest {
 
 $spendingRest = new SpendingRest();
 URIDispatcher::getInstance()
-        ->map("GET", "/spendings/$1", [$spendingRest, "getByOwner"])
+        ->map("GET", "/spendings/$1/$2", [$spendingRest, "getByOwner"])
         ->map("POST", "/spendings", [$spendingRest, "create"])
         ->map("PUT", "/spendings/$1/", [$spendingRest, "update"])
         ->map("DELETE", "/spendings/$1", [$spendingRest, "delete"]);
