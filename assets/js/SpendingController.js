@@ -8,16 +8,23 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
     var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
 
+    $scope.hide = false;
+
+    function notification(msg, type) {
+        $scope.message = msg;
+        $scope.type = type;
+        $scope.hide = true;
+        $scope.show = true;
+    }
 
     function refreshSpendings(startDate, endDate) {
         SpendingService.getByOwner(login, startDate, endDate).then(
             function(response) {
-
                 $scope.spendings = response;
             },
             function(response) {
-                alert("error");
-                console.log(response);
+                notification("You don't have any spendings", "info");
+                $scope.spendings = null;
             }
         );
     };
@@ -70,6 +77,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
         uibmodalInstance.result.then(
             function(response) {
+                notification("New revenue was added successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
                     refreshSpendings(defaultStartDate, defaultEndDate);
                 } else {
@@ -77,7 +85,9 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                 }
             },
             function() {
-                alert("error");
+                if (response.localeCompare("cancel") != 0 ) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
     };
@@ -100,6 +110,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
         uibmodalInstance.result.then(
             function(response) {
+                notification("Spending updated successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
                     refreshSpendings(defaultStartDate, defaultEndDate);
                 } else {
@@ -107,7 +118,9 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                 }
             },
             function() {
-                alert("error update");
+                if (response.localeCompare("cancel") != 0 ) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
     }
@@ -130,6 +143,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
         uibmodalInstance.result.then(
             function(response) {
+                notification("Spending deleted successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
                     refreshSpendings(defaultStartDate, defaultEndDate);
                 } else {
@@ -137,7 +151,9 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                 }
             },
             function() {
-                alert("error delete");
+                if (response.localeCompare("cancel") != 0 ) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
     };
@@ -157,6 +173,10 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             $scope.datepopupEndOpened = true;
         };
 
-
+    $scope.show = true;
+  
+    $scope.closeAlert = function(index) {
+        $scope.show = false;
+    };
 
   }]);

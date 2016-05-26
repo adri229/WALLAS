@@ -8,24 +8,35 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
   	var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
 
-	
+    $scope.hide = false;
+
+    function notification(msg, type) {
+        $scope.message = msg;
+        $scope.typeAlert = type;
+        $scope.hide = true;
+        $scope.show = true;
+    }
+
 	function refreshTypes() {
+
 		TypeService.getByOwner(login).then(
 	  		function(response) {
 				$scope.types = response;
 			},
 			function(response) {
-				alert("error");
-	        	console.log(response);
+				notification("You don't have any revenues", "info");
+                $scope.types = null;
 			}
 		)
 	}
 	refreshTypes();
 
-  	$scope.addNewType = function() {
+  	$scope.create = function() {
   		var uibmodalInstance = $uibmodal.open({
   			templateUrl: 'assets/html/modalNewType.html',
   			controller: 'TypeModalController',
+            animation : true,
+            backdrop: false,
   			scope: $scope,
             resolve: {
                 types: function() {
@@ -36,11 +47,13 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
 
   		uibmodalInstance.result.then(
   			function(response) {
+  				notification("New type was added successfully", "success");
   				refreshTypes();
-  				console.log("RESPONSE" + response);
   			},
   			function() {
-  				alert("error");
+  				if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
   			}
   		)
   	}
@@ -50,6 +63,8 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
         var uibmodalInstance = $uibmodal.open({
             templateUrl: 'assets/html/modalUpdateType.html',
             controller: 'TypeModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 types: function() {
@@ -63,10 +78,13 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
 
         uibmodalInstance.result.then(
             function(response) {
+                notification("Type updated successfully", "success");
                 refreshTypes();
             },
             function() {
-                alert("error update");
+                if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
         
@@ -77,6 +95,8 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
         var uibmodalInstance = $uibmodal.open({
             templateUrl: 'assets/html/modalDeleteType.html',
             controller: 'TypeModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 types: function() {
@@ -90,14 +110,22 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
 
         uibmodalInstance.result.then(
             function(response) {
+                notification("Type deleted successfully", "success");
                 refreshTypes();
             },
             function() {
-                alert("error delete");
+                if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
     }
 
+    $scope.show = true;
+  
+  	$scope.closeAlert = function(index) {
+    	$scope.show = false;
+	};
 
 
 }]);

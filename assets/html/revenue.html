@@ -13,7 +13,6 @@
 
 <div class="revenue" ng-controller="RevenueController">
 <button class="btn btn-primary" ng-click="create()">Add new revenue</button>
-
 		<table class="row-border table table-condensed table-responsive table-hover table-striped">
     		<thead>
     			<tr>
@@ -39,6 +38,7 @@
 		      </tr>
 		  </tbody>
 		</table>
+    <uib-alert type={{type}} dismiss-on-timeout="1500" ng-if="show" close="closeAlert()" ng-show="hide">{{message}}</uib-alert> 
 </div>
 
 

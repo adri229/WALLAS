@@ -8,15 +8,23 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
     var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
 
+    $scope.hide = false;
+
+    function notification(msg, type) {
+        $scope.message = msg;
+        $scope.type = type;
+        $scope.hide = true;
+        $scope.show = true;
+    }
+
     function refreshRevenues(startDate, endDate){
     	RevenueService.getByOwner(login, startDate, endDate).then(
             function(response) {
                 $scope.revenues = response;
-                console.log($scope.revenues.data);
             },
             function(response) {
-                alert("error");
-                console.log(response);
+                notification("You don't have any revenues", "info");
+                $scope.revenues = null;
             }
 
 
@@ -43,12 +51,15 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
         refreshRevenues($scope.startDate, $scope.endDate);  
     }
 
+    
 
 
     $scope.create = function() {
     	var uibmodalInstance = $uibModal.open({
   			templateUrl: 'assets/html/modalNewRevenue.html',
   			controller: 'RevenueModalController',
+            animation : true,
+            backdrop: false,
   			scope: $scope,
             resolve: {
                 revenues: function() {
@@ -59,14 +70,17 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
   		uibmodalInstance.result.then(
   			function(response) {
+                notification("New revenue was added successfully", "success");
   				if ($scope.startDate == null || $scope.endDate == null) {
                     refreshRevenues(defaultStartDate, defaultEndDate);
                 } else {
                     refreshRevenues($scope.startDate, $scope.endDate);  
                 }
   			},
-  			function() {
-  				alert("error");
+  			function(response) {
+  				if (response.localeCompare("cancel") != 0 ) {
+                    notification("An error ocurred!", "danger");
+                }
   			}
   		)
     };
@@ -75,6 +89,8 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
         var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalUpdateRevenue.html',
             controller: 'RevenueModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 revenues: function() {
@@ -88,14 +104,17 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
         uibmodalInstance.result.then(
             function(response) {
+                notification("Revenue updated successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
                     refreshRevenues(defaultStartDate, defaultEndDate);
                 } else {
                     refreshRevenues($scope.startDate, $scope.endDate);  
                 }
             },
-            function() {
-                alert("error update");
+            function(response) {
+                if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
     };
@@ -104,6 +123,8 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
   		var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalDeleteRevenue.html',
             controller: 'RevenueModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 revenues: function() {
@@ -117,14 +138,17 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
         uibmodalInstance.result.then(
             function(response) {
+                notification("Revenue deleted successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
                     refreshRevenues(defaultStartDate, defaultEndDate);
                 } else {
                     refreshRevenues($scope.startDate, $scope.endDate);  
                 }
             },
-            function() {
-                alert("error delete");
+            function(response) {
+                if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
     };
@@ -138,12 +162,17 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
         };
 
         
-        $scope.openInitDate = function() {
-            $scope.datepopupInitOpened = true;
-        };
-        $scope.openEndDate = function() {
-            $scope.datepopupEndOpened = true;
-        };
+    $scope.openInitDate = function() {
+        $scope.datepopupInitOpened = true;
+    };
+    $scope.openEndDate = function() {
+        $scope.datepopupEndOpened = true;
+    };
 
+    $scope.show = true;
+  
+    $scope.closeAlert = function(index) {
+        $scope.show = false;
+    };
 
   }]);
