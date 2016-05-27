@@ -2,11 +2,23 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'SpendingService', 'spendings',
-	function($scope, $uibModalInstance, SpendingService, spendings) {
+wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'SpendingService', 'spendings', 'TypeService', '$cookies',
+	function($scope, $uibModalInstance, SpendingService, spendings, TypeService, $cookies) {
 
+		var user = $cookies.getObject('globals');
+    	var login = user.currentUser.login;
 
-		
+		function getTypes() {
+        	TypeService.getByOwner(login).then(
+	            function(response) {
+	                $scope.types = response.data;
+	                console.log(response);
+	            },
+	            function(response) {
+	                alert("error create");
+	            }
+        	)
+    	}
 
 		$scope.create = function(spending) {
 			spending.types = $scope.selected;
@@ -81,4 +93,19 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
       	$scope.exists = function (item, list) {
         	return list.indexOf(item) > -1;
       	};
+
+      	$scope.isCollapsed = false;
+
+
+      	$scope.addNewType = function(type) {
+      		TypeService.create(type).then(
+				function(response) {
+					$scope.newType = null;
+					getTypes();
+				},
+				function(response) {
+					alert("error create");
+				}
+			)
+      	}
 }]);

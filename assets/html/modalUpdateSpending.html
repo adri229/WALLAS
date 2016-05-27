@@ -31,6 +31,22 @@
                       </li>
                   </ul>  
                   </fieldset>
+                  <button type="button" class="btn btn-default" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
+                        Are you need more types?
+                 </button>
+                  <div uib-collapse="isCollapsed">
+                    <div class="well well-lg">
+                        <form name="addTypeForm" accept-charset="UTF-8" role="form">
+                          <md-input-container class="md-block" flex-gt-xs >
+                              <label>Name</label>
+                              <input ng-model="newType.name" type="text" required="" name="name" autofocus>
+                          </md-input-container>
+                        </md-input-container>
+                      </form>
+                        <button type="button" class="btn btn-primary" ng-disabled="addTypeForm.$invalid" ng-click="addNewType(newType)">OK</button>
+                        <button class="btn btn-warning" ng-click="isCollapsed = !isCollapsed">Cancel</button>
+                    </div>
+                </div>
                 </form>
             </md-content>
        <button type="button" class="btn btn-primary" ng-disabled="updateRevenueForm.$invalid" ng-click="update(spending)">OK</button>
