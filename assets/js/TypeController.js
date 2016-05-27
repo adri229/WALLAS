@@ -50,7 +50,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
   				notification("New type was added successfully", "success");
   				refreshTypes();
   			},
-  			function() {
+  			function(response) {
   				if (response.localeCompare("cancel") != 0) {
                     notification("An error ocurred!", "danger");
                 }
@@ -81,7 +81,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
                 notification("Type updated successfully", "success");
                 refreshTypes();
             },
-            function() {
+            function(response) {
                 if (response.localeCompare("cancel") != 0) {
                     notification("An error ocurred!", "danger");
                 }
@@ -113,7 +113,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
                 notification("Type deleted successfully", "success");
                 refreshTypes();
             },
-            function() {
+            function(response) {
                 if (response.localeCompare("cancel") != 0) {
                     notification("An error ocurred!", "danger");
                 }

@@ -5,7 +5,7 @@ var wallas = angular.module('wallasApp');
 wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeService', 'types',
 	function($scope, $uibModalInstance, TypeService, types) {
 		
-		$scope.insert = function(type) {
+		$scope.create = function(type) {
 			TypeService.create(type).then(
 	    		function(response) {
 	    			$uibModalInstance.close('closed');

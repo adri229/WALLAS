@@ -18,20 +18,18 @@
                     </md-input-container>
                   </md-input-container>
                   <p class="input-group">
-                  <p class="input-group">
                     <input type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="spending.date" is-open="datepopupOpened" ng-required="true" close-text="Close" />
                       <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="opendate()"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
+                  </p>    
                   <fieldset class="standard" >
                     <label>Select types</label>
-                    <div layout="row" layout-wrap flex>
-                      <div flex="50" ng-repeat="type in types">
-                        <md-checkbox ng-checked="exists(type, selected)" ng-click="toggle(type, selected)">
-                          {{ type.name }} 
-                        </md-checkbox>
-                      </div>
-                    </div>
+                     <ul class="list-inline">
+                      <li ng-repeat="type in types">
+                        <md-checkbox ng-click="toggle(type)">{{ type.name }}</md-checkbox>
+                      </li>
+                  </ul>  
                   </fieldset>
                 </form>
             </md-content>
