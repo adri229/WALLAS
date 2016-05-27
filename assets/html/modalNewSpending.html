@@ -27,7 +27,7 @@
                     <label>Select types</label>
                      <ul class="list-inline">
                       <li ng-repeat="type in types">
-                        <md-checkbox ng-click="toggle(type)">{{ type.name }}</md-checkbox>
+                        <md-checkbox ng-checked="exists(type, selected)" ng-click="toggle(type,selected)">{{ type.name }}</md-checkbox>
                       </li>
                   </ul>  
                   </fieldset>
