@@ -23,13 +23,16 @@
                       <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="opendate()"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
-                  </p>
-                  <label>Select types</label>
-                  <p class="input-types" ng-repeat="type in types">
-                    <md-checkbox ng-click="toggle(type)">
-                        {{ type.name }} 
-                    </md-checkbox>
-                  </p>  
+                  <fieldset class="standard" >
+                    <label>Select types</label>
+                    <div layout="row" layout-wrap flex>
+                      <div flex="50" ng-repeat="type in types">
+                        <md-checkbox ng-checked="exists(type, selected)" ng-click="toggle(type, selected)">
+                          {{ type.name }} 
+                        </md-checkbox>
+                      </div>
+                    </div>
+                  </fieldset>
                 </form>
             </md-content>
        <button type="button" class="btn btn-primary" ng-disabled="createStockForm.$invalid" ng-click="create(spending)">OK</button>

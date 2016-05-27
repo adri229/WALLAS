@@ -67,6 +67,8 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
         var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalNewSpending.html',
             controller: 'SpendingModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 spendings: function() {
@@ -84,7 +86,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                     refreshSpendings($scope.startDate, $scope.endDate);  
                 }
             },
-            function() {
+            function(response) {
                 if (response.localeCompare("cancel") != 0 ) {
                     notification("An error ocurred!", "danger");
                 }
@@ -97,6 +99,8 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
         var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalUpdateSpending.html',
             controller: 'SpendingModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 spendings: function() {
@@ -117,7 +121,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                     refreshSpendings($scope.startDate, $scope.endDate);  
                 }
             },
-            function() {
+            function(response) {
                 if (response.localeCompare("cancel") != 0 ) {
                     notification("An error ocurred!", "danger");
                 }
@@ -130,6 +134,8 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
     	var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalDeleteSpending.html',
             controller: 'SpendingModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 spendings: function() {
@@ -150,7 +156,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                     refreshSpendings($scope.startDate, $scope.endDate);  
                 }
             },
-            function() {
+            function(response) {
                 if (response.localeCompare("cancel") != 0 ) {
                     notification("An error ocurred!", "danger");
                 }

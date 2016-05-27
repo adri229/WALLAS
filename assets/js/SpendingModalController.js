@@ -6,24 +6,13 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 	function($scope, $uibModalInstance, SpendingService, spendings) {
 
 
-		var types = [];
-
-		$scope.toggle = function(type) {
-			types.push(type);
-		}
-
-		
-		function clearArray() {
-			types.splice(0,types.length);
-		}
-
 		
 
 		$scope.create = function(spending) {
-			spending.types = types;
+			spending.types = $scope.selected;
 			SpendingService.create(spending).then(
 				function(response) {
-					clearArray();
+					//$scope.selected = null;
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
@@ -35,11 +24,10 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 
 
 		$scope.update = function(spending) {
-			spending.types = types;
-
+			spending.types = $scope.selected;
 			SpendingService.update(spending, spendings.spending.idSpending).then(
 				function(response) {
-					clearArray();
+					//$scope.selected = null;
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
@@ -79,4 +67,18 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 		    $scope.datepopupOpened = true;
 		};
 
+
+		$scope.selected = [];
+      	$scope.toggle = function (item, list) {
+	        var idx = list.indexOf(item);
+	        if (idx > -1) {
+	          list.splice(idx, 1);
+	        }
+	        else {
+	          list.push(item);
+	        }
+      	};
+      	$scope.exists = function (item, list) {
+        	return list.indexOf(item) > -1;
+      	};
 }]);
