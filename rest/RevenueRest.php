@@ -35,11 +35,11 @@ class RevenueRest extends BaseRest
 	    	try {
 	    		//$revenue->validate();	
 	    		  $idRevenue = $this->revenueDAO->save($revenue);
-	    		  header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-	      		header('Location: '.$_SERVER['REQUEST_URI']."/".$idRevenue);
+	    		  header($this->server->getServerProtocol().' 201 Created');
+	      		header('Location: '.$this->server->getRequestUri()."/".$idRevenue);
 	      		
 	    	} catch (ValidationException $e) {
-	    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	    		header($this->server->getServerProtocol().' 400 Bad request');
 	      		echo(json_encode($e->getErrors()));
 	    	}
 	    }
@@ -51,14 +51,14 @@ class RevenueRest extends BaseRest
 
 		$revenue = $this->revenueDAO->findById($idRevenue);
 		if ($revenue == NULL) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo("Revenue with id ".$idRevenue." not found");
       		return;
     	}
 
 
     	if($revenue->getOwner()->getLogin() != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("you are not the owner of this revenue");
       		return;
     	}
@@ -73,9 +73,9 @@ class RevenueRest extends BaseRest
 	            // validate Post object
 	            //$revenue->validate(); // if it fails, ValidationException
 	            $this->revenueDAO->update($revenue);
-	            header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	            header($this->server->getServerProtocol().' 200 Ok');
 	        }catch (ValidationException $e) {
-	            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	            header($this->server->getServerProtocol().' 400 Bad request');
 	            echo(json_encode($e->getErrors()));
 	        }
 	    }
@@ -88,23 +88,23 @@ class RevenueRest extends BaseRest
 		
 		$revenue = $this->revenueDAO->findById($idRevenue);
 		if ($revenue == NULL) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo("Revenue with id ".$idRevenue." not found");
       		return;
     	}
 
 
     	if($revenue->getOwner()->getLogin() != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("you are not the owner of this revenue");
       		return;
     	}
 
     	try {
       		$this->revenueDAO->delete($idRevenue);
-      		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+      		header($this->server->getServerProtocol().' 200 Ok');
     	}catch (ValidationException $e) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo(json_encode($e->getErrors()));
     	}	
 	}
@@ -119,14 +119,14 @@ class RevenueRest extends BaseRest
 		$revenues = $this->revenueDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
 
 		if ($revenues == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("The defined interval time not contains revenues");
             return;
         }
 
         foreach ($revenues as $revenue) {
             if ($revenue->getOwner()->getLogin() != $currentUser->getLogin()) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+                header($this->server->getServerProtocol() . ' 403 Forbidden');
                 echo("you are not the owner of this revenue");
                 return;
             }
@@ -142,7 +142,7 @@ class RevenueRest extends BaseRest
 			]);
 		}
 
-		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+		header($this->server->getServerProtocol().' 200 Ok');
     	header('Content-Type: application/json');
     	echo(json_encode($revenue_array));
 	}

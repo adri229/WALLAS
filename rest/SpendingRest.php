@@ -49,7 +49,7 @@ class SpendingRest extends BaseRest {
 
                     if ($type == NULL) {
                         $this->spendingDAO->delete($idSpending);
-                        header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                        header($this->server->getServerProtocol() . ' 400 Bad request');
                         echo("Type with id " . $type_loop->idType . " not found");
                         return;
                     }
@@ -61,11 +61,11 @@ class SpendingRest extends BaseRest {
                 }
 
 
-                header($_SERVER['SERVER_PROTOCOL'] . ' 201 Created');
-                header('Location: ' . $_SERVER['REQUEST_URI'] . "/" . $idSpending);
+                header($this->server->getServerProtocol() . ' 201 Created');
+                header('Location: ' . $this->server->getRequestUri() . "/" . $idSpending);
                 header('Content-Type: application/json');
             } catch (ValidationException $e) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                header($this->server->getServerProtocol() . ' 400 Bad request');
                 echo(json_encode($e->getErrors()));
             }
         }
@@ -77,14 +77,14 @@ class SpendingRest extends BaseRest {
 
         $spending = $this->spendingDAO->findById($idSpending);
         if ($spending == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("Spending with id " . $idSpending . " not found");
             return;
         }
 
 
         if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+            header($this->server->getServerProtocol() . ' 403 Forbidden');
             echo("you are not the owner of this spending");
             return;
         }
@@ -98,9 +98,9 @@ class SpendingRest extends BaseRest {
                 // validate Post object
                 //$spending->validate(); // if it fails, ValidationException
                 $this->typeSpendingDAO->deleteBySpending($idSpending);
-                header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+                header($this->server->getServerProtocol() . ' 200 Ok');
             } catch (ValidationException $e) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                header($this->server->getServerProtocol() . ' 400 Bad request');
                 echo(json_encode($e->getErrors()));
             }
             foreach ($data->types as $type_loop) {
@@ -108,7 +108,7 @@ class SpendingRest extends BaseRest {
 
 
                 if ($type == NULL) {
-                    header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                    header($this->server->getServerProtocol() . ' 400 Bad request');
                     echo("Type with id " . $type_loop->idType . " not found");
                     return;
                 }
@@ -125,9 +125,9 @@ class SpendingRest extends BaseRest {
 
                 $this->spendingDAO->update($spending);
 
-                header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+                header($this->server->getServerProtocol() . ' 200 Ok');
             } catch (ValidationException $e) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                header($this->server->getServerProtocol() . ' 400 Bad request');
                 echo(json_encode($e->getErrors()));
             }
         }
@@ -142,14 +142,14 @@ class SpendingRest extends BaseRest {
 
         $spending = $this->spendingDAO->findById($idSpending);
         if ($spending == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("Spending with id " . $idSpending . " not found");
             return;
         }
 
 
         if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+            header($this->server->getServerProtocol() . ' 403 Forbidden');
             echo("you are not the owner of this spending");
             return;
         }
@@ -157,9 +157,9 @@ class SpendingRest extends BaseRest {
         try {
             //$this->typeSpendingDAO->deleteBySpending($idSpending);
             $this->spendingDAO->delete($idSpending);
-            header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+            header($this->server->getServerProtocol() . ' 200 Ok');
         } catch (ValidationException $e) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo(json_encode($e->getErrors()));
         }
     }
@@ -178,14 +178,14 @@ class SpendingRest extends BaseRest {
                 $spendings = $this->spendingDAO->findByOwnerAndFilterWithTypes($owner, $startDate, $endDate);
 
                 if ($spendings == NULL) {
-                    header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                    header($this->server->getServerProtocol() . ' 400 Bad request');
                     echo("The defined interval time not contains spendings");
                     return;
                 }
 
                 foreach ($spendings as $spending) {
                     if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
-                        header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+                        header($this->server->getServerProtocol() . ' 403 Forbidden');
                         echo("you are not the owner of this spending");
                         return;
                     }
@@ -223,14 +223,14 @@ class SpendingRest extends BaseRest {
                 $spendings = $this->spendingDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
 
                 if ($spendings == NULL) {
-                    header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+                    header($this->server->getServerProtocol() . ' 400 Bad request');
                     echo("The defined interval time not contains spendings");
                     return;
                 }
 
                 foreach ($spendings as $spending) {
                     if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
-                        header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+                        header($this->server->getServerProtocol() . ' 403 Forbidden');
                         echo("you are not the owner of this spending");
                         return;
                     }
@@ -259,7 +259,7 @@ class SpendingRest extends BaseRest {
 
 
 
-        header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+        header($this->server->getServerProtocol() . ' 200 Ok');
         header('Content-Type: application/json');
         echo(json_encode($spendings_array));
     }

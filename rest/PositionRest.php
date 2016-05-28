@@ -43,14 +43,14 @@ class PositionRest extends BaseRest
         
         $stockRef = $this->stockDAO->findByOwnerAndDate($owner, $startDate);
         if ($stockRef == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("The defined interval time not contains stocks");
             return;
         }
         $stocks = $this->stockDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
                 
         if ($stocks == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("The defined interval time not contains stocks");
             return;
         }
@@ -117,7 +117,7 @@ class PositionRest extends BaseRest
         }
 
 
-		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+		header($this->server->getServerProtocol().' 200 Ok');
     	header('Content-Type: application/json');
     	echo(json_encode($stocks_array));	
   }

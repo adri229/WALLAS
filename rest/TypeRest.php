@@ -33,11 +33,11 @@ class TypeRest extends BaseRest
 
 			try {
 				$idType = $this->typeDAO->save($type);
-	    		header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-	      		header('Location: '.$_SERVER['REQUEST_URI']."/".$idType);
+	    		header($this->server->getServerProtocol().' 201 Created');
+	      		header($this->server->getRequestUri()."/".$idType);
 	      		header('Content-Type: application/json');
 			} catch (ValidationException $e) {
-	    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	    		header($this->server->getServerProtocol().' 400 Bad request');
 	      		echo(json_encode($e->getErrors()));
 	    	}
 		}
@@ -49,13 +49,13 @@ class TypeRest extends BaseRest
 
 		$type = $this->typeDAO->findById($idType);
 		if ($type == NULL) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo("Type with id ".$idType." not found");
       		return;
     	}
 
     	if($type->getOwner()->getLogin() != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("You are not the owner of this type");
       		return;
     	}
@@ -66,9 +66,9 @@ class TypeRest extends BaseRest
     		try {
       			//$type->validate(); // if it fails, ValidationException
       			$this->typeDAO->update($type);
-      			header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+      			header($this->server->getServerProtocol().' 200 Ok');
     		}catch (ValidationException $e) {
-      			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      			header($this->server->getServerProtocol().' 400 Bad request');
       			echo(json_encode($e->getErrors()));
     		}
     	}
@@ -80,13 +80,13 @@ class TypeRest extends BaseRest
 
 		$type = $this->typeDAO->findById($idType);
 		if ($type == NULL) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo("Type with id ".$idType." not found");
       		return;
     	}
 
     	if($type->getOwner()->getLogin() != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("You are not the owner of this type");
       		return;
     	}
@@ -94,9 +94,9 @@ class TypeRest extends BaseRest
     	try {
     		//$this->typeSpendingDAO->deleteByType($idType);
       		$this->typeDAO->delete($idType);
-      		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+      		header($this->server->getServerProtocol().' 200 Ok');
     	}catch (ValidationException $e) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo(json_encode($e->getErrors()));
     	}	
 	}
@@ -107,14 +107,14 @@ class TypeRest extends BaseRest
 
 		$types = $this->typeDAO->findByOwner($owner);
 		if ($types == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("The defined interval time not contains Spendings");
             return;
         }
 
         foreach ($types as $type) {
             if ($type->getOwner()->getLogin() != $currentUser->getLogin()) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+                header($this->server->getServerProtocol() . ' 403 Forbidden');
                 echo("you are not the owner of this type");
                 return;
             }
@@ -129,7 +129,7 @@ class TypeRest extends BaseRest
 			));
 		}
 
-		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+		header($this->server->getServerProtocol().' 200 Ok');
     	header('Content-Type: application/json');
     	echo(json_encode($type_array));
 	}

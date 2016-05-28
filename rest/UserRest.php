@@ -3,6 +3,7 @@
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/BaseRest.php");
+require_once(__DIR__."/../components/ServerWrapper.php");
 /**
  * Refactorizar cuando se cree la clase Server
  * @author acfernandez4
@@ -30,13 +31,13 @@ class UserRest extends BaseRest
 	    	isset($data->country);
 
     	if (!$required || $data->passwd != $data->verifyPass) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+    		header($this->server->getServerProtocol() .' 400 Bad request');
     		echo("The entered passwords do not match");
     		return;
     	}
 
         if (!$this->userDAO->isNewLogin($data->login)) {
-	       	header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	       	header($this->server->getServerProtocol() .' 400 Bad request');
 	    	echo("This user already exits");
 		    return;
         }
@@ -50,8 +51,8 @@ class UserRest extends BaseRest
         try {
             //$user->validate();
             $this->userDAO->save($user);
-            header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-            header("Location: ".$_SERVER['REQUEST_URI']."/".$data->login);
+            header($this->server->getServerProtocol() .' 201 Created');
+            header("Location: ". $this->server->getRequestUri() ."/".$data->login);
         } catch (Exception $e) {
             http_response_code(400);
             echo(json_encode($e->getErrors()));
@@ -73,7 +74,7 @@ class UserRest extends BaseRest
 
 
         if ($user == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("User with id ".$login." not found");
             return;
         }
@@ -89,7 +90,7 @@ class UserRest extends BaseRest
                     isset($data->country);
                 
                 if (!$required) {
-                    header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+                    header($this->server->getServerProtocol() . ' 400 Bad request');
                     echo("The entered data is not valid");
                     return;
                 }
@@ -103,7 +104,7 @@ class UserRest extends BaseRest
 
                 if ($data->passwd != $data->verifyPass) {
                    
-                    header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+                    header($this->server->getServerProtocol() . ' 400 Bad request');
                     echo("The entered passwords do not match");
                     return;
                 }
@@ -119,7 +120,7 @@ class UserRest extends BaseRest
         try {
             //$user->validate();
             $this->userDAO->update($user);
-            header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
+            header($this->server->getServerProtocol() . ' 200 OK');
         } catch (Exception $e) {
             http_response_code(400);
             echo(json_encode($e->getErrors()));
@@ -132,14 +133,14 @@ class UserRest extends BaseRest
     {
     	$currentUser = parent::authenticateUser();
     	if ($login != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		header($this->server->getServerProtocol() . ' 403 Forbidden');
     		echo("You are not authorized to access this resource");
     		return;
     	}
 
     	try {
     		$this->userDAO->delete($login);
-    		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+    		header($this->server->getServerProtocol() . ' 200 Ok');
     	} catch (Exception $e) {
     		http_response_code(400);
     		echo(json_encode($e->getErrors()));
@@ -150,14 +151,14 @@ class UserRest extends BaseRest
     {
         $currentUser = parent::authenticateUser();
         if ($login != $currentUser->getLogin()) {
-            header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+            header($this->server->getServerProtocol() . ' 403 Forbidden');
             echo("You are not authorized to access this resource");
             return;
         } 
 
 	    $user = $this->userDAO->findByID($login);
         if ($user == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo ("User with login ".$login." not found");
             return;
         }
@@ -172,7 +173,7 @@ class UserRest extends BaseRest
             "country" => $user->getCountry()
         );
         
-        header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+        header($this->server->getServerProtocol() . ' 200 Ok');
         header('Content-Type: application/json');
         echo(json_encode($user_array));        
         
@@ -182,10 +183,10 @@ class UserRest extends BaseRest
     {
         $currentLogged = parent::authenticateUser();
         if($currentLogged->getLogin() != $login) {
-            header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+            header($this->server->getServerProtocol() . ' 403 Forbidden');
             echo("You are not authorized to login as anyone but you");
         } else {
-            header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+            header($this->server->getServerProtocol() . ' 200 Ok');
             echo("Hello ".$login);
         }
         

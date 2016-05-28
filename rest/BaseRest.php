@@ -2,11 +2,16 @@
 
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../database/UserDAO.php");
+require_once(__DIR__."/../components/ServerWrapper.php");
 
 class BaseRest
 {
     
-    public function __construct() { }
+    protected $server;
+
+    public function __construct() { 
+        $this->server = new ServerWrapper();
+    }
     
     
     public function authenticateUser()

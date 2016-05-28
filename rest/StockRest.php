@@ -14,12 +14,15 @@ require_once(__DIR__."/../database/RevenueDAO.php");
 
 
 require_once(__DIR__."/../rest/BaseRest.php");
+require_once(__DIR__."/../components/ServerWrapper.php");
 
 class StockRest extends BaseRest
 {
 	private $stockDAO;
 	private $spendingDAO;
 	private $revenueDAO;
+
+  
 	
 	public function __construct()
 	{
@@ -27,6 +30,8 @@ class StockRest extends BaseRest
         $this->stockDAO = new StockDAO();
         $this->spendingDAO = new SpendingDAO();
         $this->revenueDAO = new RevenueDAO();
+
+        
 	}
 
 	public function create($data)
@@ -43,12 +48,12 @@ class StockRest extends BaseRest
 	    	try {
 	    		//$stock->validate();	
 	    		$idStock = $this->stockDAO->save($stock);
-	    		header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-	      		header('Location: '.$_SERVER['REQUEST_URI']."/".$idStock);
+	    		header($this->server->getServerProtocol() .' 201 Created');
+	      		header('Location: '. $this->server->getRequestUri() ."/".$idStock);
 	      		header('Content-Type: application/json');
 
 	    	} catch (ValidationException $e) {
-	    		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+	    		header($this->server->getServerProtocol() .' 400 Bad request');
 	      		echo(json_encode($e->getErrors()));
 	    	}
 	    }
@@ -80,7 +85,7 @@ class StockRest extends BaseRest
       			// validate Post object
       			//$stock->validate(); // if it fails, ValidationException
       			$this->stockDAO->update($stock);
-      			header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+      			header($this->server->getServerProtocol() .' 200 Ok');
     		}catch (ValidationException $e) {
       			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
       			echo(json_encode($e->getErrors()));
@@ -109,9 +114,9 @@ class StockRest extends BaseRest
 
     	try {
       		$this->stockDAO->delete($idStock);
-      		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+      		header($this->server->getServerProtocol() .' 200 Ok');
     	}catch (ValidationException $e) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol() .' 400 Bad request');
       		echo(json_encode($e->getErrors()));
     	}	
 
@@ -155,7 +160,7 @@ class StockRest extends BaseRest
             }
                 
 
-		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+		header($this->server->getServerProtocol() .' 200 Ok');
     	header('Content-Type: application/json');
     	echo(json_encode($stock_array));
 	}
