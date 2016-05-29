@@ -3,14 +3,18 @@
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/../components/ServerWrapper.php");
+require_once(__DIR__."/../components/RequestWrapper.php");
 
 class BaseRest
 {
     
     protected $server;
+    protected $request;
 
-    public function __construct() { 
+    public function __construct() 
+    { 
         $this->server = new ServerWrapper();
+        $this->request = new RequestWrapper();
     }
     
     

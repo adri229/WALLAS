@@ -9,28 +9,28 @@ class ServerWrapper
 	
 	function __construct()
 	{
-		
+		$this->server = $_SERVER;
 	}
 
 	public function getPhpAuthUser()
 	{
-		return $_SERVER['PHP_AUTH_USER'];
+		return $this->server['PHP_AUTH_USER'];
 	}
 
 
 	public function getPhpAuthPw()
 	{
-		return $_SERVER['PHP_AUTH_PW'];
+		return $this->server['PHP_AUTH_PW'];
 	}
 
 	public function getServerProtocol()
 	{
-		return $_SERVER['SERVER_PROTOCOL'];
+		return $this->server['SERVER_PROTOCOL'];
 	}
 
 	public function getRequestUri()
 	{
-		return $_SERVER['REQUEST_URI'];
+		return $this->server['REQUEST_URI'];
 	}
 }
 ?>

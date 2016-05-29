@@ -9,5 +9,5 @@ curl -i -X GET -u adri229:adri229 "http://localhost/wallas/rest/stocks/adri229/s
 curl -i -X GET -u adri229:adri229 http://localhost/wallas/rest/stocks/adri229/chart?startDate=1451602800&endDate=1463176800
 
 
-curl -i -X GET -u adri229:adri229 "http://localhost/wallas/rest/stocks/adri229/stocks?startDate=1451602800&endDate=1463522400"
+curl -i -X GET -u adri229:adri229 "http://localhost/wallas/rest/stocks/adri229?startDate=2015-12-31T23:0Z&endDate=2016-5-29T22:0Z"
 

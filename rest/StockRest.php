@@ -65,14 +65,14 @@ class StockRest extends BaseRest
 
 		$stock = $this->stockDAO->findById($idStock);
 		if ($stock == NULL) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo("Stock with id ".$idStock." not found");
       		return;
     	}
 
 
     	if($stock->getOwner()->getLogin() != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("you are not the owner of this stock");
       		return;
     	}
@@ -87,7 +87,7 @@ class StockRest extends BaseRest
       			$this->stockDAO->update($stock);
       			header($this->server->getServerProtocol() .' 200 Ok');
     		}catch (ValidationException $e) {
-      			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      			header($this->server->getServerProtocol().' 400 Bad request');
       			echo(json_encode($e->getErrors()));
     		}
     	}
@@ -100,14 +100,14 @@ class StockRest extends BaseRest
 		
 		$stock = $this->stockDAO->findById($idStock);
 		if ($stock == NULL) {
-      		header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+      		header($this->server->getServerProtocol().' 400 Bad request');
       		echo("Stock with id ".$idStock." not found");
       		return;
     	}
 
 
     	if($stock->getOwner()->getLogin() != $currentUser->getLogin()) {
-    		header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+    		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("you are not the owner of this stock");
       		return;
     	}
@@ -129,21 +129,21 @@ class StockRest extends BaseRest
 
 		$currentUser = parent::authenticateUser();
 
-        $startDate = $_GET['startDate'];
-        $endDate = $_GET['endDate'];
 
+        $startDate = $this->request->getStartDate();
+        $endDate = $this->request->getEndDate();
 
        
         $stocks = $this->stockDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
         if ($stocks == NULL) {
-            header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+            header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("The defined interval time not contains stocks");
         	return;
         }
 
         foreach ($stocks as $stock) {
             if ($stock->getOwner()->getLogin() != $currentUser->getLogin()) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+                header($this->server->getServerProtocol() . ' 403 Forbidden');
                 echo("you are not the owner of this stock");
                 return;
             }
