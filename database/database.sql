@@ -82,11 +82,11 @@ INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`, `country`) VA
 
 
 INSERT INTO `SPENDING` (`dateSpending`,`quantity`,`name`,`owner`) VALUES 
-('2016-02-10 23:00:00', '20','desayuno','adri229'),
-('2016-02-10 00:00:00', '40','comida','adri229'),
-('2016-02-13 23:00:00', '25','merienda','adri229'),
-('2016-02-15 23:00:00', '10','cena','adri229'),
-('2016-03-15 00:00:00', '50','videojuegos','adri229'),
+('2016-02-10 23:00:00', '5','desayuno','adri229'),
+('2016-02-10 00:00:00', '10','domingo','adri229'),
+('2016-02-13 23:00:00', '10','sabado tarde','adri229'),
+('2016-02-15 23:00:00', '50','sabado noche','adri229'),
+('2016-03-15 00:00:00', '300','vacaciones','adri229'),
 ('2016-03-16 03:00:00', '20','cine','adri229'),
 ('2016-03-20 23:00:00', '45','gasolina','adri229'),
 ('2016-03-20 10:00:00', '15','netflix','adri229'),
@@ -126,14 +126,23 @@ INSERT INTO `STOCK` (`dateStock`,`total`,`owner`) VALUES
 
 INSERT INTO `TYPE` (`name`,`owner`) VALUES
 ('coffe','adri229'),
+('leisure','adri229'),
+('cinema','adri229'),
+('restaurant','adri229'),
+('computer games','adri229'),
 ('underground','adri229'),
 ('bus','adri229'),
 ('taxi','adri229'),
-('CocaCola','adri229'),
-('loaf','adri229');
+('travel','adri229');
 
 
 INSERT INTO `TYPE_SPENDING` (`type`,`spending`) VALUES 
 ('1','1'),
-('2','1'),
-('5','1');
+('2','2'),
+('1','3'),
+('2','3'),
+('2','4'),
+('3','4'),
+('4','4'),
+('6','5'),
+('9','5');

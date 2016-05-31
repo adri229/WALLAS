@@ -3,85 +3,24 @@
 <div class="form-group interval" role="form">
     <div class="col-md-12">
         <div class="form-group row">
-            <label class="col-md-1 control-label">Since</label>
+            <label class="col-md-1 control-label">From</label>
             <div class="col-md-2">
-                <input placeholder="Year" type="text" class="form-control" list="yearsSince" name="yearsSince" ng-model="yearsSince">
-                  <datalist id="yearsSince">
-                    <option value="2030">
-                    <option value="2029">
-                    <option value="2028">
-                    <option value="2027">
-                    <option value="2026">
-                    <option value="2025">
-                    <option value="2024">
-                    <option value="2023">
-                    <option value="2022">
-                    <option value="2021">
-                    <option value="2020">
-                    <option value="2019">
-                    <option value="2018">
-                    <option value="2017">
-                    <option value="2016">
-                    <option value="2015">
-                  </datalist>
+                <select class="form-control" ng-model="yearFromSelect" ng-options="year.id as year.name for year in years" ng-change="changeIntervalDate()">
+                </select>
             </div>
             <div class="col-md-2">
-                <input placeholder="Month" type="text" class="form-control" list="monthsSince" name="monthsSince" ng-model="monthsSince">
-                  <datalist id="monthsSince">
-                    <option label="January" value="01">
-                    <option label="February" value="02">
-                    <option label="March" value="03">
-                    <option label="April" value="04">
-                    <option label="May" value="05">
-                    <option label="June" value="06">
-                    <option label="July" value="07">
-                    <option label="August" value="08">
-                    <option label="September" value="09">
-                    <option label="October" value="10">
-                    <option label="November" value="11">
-                    <option label="December" value="12">
-                  </datalist>
+                <select class="form-control" ng-model="monthFromSelect" ng-options="month.id as month.name for month in months" ng-change="changeIntervalDate()">
+                </select>
             </div>
-            <label class="col-md-1 control-label">Ago</label>
+            <label class="col-md-1 control-label">To</label>
             <div class="col-md-2">
-                <input placeholder="Year" type="text" class="form-control" list="yearsAgo" name="yearsAgo" ng-model="yearsAgo">
-                  <datalist id="yearsAgo">
-                    <option value="2030">
-                    <option value="2029">
-                    <option value="2028">
-                    <option value="2027">
-                    <option value="2026">
-                    <option value="2025">
-                    <option value="2024">
-                    <option value="2023">
-                    <option value="2022">
-                    <option value="2021">
-                    <option value="2020">
-                    <option value="2019">
-                    <option value="2018">
-                    <option value="2017">
-                    <option value="2016">
-                    <option value="2015">
-                  </datalist>
+                <select class="form-control" ng-model="yearToSelect" ng-options="year.id as year.name for year in years" ng-change="changeIntervalDate()">
+                </select>
             </div>
             <div class="col-md-2">
-                <input placeholder="Month" type="text" class="form-control" list="monthsAgo" name="monthsAgo" ng-model="monthsAgo" ng-change="changeChartPositions()">
-                  <datalist id="monthsAgo">
-                    <option label="January" value="01">
-                    <option label="February" value="02">
-                    <option label="March" value="03">
-                    <option label="April" value="04">
-                    <option label="May" value="05">
-                    <option label="June" value="06">
-                    <option label="July" value="07">
-                    <option label="August" value="08">
-                    <option label="September" value="09">
-                    <option label="October" value="10">
-                    <option label="November" value="11">
-                    <option label="December" value="12">
-                  </datalist>
+                <select class="form-control" ng-model="monthToSelect" ng-options="month.id as month.name for month in months" ng-change="changeIntervalDate()">
+                </select>
             </div>
-            <button type="button" class="btn btn-primary" ng-click="changeChartPositions()"> Show charts</button>
         </div>
     </div>
 </div>
