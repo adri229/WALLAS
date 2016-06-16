@@ -9,7 +9,7 @@
                 <form name="createStockForm" accept-charset="UTF-8" role="form" >
                     <md-input-container class="md-block" flex-gt-xs>
                         <label>Total</label>
-                        <input ng-model="stock.total" type="text" required="" name="total" autofocus>
+                        <input ng-model="stock.total" type="number" required="" name="total" autofocus>
                     </md-input-container>
                   </md-input-container>
                   <p class="input-group">
@@ -20,7 +20,13 @@
                   </p>
                 </form>
             </md-content>
-       <button type="button" class="btn btn-primary" ng-disabled="createStockForm.$invalid" ng-click="create(stock)">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <div class="modal-body" ng-init="alertStock = false" >
+                <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertStock" ng-show="alertStock">{{msg}}</uib-alert> 
+            </div>
+       <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-disabled="createStockForm.$invalid" ng-click="create(stock)"><span class="glyphicon glyphicon-ok-sign"></span> OK</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+      </div>
+       
         </div>
     </div>

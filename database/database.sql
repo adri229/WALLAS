@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `TYPE` (
     `idType` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del tipo de gasto, unico y auto incremental',
     `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
     `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
+    UNIQUE(name),
     PRIMARY KEY (`idType`),
     FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de los tipos de gastos' AUTO_INCREMENT=1;
@@ -117,11 +118,11 @@ INSERT INTO `REVENUE` (`dateRevenue`,`quantity`,`name`,`owner`) VALUES
 
 
 INSERT INTO `STOCK` (`dateStock`,`total`,`owner`) VALUES
-('2015-01-10 23:00:00', '500', 'adri229'),
-('2016-02-10 00:00:00', '390', 'adri229'),
-('2016-02-13 23:00:00', '300', 'adri229'),
-('2016-02-15 23:00:00', '400', 'adri229'),
-('2016-04-15 00:00:00', '1000', 'adri229');
+('2015-01-10 22:00:00', '500', 'adri229'),
+('2016-02-10 22:00:00', '390', 'adri229'),
+('2016-02-13 22:00:00', '300', 'adri229'),
+('2016-02-15 22:00:00', '400', 'adri229'),
+('2016-04-15 22:00:00', '1000', 'adri229');
 
 
 INSERT INTO `TYPE` (`name`,`owner`) VALUES

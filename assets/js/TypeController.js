@@ -8,7 +8,20 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
   	var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
 
+
     $scope.hide = false;
+    $scope.searchType = '';
+
+    $scope.changeSort = function() {
+        if ($scope.sortType == 'name') {
+            $scope.sortType = '-name';
+            $scope.classSort = 'fa fa-caret-up';
+        } else {
+        	$scope.sortType = 'name';
+            $scope.classSort = 'fa fa-caret-down';
+        }
+
+    }
 
     function notification(msg, type) {
         $scope.message = msg;
@@ -17,8 +30,11 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
         $scope.show = true;
     }
 
-	function refreshTypes() {
 
+	function refreshTypes() {
+        $scope.sortType = 'name';
+        $scope.classSort = 'fa fa-caret-down';
+        
 		TypeService.getByOwner(login).then(
 	  		function(response) {
 				$scope.types = response;
@@ -51,6 +67,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
   				refreshTypes();
   			},
   			function(response) {
+  				console.log(response);
   				if (response.localeCompare("cancel") != 0) {
                     notification("An error ocurred!", "danger");
                 }
@@ -84,6 +101,8 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
             function(response) {
                 if (response.localeCompare("cancel") != 0) {
                     notification("An error ocurred!", "danger");
+                } else {
+                    refreshTypes();
                 }
             }
         )
@@ -123,9 +142,9 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
 
     $scope.show = true;
   
-  	$scope.closeAlert = function(index) {
-    	$scope.show = false;
-	};
+    $scope.closeAlert = function(index) {
+        $scope.show = false;
+    };
 
 
 }]);

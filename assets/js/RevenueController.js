@@ -9,6 +9,43 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
     var login = user.currentUser.login;
 
     $scope.hide = false;
+    $scope.searchRevenue = '';
+
+    $scope.changeSort = function(sort) {
+        switch (sort) {
+            case 1: 
+                if ($scope.sortRevenue == 'name') {
+                    $scope.sortRevenue = '-name';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortRevenue = 'name';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            case 2:
+                if ($scope.sortRevenue == 'quantity') {
+                    $scope.sortRevenue = '-quantity';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortRevenue = 'quantity';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            case 3:
+                if ($scope.sortRevenue == 'date') {
+                    $scope.sortRevenue = '-date';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortRevenue = 'date';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            default:
+                break;
+        }
+        
+
+    }
 
     function notification(msg, type) {
         $scope.message = msg;
@@ -18,6 +55,9 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
     }
 
     function refreshRevenues(startDate, endDate){
+        $scope.sortRevenue = 'name';
+        $scope.classSort = 'fa fa-caret-down';
+
     	RevenueService.getByOwner(login, startDate, endDate).then(
             function(response) {
                 $scope.revenues = response;
@@ -26,10 +66,9 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
                 notification("You don't have any revenues", "info");
                 $scope.revenues = null;
             }
-
-
         );
     }
+
  	var defaultStartDate = new Date();
     defaultStartDate.setHours(0);
     defaultStartDate.setMinutes(0);
@@ -114,6 +153,12 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
             function(response) {
                 if (response.localeCompare("cancel") != 0) {
                     notification("An error ocurred!", "danger");
+                } else {
+                	if ($scope.startDate == null || $scope.endDate == null) {
+                    	refreshRevenues(defaultStartDate, defaultEndDate);
+                	} else {
+                    	refreshRevenues($scope.startDate, $scope.endDate);  
+                	}
                 }
             }
         )

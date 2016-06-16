@@ -19,8 +19,7 @@ require_once(__DIR__."/../components/ServerWrapper.php");
 class StockRest extends BaseRest
 {
 	private $stockDAO;
-	private $spendingDAO;
-	private $revenueDAO;
+
 
   
 	
@@ -28,10 +27,6 @@ class StockRest extends BaseRest
 	{
         parent::__construct();
         $this->stockDAO = new StockDAO();
-        $this->spendingDAO = new SpendingDAO();
-        $this->revenueDAO = new RevenueDAO();
-
-        
 	}
 
 	public function create($data)
@@ -128,7 +123,6 @@ class StockRest extends BaseRest
 	{
 
 		$currentUser = parent::authenticateUser();
-
 
         $startDate = $this->request->getStartDate();
         $endDate = $this->request->getEndDate();

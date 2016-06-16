@@ -8,6 +8,11 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 		var user = $cookies.getObject('globals');
     	var login = user.currentUser.login;
 
+    	if (spendings != null) {
+    		console.log(spendings);
+    		$scope.spending = spendings.spending;
+    	}
+
 		function getTypes() {
         	TypeService.getByOwner(login).then(
 	            function(response) {
@@ -28,7 +33,9 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error create");
+					console.log(response);
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertSpending = true;
 				}
 			)
 		}
@@ -43,7 +50,8 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error update");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertSpending = true;
 				}	
 			)
 		}
@@ -56,7 +64,8 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error update");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertSpending = true;
 				}	
 			)
 
@@ -104,8 +113,17 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 					getTypes();
 				},
 				function(response) {
-					alert("error create");
+					if (response.data == 'This type already exits') {
+	    				$scope.msg = 'This type already exits';
+	    			} else {
+	    				$scope.msg = 'An error ocurred';
+	    			}
+	    			$scope.alertSpending = true;
 				}
 			)
       	}
+
+      	$scope.closeAlert = function(index) {
+        	$scope.alertSpending = false;
+    	};
 }]);

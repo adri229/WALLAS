@@ -37,24 +37,13 @@ class PositionRest extends BaseRest
 
 		$currentUser = parent::authenticateUser();
 
-        $startDate = $_GET['startDate'];
-        $endDate = $_GET['endDate'];
-
+        $startDate = $this->request->getStartDate();
+        $endDate = $this->request->getEndDate();
         
         $stockRef = $this->stockDAO->findByOwnerAndDate($owner, $startDate);
-        if ($stockRef == NULL) {
-            header($this->server->getServerProtocol() . ' 400 Bad request');
-            echo("The defined interval time not contains stocks");
-            return;
-        }
+        
+        
         $stocks = $this->stockDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
-                
-        if ($stocks == NULL) {
-            header($this->server->getServerProtocol() . ' 400 Bad request');
-            echo("The defined interval time not contains stocks");
-            return;
-        }
-	
         $spendings = $this->spendingDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
         $revenues = $this->revenueDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
        	
@@ -74,27 +63,46 @@ class PositionRest extends BaseRest
             $aux = new DateTime($dt->format("Y-m-d"));
             $initMonth = $dt;
             $topMonth = $aux->add($interval);
-            
-            $quantitySpendings = 0;
-            foreach ($spendings as $spending) {
-                if ($spending->getDate() >= $initMonth->format("Y-m-d")  && $spending->getDate() < $topMonth->format("Y-m-d")) {
-                    $quantitySpendings += $spending->getQuantity();
+
+            foreach ($stocks as $stock) {
+                if ($stock->getDate() >= $initMonth->format("Y-m-d")  && $stock->getDate() < $topMonth->format("Y-m-d")) {
+                    $stockRef = $stock;
                 }
             }
 
+            $quantitySpendings = 0;
+            foreach ($spendings as $spending) {
+                if ($stockRef != NULL) {
+                    if ($spending->getDate() >= $stockRef->getDate()  && $spending->getDate() <= $topMonth->format("Y-m-d")) {
+                        $quantitySpendings += $spending->getQuantity();
+                    }
+                } else {
+                    if ($spending->getDate() <= $topMonth->format("Y-m-d")) {
+                        $quantitySpendings += $spending->getQuantity();
+                    }
+                }
+            }
+            
             $quantityRevenues = 0;
             foreach ($revenues as $revenue) {
-                if ($revenue->getDate() >= $initMonth->format("Y-m-d")  && $revenue->getDate() < $topMonth->format("Y-m-d")) {
-                    $quantityRevenues += $revenue->getQuantity();
-                }
+                if ($stockRef != NULL) {
+                    if ($revenue->getDate() >= $stockRef->getDate()  && $revenue->getDate() < $topMonth->format("Y-m-d")) {
+                        $quantityRevenues += $revenue->getQuantity();
+                    }                        
+                } else {
+                    if ($revenue->getDate() <= $topMonth->format("Y-m-d")) {
+                        $quantityRevenues += $revenue->getQuantity();
+                    }
+                }    
             }
-       
-            foreach ($stocks as $stock) {
-            	if ($stock->getDate() >= $initMonth->format("Y-m-d")  && $stock->getDate() < $topMonth->format("Y-m-d")) {
-                	$stockRef = $stock;
-                }
-            }
-			$total = $stockRef->getTotal() + $quantityRevenues - $quantitySpendings;
+
+            
+       		if ($stockRef != NULL) {
+       			$total = $stockRef->getTotal() + $quantityRevenues - $quantitySpendings;	
+       		} else {
+       			$total = $quantityRevenues - $quantitySpendings;
+       		}
+			
 			
 			$stockChart = new Stock();
 			$stockChart->setTotal($total);

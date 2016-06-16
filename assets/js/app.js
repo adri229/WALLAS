@@ -50,6 +50,16 @@ wallas.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'assets/html/positions.html',
                 controller: 'PositionController'
             }).
+            when('/percents', {
+                pageTitle: 'Percents - WALLAS',
+                templateUrl: 'assets/html/percents.html',
+                controller: 'PercentSpendingController'
+            }).
+            when('/dashboard', {
+                pageTitle: 'Home - WALLAS',
+                templateUrl: 'assets/html/dashboard.html',
+                controller: 'DashboardController'
+            }).
             otherwise({
                 redirectTo: '/'
             });

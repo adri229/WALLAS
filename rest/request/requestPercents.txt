@@ -1,0 +1,1 @@
+curl -i -X GET -u adri229:adri229 "http://localhost/wallas/rest/percents/adri229?startDate=2016-01-01&endDate=2016-05-31"

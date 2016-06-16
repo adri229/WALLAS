@@ -1,0 +1,38 @@
+<div class="interval">
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary" ng-click="intervalDate(1)">Last Month</button>
+      <button type="button" class="btn btn-primary" ng-click="intervalDate(2)">Last Quarter</button>
+      <button type="button" class="btn btn-primary" ng-click="intervalDate(3)">Last Year</button>
+    </div>
+
+
+<div class="form-group" role="form">
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-md-1 control-label">From</label>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="yearFromSelect" ng-options="year.id as year.name for year in years" ng-change="changeIntervalDate()">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="monthFromSelect" ng-options="month.id as month.name for month in months" ng-change="changeIntervalDate()">
+                </select>
+            </div>
+            <label class="col-md-1 control-label">To</label>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="yearToSelect" ng-options="year.id as year.name for year in years" ng-change="changeIntervalDate()">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="monthToSelect" ng-options="month.id as month.name for month in months" ng-change="changeIntervalDate()">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div >
+	<highchart id="percentChart" config="chartConfigPercents" class="span10"></highchart>
+</div>
+

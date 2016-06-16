@@ -11,8 +11,12 @@ wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeSe
 	    			$uibModalInstance.close('closed');
 	    		},
 	    		function(response) {
-	    			alert("error create");
-	            	console.log(response);
+	    			if (response.data == 'This type already exits') {
+	    				$scope.msg = 'This type already exits';
+	    			} else {
+	    				$scope.msg = 'An error ocurred';
+	    			}
+	    			$scope.alertType = true;
 	    		}
 
     		)
@@ -29,8 +33,12 @@ wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeSe
 	    			$uibModalInstance.close('closed');
 	    		},
 	    		function(response) {
-	    			alert("error update TypeModalController");
-	            	console.log(response);
+	    			if (response.data == 'This type already exits') {
+	    				$scope.msg = 'This type already exits';
+	    			} else {
+	    				$scope.msg = 'An error ocurred';
+	    			}
+	    			$scope.alertType = true;
 	    		}
 
 			);
@@ -42,8 +50,8 @@ wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeSe
 					$uibModalInstance.close('closed');	
 				},
 				function(response) {
-	    			alert("error delete TypeModalController");
-	            	console.log(response);
+	    			$scope.msg = 'An error ocurred';
+	    			$scope.alertType = true;
 	    		}
 			);
 		}
@@ -59,4 +67,8 @@ wallas.controller('TypeModalController', ['$scope', '$uibModalInstance', 'TypeSe
 	    $scope.cancel = function () {
 	        $uibModalInstance.dismiss('cancel');
 	    };
+
+	    $scope.closeAlert = function(index) {
+        	$scope.alertType = false;
+    	};
 	}]);

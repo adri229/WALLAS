@@ -167,8 +167,8 @@ class SpendingRest extends BaseRest {
     public function getByOwner($owner, $param) {
         $currentUser = parent::authenticateUser();
 
-        $startDate = $_GET["startDate"];
-        $endDate = $_GET["endDate"];
+        $startDate = $this->request->getStartDate();
+        $endDate = $this->request->getEndDate();
 
         $spendings = [];
         $spendings_array = [];
@@ -255,7 +255,7 @@ class SpendingRest extends BaseRest {
                 break;
         }
 
-        
+
 
 
 

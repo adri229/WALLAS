@@ -11,7 +11,8 @@ wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'Stock
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error create");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertStock = true;
 				}
 			)
 		}
@@ -29,7 +30,8 @@ wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'Stock
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error update");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertStock = true;
 				}
 			)
 		}
@@ -42,7 +44,8 @@ wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'Stock
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error delete");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertStock = true;
 				}
 			)
 		}
@@ -62,5 +65,9 @@ wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'Stock
 		$scope.opendate = function() {
 		    $scope.datepopupOpened = true;
 		};
+
+		$scope.closeAlert = function(index) {
+        	$scope.alertStock = false;
+    	};
 
 	}]);

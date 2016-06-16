@@ -14,7 +14,12 @@
                   </md-input-container>
                 </form>
             </md-content>
-       <button type="button" class="btn btn-primary" ng-disabled="addTypeForm.$invalid" ng-click="create(type)">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <div class="modal-body" ng-init="alertType = false" >
+                <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertType" ng-show="alertType">{{msg}}</uib-alert> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-disabled="addTypeForm.$invalid" ng-click="create(type)"><span class="glyphicon glyphicon-ok-sign"></span> OK</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+             </div>
         </div>
     </div>  

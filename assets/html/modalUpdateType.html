@@ -6,13 +6,20 @@
                 </h2>
             </md-toolbar>
             <md-content layout-padding>
+                <form name="editTypeForm" accept-charset="UTF-8" role="form" >
                 <md-input-container class="md-block" flex-gt-xs>
                         <label>Name</label>
-                        <input ng-model="type.name" type="text" required="" name="total" autofocus>
+                        <input ng-model="type.name" type="text" required="" name="name" autofocus>
                     </md-input-container>
                   </md-input-container>
+                  </form>
             </md-content>
-       <button type="button" class="btn btn-primary" ng-disabled="editTypeForm.$invalid" ng-click="update(type)">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <div class="modal-body" ng-init="alertType = false" >
+                <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertType" ng-show="alertType">{{msg}}</uib-alert> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-disabled="editTypeForm.$invalid" ng-click="update(type)"><span class="glyphicon glyphicon-ok-sign"></span> OK</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            </div>
         </div>
     </div>  

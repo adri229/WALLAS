@@ -5,6 +5,9 @@
     </div>
     <div class="modal-body">
         <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Type?</div>
+        <div ng-init="alertType = false" >
+                <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertType" ng-show="alertType">{{msg}}</uib-alert> 
+            </div>
     </div>
     <div class="modal-footer ">
         <button type="button" class="btn btn-success" ng-click="delete(type)"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>

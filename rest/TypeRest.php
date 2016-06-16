@@ -27,6 +27,12 @@ class TypeRest extends BaseRest
 		$currentUser = parent::authenticateUser();
 		$type = new Type();
 
+		if (!$this->typeDAO->isNewType($data->name)) {
+	       	header($this->server->getServerProtocol() .' 400 Bad request');
+	    	echo("This type already exits");
+		    return;
+        }
+
 		if(isset($data->name)) {
 			$type->setName($data->name);
 			$type->setOwner($currentUser->getLogin());
@@ -53,6 +59,12 @@ class TypeRest extends BaseRest
       		echo("Type with id ".$idType." not found");
       		return;
     	}
+
+    	if (!$this->typeDAO->isNewType($data->name)) {
+	       	header($this->server->getServerProtocol() .' 400 Bad request');
+	    	echo("This type already exits");
+		    return;
+        }
 
     	if($type->getOwner()->getLogin() != $currentUser->getLogin()) {
     		header($this->server->getServerProtocol().' 403 Forbidden');

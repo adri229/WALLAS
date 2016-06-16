@@ -9,6 +9,43 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
     var login = user.currentUser.login;
 
     $scope.hide = false;
+    $scope.searchSpending = '';
+
+    $scope.changeSort = function(sort) {
+        switch (sort) {
+            case 1: 
+                if ($scope.sortSpending == 'name') {
+                    $scope.sortSpending = '-name';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortSpending = 'name';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            case 2:
+                if ($scope.sortSpending == 'quantity') {
+                    $scope.sortSpending = '-quantity';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortSpending = 'quantity';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            case 3:
+                if ($scope.sortSpending == 'date') {
+                    $scope.sortSpending = '-date';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortSpending = 'date';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            default:
+                break;
+        }
+        
+
+    }
 
     function notification(msg, type) {
         $scope.message = msg;
@@ -18,6 +55,9 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
     }
 
     function refreshSpendings(startDate, endDate) {
+        $scope.sortSpending = 'date';
+        $scope.classSort = 'fa fa-caret-down';
+
         SpendingService.getByOwner(login, startDate, endDate).then(
             function(response) {
                 $scope.spendings = response;
@@ -124,6 +164,12 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             function(response) {
                 if (response.localeCompare("cancel") != 0 ) {
                     notification("An error ocurred!", "danger");
+                } else {
+                    if ($scope.startDate == null || $scope.endDate == null) {
+                       refreshSpendings(defaultStartDate, defaultEndDate);
+                    } else {
+                        refreshSpendings($scope.startDate, $scope.endDate);  
+                    }
                 }
             }
         )

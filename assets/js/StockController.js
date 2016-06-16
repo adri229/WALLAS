@@ -10,6 +10,33 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 
     $scope.hide = false;
 
+    $scope.changeSort = function(sort) {
+        switch (sort) {
+            case 1: 
+                if ($scope.sortStock == 'total') {
+                    $scope.sortStock = '-total';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortStock = 'total';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            case 2:
+                if ($scope.sortStock == 'date') {
+                    $scope.sortStock = '-date';
+                    $scope.classSort = 'fa fa-caret-up';
+                } else {
+                    $scope.sortStock = 'date';
+                    $scope.classSort = 'fa fa-caret-down';
+                }
+                break;
+            default:
+                break;
+        }
+        
+
+    }
+
     function notification(msg, type) {
         $scope.message = msg;
         $scope.type = type;
@@ -18,6 +45,9 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
     }
 
     function refreshStocks(startDate, endDate) {
+        $scope.sortStock = 'total';
+        $scope.classSort = 'fa fa-caret-down';
+        
     	StockService.getByOwner(login, startDate, endDate).then(
 	  		function(response) {
 				$scope.stocks = response;
@@ -72,7 +102,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
                     refreshStocks($scope.startDate, $scope.endDate);  
                 }
   			},
-  			function() {
+  			function(response) {
   				if (response.localeCompare("cancel") != 0 ) {
                     notification("An error ocurred!", "danger");
                 }
@@ -108,9 +138,15 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
                     refreshStocks($scope.startDate, $scope.endDate);  
                 }
             },
-            function() {
+            function(response) {
                 if (response.localeCompare("cancel") != 0 ) {
                     notification("An error ocurred!", "danger");
+                } else {
+                    if ($scope.startDate == null || $scope.endDate == null) {
+                       refreshStocks(defaultStartDate, defaultEndDate);
+                    } else {
+                        refreshStocks($scope.startDate, $scope.endDate);  
+                    }      
                 }
             }
         )
@@ -142,7 +178,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
                     refreshStocks($scope.startDate, $scope.endDate);  
                 }
             },
-            function() {
+            function(response) {
                 if (response.localeCompare("cancel") != 0 ) {
                     notification("An error ocurred!", "danger");
                 }

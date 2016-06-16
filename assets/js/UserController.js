@@ -8,6 +8,14 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
 
 	var login = user.currentUser.login;
 	
+    $scope.hide = false;
+
+    function notification(msg, type) {
+        $scope.message = msg;
+        $scope.type = type;
+        $scope.hide = true;
+        $scope.show = true;
+    }
 
 	function refreshUser() {
 		UserService.getByLogin(login).then(
@@ -15,8 +23,7 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
 				$scope.user = response;
 			},
 			function(response) {
-				alert("error");
-	        	console.log(response);
+				notification("An error ocurred!", "danger");
 			}
 		);
 	}
@@ -42,9 +49,13 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
         uibmodalInstance.result.then(
             function(response) {
                 refreshUser();
+                notification("Account updated successfully", "success");
+                alert($scope.message);
             },
-            function() {
-                alert("error update");
+            function(response) {
+                if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
   }
@@ -69,8 +80,10 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
             function(response) {
                 $location.path('/login');
             },
-            function() {
-                alert("error update");
+            function(response) {
+                if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
     }
@@ -95,14 +108,21 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
             function(response) {
                 $location.path('/login');
             },
-            function() {
-                alert("error delete");
+            function(response) {
+                if (response.localeCompare("cancel") != 0) {
+                    notification("An error ocurred!", "danger");
+                }
             }
         )
 	
 	}
 
 	
+    $scope.show = true;
+  
+    $scope.closeAlert = function(index) {
+        $scope.show = false;
+    };
 
 	
 }]); 

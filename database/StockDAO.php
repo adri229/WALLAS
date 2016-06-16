@@ -11,20 +11,6 @@ class StockDAO
         $this->db = PDOConnection::getInstance ();
     }
 
-    public function findByOwner($owner)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM STOCK WHERE owner = ?");
-        $stmt->execute(array($owner));
-        $stocks_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $stocks = array();
-
-        foreach ($stocks_db as $stock) {
-            array_push($stocks, new Stock($stock["idStock"],$stock["dateStock"],
-                    $stock["total"], new User($stock["owner"])));
-        }
-        return $stocks;
-    }
 
     public function findByOwnerAndFilter($owner, $startDate, $endDate)
     {
@@ -36,7 +22,7 @@ class StockDAO
         $stocks = array();
 
         foreach ($stocks_db as $stock) {
-            array_push($stocks, new Stock($stock["idStock"],str_replace(" ","T", $stock["dateStock"])."Z",
+            array_push($stocks, new Stock($stock["idStock"],$stock["dateStock"],
                     $stock["total"], new User($stock["owner"])));
         }
         return $stocks;

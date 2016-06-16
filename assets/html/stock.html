@@ -16,14 +16,14 @@
     	<table class="row-border table table-condensed table-responsive table-hover table-striped">
     		<thead>
     			<tr>
-                    <th>Total</th>
-                    <th>Date</th>
-                    <th></th>	
-                </tr>
+              <th ng-click="changeSort(1)"><span ng-class="classSort" >Total</span> </th>
+              <th ng-click="changeSort(2)"><span ng-class="classSort" >Date</span> </th>
+              <th></th>	
+          </tr>
     		</thead>
 		  <tbody>
-		    <tr ng-repeat="stock in stocks.data">
-		       <td>{{stock.total}}</td>
+		    <tr ng-repeat="stock in stocks.data | orderBy:sortStock ">
+		       <td>{{stock.total | currency}}</td>
                <td>{{stock.date | date: 'fullDate'}}</td>
                <td>
                     <button class="btn btn-warning btn-xs" ng-click="update(stock)" >

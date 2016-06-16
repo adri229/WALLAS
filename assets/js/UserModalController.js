@@ -5,27 +5,31 @@ var wallas = angular.module('wallasApp');
 wallas.controller('UserModalController', ['$scope', '$uibModalInstance', 'UserService', 'users',
 	function($scope, $uibModalInstance, UserService, users) {
 
-		
+
+
 
 		$scope.update = function(user) {
-
+			console.log(user);
 			UserService.update(users.user.currentUser.login, user).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error update");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertUser = true;
 				}
 			)
 		}
 
 		$scope.updatePass = function(user) {
+			console.log(user);
 			UserService.updatePass(users.login, user).then(
 				function(response) {
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error update");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertUser = true;
 				}
 			)
 		}
@@ -38,7 +42,8 @@ wallas.controller('UserModalController', ['$scope', '$uibModalInstance', 'UserSe
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error delete");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertUser = true;
 				}
 			)
 		}
@@ -47,5 +52,7 @@ wallas.controller('UserModalController', ['$scope', '$uibModalInstance', 'UserSe
 	        $uibModalInstance.dismiss('cancel');
 	    };
 
-	   
+	    $scope.closeAlert = function(index) {
+        	$scope.alertUser = false;
+    	};	   
 }]);

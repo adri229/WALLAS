@@ -8,6 +8,16 @@ wallas.controller('PositionController', ['$scope', '$cookies', 'PositionService'
         var user = $cookies.getObject('globals');
         var login = user.currentUser.login;
 
+
+        $scope.hide = false;
+
+        function notification(msg, type) {
+            $scope.message = msg;
+            $scope.type = type;
+            $scope.hide = true;
+            $scope.show = true;
+        }
+
         $scope.years = [
             {id: '2016', name: '2016'},
             {id: '2017', name: '2017'},
@@ -55,51 +65,98 @@ wallas.controller('PositionController', ['$scope', '$cookies', 'PositionService'
         function chartPositions(startDate, endDate) {
             PositionService.getPositions(login, startDate, endDate).then(
                 function(positions) {
-                    console.log(positions.data);
+                    
+                    var data = [];
+                    positions.data.forEach(function(positionData) {
+                        var date = new Date(positionData.date);
+                        data.push([date.getTime(),positionData.total])
+                    });
 
-                    var total = [];
-
-                    for(var key in positions.data) {
-                            if(positions.data.hasOwnProperty(key)) {
-                                total.push(parseInt(positions.data[key].total));
-                            
-
-                            }
-                        }   
-
-                    console.log(total);
                     
                     $scope.chartConfigPositions = {
                             options: {
                                 chart: {
-                                    type: 'column'
+                                    type: 'column',
+                                    backgroundColor: {
+                                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                                        stops: [
+                                            [0, 'rgb(255, 255, 255)'],
+                                            [1, 'rgb(200, 200, 255)']
+                                        ]
+                                    }
                                 }
                             },
                             series: [{
-                                data: total
+                                showInLegend: false,
+                                name: 'Positions',
+                                data: data,
+                                color: '#FF8C00'
                             }],
                             title: {
-                                text: 'Spendings/Revenues'
+                                text: 'Positions'
                             },
-                            
+                            yAxis: {
+                                title: {text: 'Total positions'}
+                             },
+                            xAxis: {
+                                type: 'datetime',
+                                
+                                dateTimeLabelFormats: { 
+                                    month: '%b'
+                                },
+                                title: {
+                                    text: 'Positions'
+                                }
+                            },
 
                             loading: false
                         }
                 },
                 function(response) {
-                    alert("error");
+                    $scope.chartConfigPositions = {};
+                    notification("You don't have any previous stocks before the interval selected. Please, creates a stock", "info");    
                 }
             )
             
         }
 
 
-        var defaultDate = new Date();
-        var defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
-        var defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+        $scope.show = true;
+  
+        $scope.closeAlert = function(index) {
+            $scope.show = false;
+        };
 
-        chartPositions(defaultStartDateUTC, defaultEndDateUTC);
 
+        $scope.intervalDate = function(option) {
+            var defaultDate = new Date();
+            var defaultStartDateUTC = 0;
+            var defaultEndDateUTC = 0;
+            switch (option) {
+                case 1:
+                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                case 2:
+                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()-2)+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                case 3:
+                    defaultStartDateUTC = (defaultDate.getUTCFullYear()-1) + '-' + defaultDate.getUTCMonth()+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                default:
+                    break;
+            }
+            
+            chartPositions(defaultStartDateUTC, defaultEndDateUTC);
+        }
+
+        function defaultIntervalDate() {
+            $scope.intervalDate(1);
+
+        }
+        defaultIntervalDate();
 
 }]); 
 

@@ -14,18 +14,27 @@
 
 <div class="spending">
 <button class="btn btn-primary" ng-click="create()">Add new spending</button>
+  <form>
+    <div class="form-group search">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Search spending by name" ng-model="searchSpending">
+      </div>      
+    </div>
+  </form>
+
 <table class="row-border table table-condensed table-responsive table-hover table-striped">
     <thead>
     	<tr>
-    	   <th>Name</th>
-           <th>Quantity</th>
-           <th>Date</th>
+    	    <th ng-click="changeSort(1)"><span ng-class="classSort" >Name</span> </th>
+          <th ng-click="changeSort(2)"><span ng-class="classSort" >Quantity</span> </th>
+          <th ng-click="changeSort(3)"><span ng-class="classSort" >Date</span> </th>
            <th>Types</th>
            <th></th>
         </tr>
     </thead>
 	<tbody>
-	    <tr ng-repeat="spending in spendings.data">
+	    <tr ng-repeat="spending in spendings.data | orderBy:sortSpending | filter:searchSpending">
 	       <td>{{spending.name}}</td>
 	       <td>{{spending.quantity | currency }}</td>
 		   <td>{{spending.date | date: 'fullDate'}}</td>

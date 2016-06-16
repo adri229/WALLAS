@@ -12,7 +12,8 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error create");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertRevenue = true;
 				}
 			)
 		}
@@ -28,7 +29,8 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error update");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertRevenue = true;
 				}
 
 			)
@@ -41,7 +43,8 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					alert("error delete");
+					$scope.msg = 'An error ocurred';
+	    			$scope.alertRevenue = true;
 				}
 
 			)
@@ -64,5 +67,9 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 		$scope.opendate = function() {
 		    $scope.datepopupOpened = true;
 		};
+
+		$scope.closeAlert = function(index) {
+        	$scope.alertRevenue = false;
+    	};
 
 	}]);

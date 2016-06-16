@@ -113,8 +113,8 @@ class RevenueRest extends BaseRest
 	{
 		$currentUser = parent::authenticateUser();
 
-		$startDate = $_GET["startDate"];
-		$endDate = $_GET["endDate"];
+		$startDate = $this->request->getStartDate();
+        $endDate = $this->request->getEndDate();
 
 		$revenues = $this->revenueDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
 
