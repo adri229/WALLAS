@@ -5,6 +5,19 @@ var wallas = angular.module('wallasApp');
 wallas.controller('AuthenticationController',
 ['$scope', '$rootScope', '$location', 'AuthenticationService',
  function ($scope, $rootScope, $location, AuthenticationService) {
+
+ 		$scope.hide = false;
+
+ 		function notification() {
+	        $scope.hide = true;
+	        $scope.show = true;
+    	}
+
+    	$scope.show = true;
+  
+	    $scope.closeAlert = function(index) {
+	        $scope.show = false;
+	    };
    
         AuthenticationService.clearCredentials();
 
@@ -13,13 +26,11 @@ wallas.controller('AuthenticationController',
         	
 			AuthenticationService.login($scope.credentials).then(
 				function(response) {
-					//AuthenticationService.setCredentials($scope.credentials);
-					$location.path('/user');
+					$location.path('/dashboard');
 				}, 
 				function(response) {
 					AuthenticationService.clearCredentials();
-              		$scope.error = response.message;
-              		alert("error");
+              		notification();
 				}
 			);
         };
