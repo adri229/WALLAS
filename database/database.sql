@@ -6,48 +6,47 @@ DROP USER 'wallas'@'localhost';
 CREATE USER 'wallas'@'localhost' IDENTIFIED BY 'wallaspass';
 GRANT ALL PRIVILEGES ON `wallas`.* TO 'wallas'@'localhost' WITH GRANT OPTION;
 
--- todas las consultas posteriores pertenecen a la base de datos wallas
 USE `wallas`;
 
 -- creacion de tabla USER
 CREATE TABLE IF NOT EXISTS `USER` (
-    `login` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'login del usuario, unico (ie, no puede haber dos usuarios con el mismo email)',
-    `password` varchar(100) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Password del usuario. No puede ser nula',
+    `login` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Clave primaria que identifica a cada usuario.',
+    `password` varchar(100) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Password que el usuario utiliza para iniciar sesión. No puede ser nula',
     `fullname` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre y apellidos del usuario. No puede ser nulo.',
-    `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario',
-    `phone` int(9) NOT NULL COMMENT 'Numero de telefono del usuario.',
+    `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario, no puede ser nulo',
+    `phone` int(9) NOT NULL COMMENT 'Numero de telefono del usuario, no puede ser nulo.',
     `country` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Pais del usuario. No puede ser nulo.',
     PRIMARY KEY (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de usuarios';
 
 -- creacion de tabla SPENDING
 CREATE TABLE IF NOT EXISTS `SPENDING` (
-    `idSpending` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del gasto, unico y auto incremental',
+    `idSpending` int(9) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a cada gasto',
     `dateSpending` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha y hora en la que es creado el gasto, no puede ser nulo',
-    `quantity` int(8) NOT NULL COMMENT 'cantidad del gasto',
-    `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
-    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del autor del gasto, no puede ser nulo, clave foranea a USER.email',
+    `quantity` int(8) NOT NULL COMMENT 'Cantidad del gasto, no puede ser nula',
+    `name` varchar(40) NOT NULL COMMENT 'Nombre del gasto, no puede ser nulo',
+    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del creador del gasto, no puede ser nulo, clave foranea a USER.login',
     PRIMARY KEY (`idSpending`),
     FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de posts' AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de gastos' AUTO_INCREMENT=1;
 
 -- creacion de la tabla STOCK
 CREATE TABLE IF NOT EXISTS `STOCK` (
-    `idStock` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del stock, unico y auto incremental',
-    `dateStock` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
-    `total` int(8) NOT NULL COMMENT 'cantidad total de presupuesto del cual dispone el usuario', 
-    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
+    `idStock` int(9) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a cada saldo',
+    `dateStock` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha en la que se crea el saldo',
+    `total` int(8) NOT NULL COMMENT 'cantidad total de presupuesto del cual dispone el usuario, no puede ser nula', 
+    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del creador del saldo, no puede ser nulo, clave foranea a USER.login',
     PRIMARY KEY (`idStock`),
     FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de stock' AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de saldos' AUTO_INCREMENT=1;
 
 -- creacion de la tabla REVENUE
 CREATE TABLE IF NOT EXISTS `REVENUE` (
-    `idRevenue` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del ingreso, unico y auto incremental',
+    `idRevenue` int(9) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a cada ingreso',
     `dateRevenue` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'El estado del capital del usuario en determinada fecha',
-    `quantity` int(8) NOT NULL COMMENT 'cantidad del gasto',
-    `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
-    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
+    `quantity` int(8) NOT NULL COMMENT 'Cantidad del ingreso, no puede ser nula',
+    `name` varchar(40) NOT NULL COMMENT 'Nombre del ingreso, no puede ser nulo',
+    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del creador del ingreso, no puede ser nulo, clave foranea a USER.login',
     PRIMARY KEY (`idRevenue`),
     FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de ingresos' AUTO_INCREMENT=1;
@@ -55,20 +54,19 @@ CREATE TABLE IF NOT EXISTS `REVENUE` (
 
 -- creacion de la tabla TYPE
 CREATE TABLE IF NOT EXISTS `TYPE` (
-    `idType` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del tipo de gasto, unico y auto incremental',
-    `name` varchar(40) NOT NULL COMMENT 'nombre del gasto',
-    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del usuario, unico (ie, no puede haber dos usuarios con el mismo login)',
+    `idType` int(9) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria del tipo de gasto, unico y auto incremental',
+    `name` varchar(40) NOT NULL COMMENT 'Nombre del tipo de gasto, no puede ser nulo',
+    `owner` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Login del creador del tipo, no puede ser nulo, clave foranea a USER.login',
     UNIQUE(name),
     PRIMARY KEY (`idType`),
     FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de los tipos de gastos' AUTO_INCREMENT=1;
 
 -- creacion de la tabla TYPE
-
 CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
-    `idTypeSpending` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id de la relacion entre el tipo de gasto y el gasto, unico y auto incremental',
-    `type` int(9) NOT NULL COMMENT 'id del tipo de gasto, unico y auto incremental',
-    `spending` int(9) NOT NULL COMMENT 'id del gasto, unico y auto incremental',
+    `idTypeSpending` int(9) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a la relación tipo-gasto',
+    `type` int(9) NOT NULL COMMENT 'Clave primaria del tipo de gasto, no puede ser nula',
+    `spending` int(9) NOT NULL COMMENT 'Clave primaria del gasto, no puede ser nula',
     PRIMARY KEY (`idTypeSpending`), 
     FOREIGN KEY (`type`) REFERENCES `TYPE` (`idType`) ON DELETE CASCADE, 
     FOREIGN KEY (`spending`) REFERENCES `SPENDING` (`idSpending`) ON DELETE CASCADE
