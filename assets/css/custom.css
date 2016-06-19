@@ -1,18 +1,9 @@
+.entity {
+    margin-top: 1%; 
+}
+
 .type {
     margin-top: 5%;
-
-}
-
-.revenue {
-    margin-top: 1%;
-}
-
-.stock {
-    margin-top: 1%;
-}
-
-.spending {
-    margin-top: 1%;
 }
 
 .register {
@@ -37,9 +28,9 @@
 
 
 #editUser {
-    margin-bottom: 0.5%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-bottom: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 .modal-dialog {
@@ -76,67 +67,7 @@
 
 }
 
-
-
-/*
-html {
-    min-height : 100%; 
-    position   : relative;
+.buttons {
+    margin-left: 30%;
+    margin-bottom: 1%;
 }
-
-body {
-    background-color : #f2f2f2;
-    border-top       : 0.5em #ffb232 solid;
-    margin-bottom    : 3.5em;
-}
-
-.login-form .input-group{
-	 margin-bottom : 0.5em;
-	
-}
-
-.login-form .form-control:focus {
-    border-color : #ccc;
-    box-shadow   : none;
-}
-
-.icon-wallas {
-	width: 45px;
-	height: 45px;
-}
-
- .navbar {
-      font-family: Montserrat, sans-serif;
-      margin-bottom: 0;
-      background-color: #2d2d30;
-      border: 0;
-      font-size: 11px !important;
-      letter-spacing: 4px;
-      opacity: 0.9;
-  }
-  .navbar li a, .navbar .navbar-brand { 
-      color: #d5d5d5 !important;
-  }
-  .navbar-nav li a:hover {
-      color: #fff !important;
-  }
-  .navbar-nav li.active a {
-      color: #fff !important;
-      background-color: #29292c !important;
-  }
-  .navbar-default .navbar-toggle {
-      border-color: transparent;
-  }
-  .open .dropdown-toggle {
-      color: #fff;
-      background-color: #555 !important;
-  }
-  .dropdown-menu li a {
-      color: #000 !important;
-  }
-  .dropdown-menu li a:hover {
-      background-color: red !important;
-  }
-
-  
-*/

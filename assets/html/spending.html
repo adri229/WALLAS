@@ -10,9 +10,7 @@
   </span>
 </p>
 </form>
-
-
-<div class="spending">
+<div class="entity">
 <button class="btn btn-primary" ng-click="create()">Add new spending</button>
   <form>
     <div class="form-group search">
@@ -40,21 +38,17 @@
 		   <td>{{spending.date | date: 'fullDate'}}</td>
 		   <td ng-repeat="type in spending.types">
 		   		<span ng-bind="type.name"></span>
-
 		   </td>
 		   <td>
-                    <button class="btn btn-warning btn-xs" ng-click="update(spending)" >
-                        <span class="glyphicon glyphicon-pencil"></span>
-                   </button>
-                   <button class="btn btn-danger btn-xs" ng-click="delete(spending)" >
-                        <span class="glyphicon glyphicon-trash"></span>
-                   </button>
+        <button class="btn btn-warning btn-xs" ng-click="update(spending)" >
+          <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <button class="btn btn-danger btn-xs" ng-click="delete(spending)" >
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
 		   </td>
 		 </tr>
 	</tbody>
 </table>
-
 <uib-alert type={{type}} dismiss-on-timeout="1500" ng-if="show" close="closeAlert()" ng-show="hide">{{message}}</uib-alert> 
-
-
 </div>

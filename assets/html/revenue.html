@@ -11,7 +11,7 @@
 </p>
 </form>
 
-<div class="revenue">
+<div class="entity">
 <button class="btn btn-primary" ng-click="create()">Add new revenue</button>
   <form>
     <div class="form-group search">
@@ -25,11 +25,11 @@
 		<table class="row-border table table-condensed table-responsive table-hover table-striped">
     		<thead>
     			<tr>
-                    <th ng-click="changeSort(1)"><span ng-class="classSort" >Name</span> </th>
-                    <th ng-click="changeSort(2)"><span ng-class="classSort" >Quantity</span> </th>
-                    <th ng-click="changeSort(3)"><span ng-class="classSort" >Date</span> </th>
-                    <th></th>	
-                </tr>
+            <th ng-click="changeSort(1)"><span ng-class="classSort" >Name</span> </th>
+            <th ng-click="changeSort(2)"><span ng-class="classSort" >Quantity</span> </th>
+            <th ng-click="changeSort(3)"><span ng-class="classSort" >Date</span> </th>
+            <th></th>	
+          </tr>
     		</thead>
 		  <tbody>
 		    <tr ng-repeat="revenue in revenues.data | orderBy:sortRevenue | filter:searchRevenue">
