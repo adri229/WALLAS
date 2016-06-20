@@ -110,7 +110,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
   			function(response) {
                 notification("New stock was added successfully", "success");
   				if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshStocks(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshStocks($scope.startDate, $scope.endDate);  
                 }
@@ -146,7 +146,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
             function(response) {
                 notification("Stock updated successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshStocks(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshStocks($scope.startDate, $scope.endDate);  
                 }
@@ -186,7 +186,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
             function(response) {
                 notification("Stock deleted successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshStocks(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshStocks($scope.startDate, $scope.endDate);  
                 }

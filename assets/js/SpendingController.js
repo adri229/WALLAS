@@ -133,7 +133,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             function(response) {
                 notification("New revenue was added successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshSpendings(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshSpendings($scope.startDate, $scope.endDate);  
                 }
@@ -168,7 +168,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             function(response) {
                 notification("Spending updated successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshSpendings(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshSpendings($scope.startDate, $scope.endDate);  
                 }
@@ -209,7 +209,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             function(response) {
                 notification("Spending deleted successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshSpendings(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshSpendings($scope.startDate, $scope.endDate);  
                 }

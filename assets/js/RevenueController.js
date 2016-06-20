@@ -123,7 +123,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
   			function(response) {
                 notification("New revenue was added successfully", "success");
   				if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshRevenues(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshRevenues($scope.startDate, $scope.endDate);  
                 }
@@ -167,7 +167,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
                     notification("An error ocurred!", "danger");
                 } else {
                 	if ($scope.startDate == null || $scope.endDate == null) {
-                    	refreshRevenues(defaultStartDate, defaultEndDate);
+                    	defaultIntervalDate();
                 	} else {
                     	refreshRevenues($scope.startDate, $scope.endDate);  
                 	}
@@ -197,7 +197,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
             function(response) {
                 notification("Revenue deleted successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshRevenues(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshRevenues($scope.startDate, $scope.endDate);  
                 }
