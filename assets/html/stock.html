@@ -1,10 +1,10 @@
 <form class="interval" accept-charset="UTF-8" role="form">
 <p class="input-group">
-    <input placeholder="Since" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="startDate" is-open="datepopupInitOpened" ng-required="true" close-text="Close" />
+    <input placeholder="From" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="startDate" is-open="datepopupInitOpened" ng-required="true" close-text="Close" />
     <span class="input-group-btn">
       <button type="button" class="btn btn-default" ng-click="openInitDate()"><i class="glyphicon glyphicon-calendar"></i></button>
   </span>
-  <input placeholder="Until" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="endDate" is-open="datepopupEndOpened" ng-required="true" close-text="Close" ng-change="changeIntervalStocks()"/>
+  <input placeholder="To" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="endDate" is-open="datepopupEndOpened" ng-required="true" close-text="Close" ng-change="changeIntervalStocks()"/>
     <span class="input-group-btn">
       <button type="button" class="btn btn-default" ng-click="openEndDate()"><i class="glyphicon glyphicon-calendar"></i></button>
   </span>
@@ -12,7 +12,19 @@
 </form>
 
 <div class="entity">
-<button class="btn btn-primary" ng-click="create()">Add new stock</button>
+<div class="col-md-12">
+    <div class="row">
+      <div class="col-md-4">
+        <button class="btn btn-primary" ng-click="create()">Add new stock</button>
+      </div>
+      <div class="col-md-8 buttons btn-group">
+        <button type="button" class="btn btn-primary" ng-click="intervalDate(1)">Last Month</button>
+        <button type="button" class="btn btn-primary" ng-click="intervalDate(2)">Last Quarter</button>
+        <button type="button" class="btn btn-primary" ng-click="intervalDate(3)">Last Year</button>
+      </div>
+    </div>
+</div>
+
     	<table class="row-border table table-condensed table-responsive table-hover table-striped">
     		<thead>
     			<tr>
@@ -38,6 +50,6 @@
 		</table>
 
 
-<uib-alert type={{type}} dismiss-on-timeout="1500" ng-if="show" close="closeAlert()" ng-show="hide">{{message}}</uib-alert> 
+<uib-alert type={{type}} dismiss-on-timeout="2000" ng-if="show" close="closeAlert()" ng-show="hide">{{message}}</uib-alert> 
 
 </div>

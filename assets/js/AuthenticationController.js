@@ -27,6 +27,7 @@ wallas.controller('AuthenticationController',
 			AuthenticationService.login($scope.credentials).then(
 				function(response) {
 					$location.path('/dashboard');
+					$rootScope.isLoggedIn = true;
 				}, 
 				function(response) {
 					AuthenticationService.clearCredentials();

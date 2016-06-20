@@ -46,6 +46,13 @@ class PositionRest extends BaseRest
         $stocks = $this->stockDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
         $spendings = $this->spendingDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
         $revenues = $this->revenueDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
+
+
+        if ($stocks == NULL && $spendings == NULL && $revenues == NULL) {
+            header($this->server->getServerProtocol() . ' 400 Bad request');
+            echo("The defined interval time not contains spendings");
+            return;
+        }
        	
        	$stocksChart = [];
         $stocks_array = [];

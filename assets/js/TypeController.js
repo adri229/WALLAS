@@ -40,7 +40,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
 				$scope.types = response;
 			},
 			function(response) {
-				notification("You don't have any revenues", "info");
+				notification("You don't have any types in this range of dates", "info");
                 $scope.types = null;
 			}
 		)

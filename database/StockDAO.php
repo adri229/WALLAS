@@ -22,7 +22,7 @@ class StockDAO
         $stocks = array();
 
         foreach ($stocks_db as $stock) {
-            array_push($stocks, new Stock($stock["idStock"],$stock["dateStock"],
+            array_push($stocks, new Stock($stock["idStock"],str_replace(" ", "T", $stock["dateStock"])."Z",
                     $stock["total"], new User($stock["owner"])));
         }
         return $stocks;

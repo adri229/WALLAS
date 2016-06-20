@@ -22,8 +22,13 @@
         <script type="text/javascript" src="assets/js/lib/highcharts/highcharts.js"></script>
         <script type="text/javascript" src="assets/js/lib/highcharts/highcharts-ng.js"></script>
         <script type="text/javascript" src="assets/js/lib/angular/angular-material.min.js"></script>
+
+        <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         
-        <script type="text/javascript" src="assets/js/app.js"></script>        
+        <script type="text/javascript" src="assets/js/app.js"></script>
+        <script type="text/javascript" src="assets/js/NavbarController.js"></script>
         <script type="text/javascript" src="assets/js/TypeController.js"></script>
         <script type="text/javascript" src="assets/js/StockController.js"></script> 
         <script type="text/javascript" src="assets/js/RevenueController.js"></script>
@@ -53,7 +58,7 @@
     </head>
 
     <body>
-        <div class="header">
+        <div class="header" ng-controller="NavbarController">
             <div ng-include='"assets/html/navbar.html"'></div>
 		</div>
         <div class="container">

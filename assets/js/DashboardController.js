@@ -8,9 +8,15 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
         var user = $cookies.getObject('globals');
         var login = user.currentUser.login;
 
+        $scope.hide;
         $scope.hideSpenRev = false;
         $scope.hidePositions = false;
         $scope.hidePositions = false;
+
+        function notification() {
+            $scope.hide = true;
+            $scope.show = true;
+        }
 
         function notificationSpenRev(msg, type) {
             $scope.messageSpenRev = 'You do not have any revenues or spendings in this interval';
@@ -64,9 +70,17 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
                 $scope.yearToSelect != null && $scope.monthToSelect != null) {
                 var startDate = $scope.yearFromSelect + '-' + $scope.monthFromSelect + '-01';
                 var endDate = $scope.yearToSelect + '-' + $scope.monthToSelect + '-' + daysInMonth($scope.yearToSelect, $scope.monthToSelect); 
-                chartSpenRev(startDate, endDate);
-        		chartPositions(startDate, endDate);
-        		chartPercents(startDate, endDate);
+                var finalDate = new Date(endDate);
+                var currentDate = new Date();
+
+                if (finalDate < currentDate) {
+                    chartSpenRev(startDate, endDate);
+                    chartPositions(startDate, endDate);
+                    chartPercents(startDate, endDate);
+                } else {
+                    notification();
+                }
+                
 
             }
         }
@@ -333,7 +347,11 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
         defaultIntervalDate();
 
 
-        $scope.show = true;
+        
+
+        $scope.closeAlert = function(index) {
+            $scope.show = false;
+        }
   
         $scope.closeAlertSpenRev = function(index) {
             $scope.showSpenRev = false;

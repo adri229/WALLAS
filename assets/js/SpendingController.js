@@ -47,6 +47,29 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
     }
 
+    $scope.intervalDate = function(option) {
+            var defaultDate = new Date();
+            var defaultStartDateUTC = 0;
+            var defaultEndDateUTC = 0;
+            switch (option) {
+                case 1:
+                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                case 2:
+                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()-2)+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                case 3:
+                    defaultStartDateUTC = (defaultDate.getUTCFullYear()-1) + '-' + defaultDate.getUTCMonth()+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                default:
+                    break;
+            }
+            refreshSpendings(new Date(defaultStartDateUTC), new Date(defaultEndDateUTC));
+        }
+
     function notification(msg, type) {
         $scope.message = msg;
         $scope.type = type;
@@ -63,28 +86,17 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                 $scope.spendings = response;
             },
             function(response) {
-                notification("You don't have any spendings", "info");
+                notification("You don't have any spendings in this range of dates", "info");
                 $scope.spendings = null;
             }
         );
     };
 
-    var defaultStartDate = new Date();
-    defaultStartDate.setHours(0);
-    defaultStartDate.setMinutes(0);
-    defaultStartDate.setSeconds(0);
-    var defaultStartDateUTC = defaultStartDate.getUTCFullYear() + '-' + (defaultStartDate.getUTCMonth() + 1)+ '-' 
-        + defaultStartDate.getUTCDate()+'T'+defaultStartDate.getUTCHours()+':'+defaultStartDate.getUTCMinutes()+'Z';
-    
-    var defaultEndDate = new Date();
-    defaultEndDate.setHours(0);
-    defaultEndDate.setMinutes(0);
-    defaultEndDate.setSeconds(0);
-    var defaultStartDateUTC = defaultEndDate.getUTCFullYear() + '-' + (defaultEndDate.getUTCMonth() + 1)+ '-' 
-        + defaultEndDate.getUTCDate()+'T'+defaultEndDate.getUTCHours()+':'+defaultEndDate.getUTCMinutes()+'Z';
-    
+    function defaultIntervalDate() {
+        $scope.intervalDate(1);
+    }
+    defaultIntervalDate();
 
-    refreshSpendings(defaultStartDate, defaultEndDate);
 
     $scope.changeIntervalSpendings = function() {
         refreshSpendings($scope.startDate, $scope.endDate);  
@@ -94,10 +106,10 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
         TypeService.getByOwner(login).then(
             function(response) {
                 $scope.types = response.data;
-                console.log(response);
+                
             },
             function(response) {
-                alert("error create");
+                
             }
         )
     }

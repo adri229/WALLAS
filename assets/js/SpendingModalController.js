@@ -17,10 +17,9 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
         	TypeService.getByOwner(login).then(
 	            function(response) {
 	                $scope.types = response.data;
-	                console.log(response);
 	            },
 	            function(response) {
-	                alert("error create");
+
 	            }
         	)
     	}

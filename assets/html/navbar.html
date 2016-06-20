@@ -9,24 +9,49 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">WALLAS</a>
+      <a class="navbar-brand" href="#dashboard">WALLAS</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-        <li><a href="#login" data-tooltip="Sign In">Sign In</a></li>
-        <li><a href="#register" data-tooltip="Sign Up">Sign Up</a></li>
-        <li><a href="#dashboard" data-tooltip="Dashboard">Dashboard</a></li>
-        <li><a href="#user" data-tooltip="user">Account</a></li>
-        <li><a href="#revenue" data-tooltip="Revenues">Revenues</a></li>
-        <li><a href="#type" data-tooltip="Types">Types</a></li>
-        <li><a href="#stock" data-tooltip="Stocks">Stocks</a></li>
-        <li><a href="#spending" data-tooltip="Stocks">Spendings</a></li>
-      </ul>
+        <li ng-hide="globals.currentUser" ng-class="{ active: isActive('/login')}">
+          <a href="#login" data-tooltip="Sign In">Sign In</a>
+        </li>
+        <li ng-hide="globals.currentUser" ng-class="{ active: isActive('/register')}">
+          <a href="#register" data-tooltip="Sign Up">Sign Up</a>
+        </li>
+        <li ng-show="globals.currentUser" ng-class="{ active: isActive('/dashboard')}">
+          <a href="#dashboard" data-tooltip="Dashboard">Dashboard</a>
+        </li>
+        <li ng-show="globals.currentUser" ng-class="{ active: isActive('/spending')}">
+          <a href="#spending" data-tooltip="Spendings">Spendings</a>
+        </li>
+        <li ng-show="globals.currentUser" ng-class="{ active: isActive('/revenue')}">
+          <a href="#revenue" data-tooltip="Revenues">Revenues</a>
+        </li>
+        <li ng-show="globals.currentUser" ng-class="{ active: isActive('/stock')}">
+          <a href="#stock" data-tooltip="Stocks">Stocks</a>
+        </li>
+        <li ng-show="globals.currentUser" ng-class="{ active: isActive('/type')}">
+          <a href="#type" data-tooltip="Types">Types</a>
+        </li>
+        
+    </ul>
+      <ul class="nav navbar-nav navbar-right" ng-show="globals.currentUser">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{globals.currentUser.login}}
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#user" data-tooltip="Account"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+            <li><a ng-click="logout()" data-tooltip="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+             
+        </ul>
+        </li>
+    </ul>
 
       <ul class="nav navbar-nav navbar-right">
 
-  </div >
+  </div>
   
   </div>
 </nav>

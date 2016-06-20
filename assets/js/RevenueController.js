@@ -47,6 +47,29 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
 
     }
 
+    $scope.intervalDate = function(option) {
+            var defaultDate = new Date();
+            var defaultStartDateUTC = 0;
+            var defaultEndDateUTC = 0;
+            switch (option) {
+                case 1:
+                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                case 2:
+                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()-2)+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                case 3:
+                    defaultStartDateUTC = (defaultDate.getUTCFullYear()-1) + '-' + defaultDate.getUTCMonth()+ '-01'; 
+                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    break;
+                default:
+                    break;
+            }
+            refreshRevenues(new Date(defaultStartDateUTC), new Date(defaultEndDateUTC));
+        }
+
     function notification(msg, type) {
         $scope.message = msg;
         $scope.type = type;
@@ -55,6 +78,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
     }
 
     function refreshRevenues(startDate, endDate){
+        console.log(startDate);
         $scope.sortRevenue = 'name';
         $scope.classSort = 'fa fa-caret-down';
 
@@ -63,28 +87,16 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
                 $scope.revenues = response;
             },
             function(response) {
-                notification("You don't have any revenues", "info");
+                notification("You don't have any revenues in this range of dates", "info");
                 $scope.revenues = null;
             }
         );
     }
 
- 	var defaultStartDate = new Date();
-    defaultStartDate.setHours(0);
-    defaultStartDate.setMinutes(0);
-    defaultStartDate.setSeconds(0);
-    var defaultStartDateUTC = defaultStartDate.getUTCFullYear() + '-' + (defaultStartDate.getUTCMonth() + 1)+ '-' 
-        + defaultStartDate.getUTCDate()+'T'+defaultStartDate.getUTCHours()+':'+defaultStartDate.getUTCMinutes()+'Z';
-    
-    var defaultEndDate = new Date();
-    defaultEndDate.setHours(0);
-    defaultEndDate.setMinutes(0);
-    defaultEndDate.setSeconds(0);
-    var defaultStartDateUTC = defaultEndDate.getUTCFullYear() + '-' + (defaultEndDate.getUTCMonth() + 1)+ '-' 
-        + defaultEndDate.getUTCDate()+'T'+defaultEndDate.getUTCHours()+':'+defaultEndDate.getUTCMinutes()+'Z';
-    
-
-    refreshRevenues(defaultStartDate, defaultEndDate);
+ 	function defaultIntervalDate() {
+        $scope.intervalDate(1);
+    }
+    defaultIntervalDate();
 
     $scope.changeIntervalRevenues = function() {
         refreshRevenues($scope.startDate, $scope.endDate);  
