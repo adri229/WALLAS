@@ -142,7 +142,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
 
     $scope.show = true;
   
-    $scope.closeAlert = function(index) {
+    $scope.closeAlert = function() {
         $scope.show = false;
     };
 

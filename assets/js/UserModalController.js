@@ -6,10 +6,7 @@ wallas.controller('UserModalController', ['$scope', '$uibModalInstance', 'UserSe
 	function($scope, $uibModalInstance, UserService, users) {
 
 
-
-
 		$scope.update = function(user) {
-			console.log(user);
 			UserService.update(users.user.currentUser.login, user).then(
 				function(response) {
 					$uibModalInstance.close('closed');
@@ -22,7 +19,6 @@ wallas.controller('UserModalController', ['$scope', '$uibModalInstance', 'UserSe
 		}
 
 		$scope.updatePass = function(user) {
-			console.log(user);
 			UserService.updatePass(users.login, user).then(
 				function(response) {
 					$uibModalInstance.close('closed');

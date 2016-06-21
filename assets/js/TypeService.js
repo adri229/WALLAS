@@ -21,8 +21,8 @@ wallas.factory('TypeService', ['$http', function($http) {
 		return $http.get('rest/types/'.concat(login));
 	};
 
-	typeService.delete = function(id) {
-		return $http.delete('rest/types/' + id);
+	typeService.delete = function(idType) {
+		return $http.delete('rest/types/' + idType);
 	};
 
 	return typeService;

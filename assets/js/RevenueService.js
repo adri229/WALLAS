@@ -33,8 +33,8 @@ wallas.factory('RevenueService', ['$http', function($http){
 		return $http.get('rest/revenues/'.concat(login) + '?startDate=' + startDate + '&endDate=' + endDate);
 	}
 
-	revenueService.delete = function(id) {
-		return $http.delete('rest/revenues/' + id);
+	revenueService.delete = function(idRevenue) {
+		return $http.delete('rest/revenues/' + idRevenue);
 	}
 
 	return revenueService;

@@ -3,8 +3,8 @@
 var wallas = angular.module('wallasApp');
 
 wallas.controller('AuthenticationController',
-['$scope', '$rootScope', '$location', 'AuthenticationService',
- function ($scope, $rootScope, $location, AuthenticationService) {
+['$scope', '$location', 'AuthenticationService',
+ function ($scope, $location, AuthenticationService) {
 
  		$scope.hide = false;
 
@@ -27,7 +27,6 @@ wallas.controller('AuthenticationController',
 			AuthenticationService.login($scope.credentials).then(
 				function(response) {
 					$location.path('/dashboard');
-					$rootScope.isLoggedIn = true;
 				}, 
 				function(response) {
 					AuthenticationService.clearCredentials();

@@ -11,14 +11,14 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
         $scope.hide;
         $scope.hideSpenRev = false;
         $scope.hidePositions = false;
-        $scope.hidePositions = false;
+        $scope.hidePercents = false;
 
         function notification() {
             $scope.hide = true;
             $scope.show = true;
         }
 
-        function notificationSpenRev(msg, type) {
+        function notificationSpenRev() {
             $scope.messageSpenRev = 'You do not have any revenues or spendings in this interval';
             $scope.hideSpenRev = true;
             $scope.showSpenRev = true;
@@ -349,17 +349,17 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
 
         
 
-        $scope.closeAlert = function(index) {
+        $scope.closeAlert = function() {
             $scope.show = false;
         }
   
-        $scope.closeAlertSpenRev = function(index) {
+        $scope.closeAlertSpenRev = function() {
             $scope.showSpenRev = false;
         };
-        $scope.closeAlertPositions = function(index) {
+        $scope.closeAlertPositions = function() {
             $scope.showPositions= false;
         };
-        $scope.closeAlertPercents = function(index) {
+        $scope.closeAlertPercents = function() {
             $scope.showPercents = false;
         };
 

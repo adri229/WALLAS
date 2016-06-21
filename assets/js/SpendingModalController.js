@@ -9,7 +9,6 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
     	var login = user.currentUser.login;
 
     	if (spendings != null) {
-    		console.log(spendings);
     		$scope.spending = spendings.spending;
     	}
 
@@ -28,7 +27,6 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 			spending.types = $scope.selected;
 			SpendingService.create(spending).then(
 				function(response) {
-					//$scope.selected = null;
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
@@ -45,7 +43,6 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 			spending.types = $scope.selected;
 			SpendingService.update(spending, spendings.spending.idSpending).then(
 				function(response) {
-					//$scope.selected = null;
 					$uibModalInstance.close('closed');
 				},
 				function(response) {

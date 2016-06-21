@@ -2,7 +2,8 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('NavbarController', ['$scope', '$cookies', '$location', function($scope, $cookies, $location) {
+wallas.controller('NavbarController', ['$scope', '$cookies', '$location', 'AuthenticationService', 
+	function($scope, $cookies, $location, AuthenticationService) {
 
 	$scope.isActive = function (viewLocation) { 
         return viewLocation === $location.path();
@@ -11,7 +12,7 @@ wallas.controller('NavbarController', ['$scope', '$cookies', '$location', functi
 
     $scope.logout = function() {
     	$location.path('/login');
-    	$cookies.remove('globals');
+    	AuthenticationService.clearCredentials();
     }
 	
 

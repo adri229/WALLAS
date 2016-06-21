@@ -16,7 +16,6 @@ wallas.factory('AuthenticationService',
 		serviceLogin.setCredentials = function (credentials) {
 			var authdata = btoa(credentials.login + ":" + credentials.password);
 
-			//Todos los controllers heredan estos datos
 			$rootScope.globals = {
 				currentUser: {
 					login: credentials.login,
@@ -26,13 +25,6 @@ wallas.factory('AuthenticationService',
 
 			$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 			$cookies.putObject('globals',$rootScope.globals);
-			
-			var user = $cookies.getObject('globals');
-			var username = user.currentUser.login;
-			var password = user.currentUser.authdata;
-			console.log(username);
-			console.log(password);
-
 		};
 
 		serviceLogin.clearCredentials = function() {

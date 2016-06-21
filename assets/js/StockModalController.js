@@ -66,7 +66,7 @@ wallas.controller('StockModalController', ['$scope', '$uibModalInstance', 'Stock
 		    $scope.datepopupOpened = true;
 		};
 
-		$scope.closeAlert = function(index) {
+		$scope.closeAlert = function() {
         	$scope.alertStock = false;
     	};
 
