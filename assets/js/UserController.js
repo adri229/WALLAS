@@ -35,6 +35,8 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
     var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalUpdateUser.html',
             controller: 'UserModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 users: function() {
@@ -65,6 +67,8 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
     var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalUpdatePass.html',
             controller: 'UserModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 users: function() {
@@ -93,6 +97,8 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
 		var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalDeleteUser.html',
             controller: 'UserModalController',
+            animation : true,
+            backdrop: false,
             scope: $scope,
             resolve: {
                 users: function() {
