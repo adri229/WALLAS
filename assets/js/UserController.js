@@ -52,10 +52,9 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
             function(response) {
                 refreshUser();
                 notification("Account updated successfully", "success");
-                alert($scope.message);
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
             }
@@ -85,7 +84,7 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
                 $location.path('/login');
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
             }
@@ -115,7 +114,7 @@ wallas.controller('UserController', ['$scope', '$cookies', '$uibModal','UserServ
                 $location.path('/login');
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
             }

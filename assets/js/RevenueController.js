@@ -133,7 +133,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
                 }
   			},
   			function(response) {
-  				if (response.localeCompare("cancel") != 0 ) {
+  				if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
   			}
@@ -161,13 +161,13 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
             function(response) {
                 notification("Revenue updated successfully", "success");
                 if ($scope.startDate == null || $scope.endDate == null) {
-                    refreshRevenues(defaultStartDate, defaultEndDate);
+                    defaultIntervalDate();
                 } else {
                     refreshRevenues($scope.startDate, $scope.endDate);  
                 }
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 } else {
                 	if ($scope.startDate == null || $scope.endDate == null) {
@@ -207,7 +207,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
                 }
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
             }

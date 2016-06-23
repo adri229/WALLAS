@@ -123,7 +123,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
                 }
   			},
   			function(response) {
-  				if (response.localeCompare("cancel") != 0 ) {
+  				if (response.localeCompare("cancel") != 0  && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
   			}
@@ -159,11 +159,11 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
                 }
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0 ) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 } else {
                     if ($scope.startDate == null || $scope.endDate == null) {
-                       refreshStocks(defaultStartDate, defaultEndDate);
+                       defaultIntervalDate();
                     } else {
                         refreshStocks($scope.startDate, $scope.endDate);  
                     }      
@@ -199,7 +199,7 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
                 }
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0 ) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
             }

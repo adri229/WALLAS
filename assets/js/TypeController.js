@@ -68,7 +68,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
   			},
   			function(response) {
   				console.log(response);
-  				if (response.localeCompare("cancel") != 0) {
+  				if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
   			}
@@ -99,7 +99,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
                 refreshTypes();
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 } else {
                     refreshTypes();
@@ -133,7 +133,7 @@ wallas.controller('TypeController', ['$scope', '$cookies', '$uibModal', 'TypeSer
                 refreshTypes();
             },
             function(response) {
-                if (response.localeCompare("cancel") != 0) {
+                if (response.localeCompare("cancel") != 0 && response.localeCompare("escape key press")) {
                     notification("An error ocurred!", "danger");
                 }
             }

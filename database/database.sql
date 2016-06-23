@@ -11,7 +11,7 @@ USE `wallas`;
 -- creacion de tabla USER
 CREATE TABLE IF NOT EXISTS `USER` (
     `login` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Clave primaria que identifica a cada usuario.',
-    `password` varchar(100) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Password que el usuario utiliza para iniciar sesión. No puede ser nula',
+    `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Password que el usuario utiliza para iniciar sesión. No puede ser nula',
     `fullname` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre y apellidos del usuario. No puede ser nulo.',
     `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario, no puede ser nulo',
     `phone` int(9) NOT NULL COMMENT 'Numero de telefono del usuario, no puede ser nulo.',
