@@ -29,7 +29,7 @@
       <div class="input-group">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
         <input type="text" class="form-control" placeholder="Search spending by name" ng-model="searchSpending">
-      </div>      
+      </div>
     </div>
   </form>
 
@@ -48,9 +48,11 @@
 	       <td>{{spending.name}}</td>
 	       <td>{{spending.quantity | currency }}</td>
 		   <td>{{spending.date | date: 'fullDate'}}</td>
-		   <td ng-repeat="type in spending.types">
-		   		<span ng-bind="type.name"></span>
-		   </td>
+       <td>
+		   		<span ng-repeat="type in spending.types">
+            {{type.name}}
+          </span>
+       </td>
 		   <td>
         <button class="btn btn-warning btn-xs" ng-click="update(spending)" >
           <span class="glyphicon glyphicon-pencil"></span>
@@ -62,5 +64,5 @@
 		 </tr>
 	</tbody>
 </table>
-<uib-alert type={{type}} dismiss-on-timeout="2000" ng-if="show" close="closeAlert()" ng-show="hide">{{message}}</uib-alert> 
+<uib-alert type={{type}} dismiss-on-timeout="2000" ng-if="show" close="closeAlert()" ng-show="hide">{{message}}</uib-alert>
 </div>

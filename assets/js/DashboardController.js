@@ -48,7 +48,7 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
             {id: '2024', name: '2024'},
             {id: '2025', name: '2025'}
         ];
-        
+
         $scope.months = [
             {id: '01', name: 'January'},
             {id: '02', name: 'February'},
@@ -64,12 +64,13 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
             {id: '12', name: 'December'}
         ];
 
-        
+
         $scope.changeIntervalDate = function() {
             if ($scope.yearFromSelect != null && $scope.monthFromSelect != null &&
                 $scope.yearToSelect != null && $scope.monthToSelect != null) {
-                var startDate = $scope.yearFromSelect + '-' + $scope.monthFromSelect + '-01';
-                var endDate = $scope.yearToSelect + '-' + $scope.monthToSelect + '-' + daysInMonth($scope.yearToSelect, $scope.monthToSelect); 
+                  
+                var startDate = new Date($scope.yearFromSelect + '-' + $scope.monthFromSelect + '-01');
+                var endDate = new Date($scope.yearToSelect + '-' + $scope.monthToSelect + '-' + daysInMonth($scope.yearToSelect, $scope.monthToSelect));
                 var finalDate = new Date(endDate);
                 var currentDate = new Date();
 
@@ -80,16 +81,16 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
                 } else {
                     notification();
                 }
-                
+
 
             }
         }
-        
+
 
         function daysInMonth(year, month) {
             return new Date(year, month, 0).getDate();
         }
-        
+
         function chartSpenRev(startDate, endDate) {
 
             var quantitySpendings = [];
@@ -123,14 +124,14 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
                                     sumRevenues += revenuesData.quantity;
                                 }
                             });
-                            
+
                             sumSpendingsArray.push([init.getTime(),sumSpendings]);
                             sumRevenuessArray.push([init.getTime(),sumRevenues]);
 
                             sumSpendings = 0;
                             sumRevenues = 0;
                         }
-                       
+
                         $scope.chartConfigSR = {
                             options: {
                                 chart: {
@@ -187,14 +188,14 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
         function chartPositions(startDate, endDate) {
             PositionService.getPositions(login, startDate, endDate).then(
                 function(positions) {
-                    
+
                     var data = [];
                     positions.data.forEach(function(positionData) {
                         var date = new Date(positionData.date);
                         data.push([date.getTime(),positionData.total])
                     });
 
-                    
+
                     $scope.chartConfigPositions = {
                             options: {
                                 chart: {
@@ -222,8 +223,8 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
                              },
                             xAxis: {
                                 type: 'datetime',
-                                
-                                dateTimeLabelFormats: { 
+
+                                dateTimeLabelFormats: {
                                     month: '%b'
                                 },
                                 title: {
@@ -236,10 +237,10 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
                 },
                 function(response) {
                     $scope.chartConfigPositions = {};
-                    notificationPositions();    
+                    notificationPositions();
                 }
             )
-            
+
         }
 
 
@@ -255,7 +256,7 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
 					var sortedPercents = percents.data.sort(function(type1, type2){
 						return type2["total"] - type1["total"];
 					});
-										
+
                     sortedPercents.forEach(function(typedata) {
 						  categories.push(typedata["typename"]+' '+typedata["percent"]+'%');
                           data.push(typedata["total"]);
@@ -308,8 +309,14 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
 
 
         var defaultDate = new Date();
-        var defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
-        var defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+
+        var defaultStartDateUTC = new Date();
+        defaultStartDateUTC.setDate(1);
+
+        var defaultEndDateUTC = new Date();
+        defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()-1)
+        defaultEndDateUTC.setDate(1);
+
 
         chartSpenRev(defaultStartDateUTC, defaultEndDateUTC);
         chartPositions(defaultStartDateUTC, defaultEndDateUTC);
@@ -317,20 +324,33 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
 
         $scope.intervalDate = function(option) {
             var defaultDate = new Date();
-            var defaultStartDateUTC = 0;
-            var defaultEndDateUTC = 0;
+            var defaultStartDateUTC = new Date();
+            var defaultEndDateUTC = new Date();
             switch (option) {
                 case 1:
-                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+
+                    defaultStartDateUTC.setDate(1);
+
+                    defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()+1);
+                    defaultEndDateUTC.setDate(1);
+
                     break;
                 case 2:
-                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()-2)+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+
+                    defaultStartDateUTC.setDate(1);
+                    defaultStartDateUTC.setMonth(defaultStartDateUTC.getMonth()-2);
+
+                    defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()+1);
+                    defaultEndDateUTC.setDate(1);
+
                     break;
                 case 3:
-                    defaultStartDateUTC = (defaultDate.getUTCFullYear()-1) + '-' + defaultDate.getUTCMonth()+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+
+                    defaultStartDateUTC.setFullYear(defaultStartDateUTC.getFullYear()-1);
+                    defaultStartDateUTC.setDate(1);
+
+                    defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()+1);
+                    defaultEndDateUTC.setDate(1);
                     break;
                 default:
                     break;
@@ -347,12 +367,12 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
         defaultIntervalDate();
 
 
-        
+
 
         $scope.closeAlert = function() {
             $scope.show = false;
         }
-  
+
         $scope.closeAlertSpenRev = function() {
             $scope.showSpenRev = false;
         };
@@ -363,13 +383,4 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
             $scope.showPercents = false;
         };
 
-}]); 
-
-
-
-
-
-
-
-
-
+}]);

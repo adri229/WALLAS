@@ -13,7 +13,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
     $scope.changeSort = function(sort) {
         switch (sort) {
-            case 1: 
+            case 1:
                 if ($scope.sortSpending == 'name') {
                     $scope.sortSpending = '-name';
                     $scope.classSort = 'fa fa-caret-up';
@@ -43,31 +43,40 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             default:
                 break;
         }
-        
+
 
     }
 
     $scope.intervalDate = function(option) {
-            var defaultDate = new Date();
-            var defaultStartDateUTC = 0;
-            var defaultEndDateUTC = 0;
+
+            var defaultDateStart = new Date();
+            var defaultDateEnd = new Date();
             switch (option) {
                 case 1:
-                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    defaultDateStart.setDate(1);
+                    defaultDateEnd.setMonth(defaultDateEnd.getMonth() + 1);
+                    defaultDateEnd.setDate(1);
                     break;
                 case 2:
-                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()-2)+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    defaultDateStart.setDate(1);
+                    defaultDateStart.setMonth(defaultDateStart.getMonth() - 2);
+
+                    defaultDateEnd.setMonth(defaultDateEnd.getMonth() + 1);
+                    defaultDateEnd.setDate(1);
                     break;
                 case 3:
-                    defaultStartDateUTC = (defaultDate.getUTCFullYear()-1) + '-' + defaultDate.getUTCMonth()+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+
+                    defaultDateStart.setDate(1);
+                    defaultDateStart.setFullYear(defaultDateStart.getFullYear() - 1);
+
+                    defaultDateEnd.setMonth(defaultDateEnd.getMonth() + 1);
+                    defaultDateEnd.setDate(1);
+
                     break;
                 default:
                     break;
             }
-            refreshSpendings(new Date(defaultStartDateUTC), new Date(defaultEndDateUTC));
+            refreshSpendings(defaultDateStart, defaultDateEnd);
         }
 
     function notification(msg, type) {
@@ -99,17 +108,17 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
 
     $scope.changeIntervalSpendings = function() {
-        refreshSpendings($scope.startDate, $scope.endDate);  
+        refreshSpendings($scope.startDate, $scope.endDate);
     }
 
     function getTypes() {
         TypeService.getByOwner(login).then(
             function(response) {
                 $scope.types = response.data;
-                
+
             },
             function(response) {
-                
+
             }
         )
     }
@@ -135,7 +144,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                 if ($scope.startDate == null || $scope.endDate == null) {
                     defaultIntervalDate();
                 } else {
-                    refreshSpendings($scope.startDate, $scope.endDate);  
+                    refreshSpendings($scope.startDate, $scope.endDate);
                 }
             },
             function(response) {
@@ -170,7 +179,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                 if ($scope.startDate == null || $scope.endDate == null) {
                     defaultIntervalDate();
                 } else {
-                    refreshSpendings($scope.startDate, $scope.endDate);  
+                    refreshSpendings($scope.startDate, $scope.endDate);
                 }
             },
             function(response) {
@@ -180,7 +189,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                     if ($scope.startDate == null || $scope.endDate == null) {
                        refreshSpendings(defaultStartDate, defaultEndDate);
                     } else {
-                        refreshSpendings($scope.startDate, $scope.endDate);  
+                        refreshSpendings($scope.startDate, $scope.endDate);
                     }
                 }
             }
@@ -211,7 +220,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
                 if ($scope.startDate == null || $scope.endDate == null) {
                     defaultIntervalDate();
                 } else {
-                    refreshSpendings($scope.startDate, $scope.endDate);  
+                    refreshSpendings($scope.startDate, $scope.endDate);
                 }
             },
             function(response) {
@@ -229,7 +238,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
             startingDay: 1
         };
 
-        
+
         $scope.openInitDate = function() {
             $scope.datepopupInitOpened = true;
         };
@@ -238,7 +247,7 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
         };
 
     $scope.show = true;
-  
+
     $scope.closeAlert = function(index) {
         $scope.show = false;
     };
