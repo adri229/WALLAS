@@ -135,14 +135,7 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
                         $scope.chartConfigSR = {
                             options: {
                                 chart: {
-                                    type: 'line',
-                                    backgroundColor: {
-                                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                                        stops: [
-                                            [0, 'rgb(255, 255, 255)'],
-                                            [1, 'rgb(200, 200, 255)']
-                                        ]
-                                    }
+                                    type: 'line'                                    
                                 }
                             },
                             series: [{
@@ -199,14 +192,7 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
                     $scope.chartConfigPositions = {
                             options: {
                                 chart: {
-                                    type: 'column',
-                                    backgroundColor: {
-                                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                                        stops: [
-                                            [0, 'rgb(255, 255, 255)'],
-                                            [1, 'rgb(200, 200, 255)']
-                                        ]
-                                    }
+                                    type: 'column'
                                 }
                             },
                             series: [{
@@ -266,14 +252,7 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
         			$scope.chartConfigPercents =  {
         				options: {
                             chart: {
-                                type: 'bar',
-                                backgroundColor: {
-                                    linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                                    stops: [
-                                        [0, 'rgb(255, 255, 255)'],
-                                        [1, 'rgb(200, 200, 255)']
-                                    ]
-                                }
+                                type: 'bar'
                             }
                         },
                         plotOptions: {
@@ -307,66 +286,40 @@ wallas.controller('DashboardController', ['$scope', '$cookies', 'PositionService
         	)
         }
 
-
-        var defaultDate = new Date();
-
-        var defaultStartDateUTC = new Date();
-        defaultStartDateUTC.setDate(1);
-
-        var defaultEndDateUTC = new Date();
-        defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()-1)
-        defaultEndDateUTC.setDate(1);
-
-
-        chartSpenRev(defaultStartDateUTC, defaultEndDateUTC);
-        chartPositions(defaultStartDateUTC, defaultEndDateUTC);
-        chartPercents(defaultStartDateUTC, defaultEndDateUTC);
-
         $scope.intervalDate = function(option) {
             var defaultDate = new Date();
-            var defaultStartDateUTC = new Date();
-            var defaultEndDateUTC = new Date();
+            var defaultStartDate = new Date();
+            var defaultEndDate = new Date();
             switch (option) {
                 case 1:
-
-                    defaultStartDateUTC.setDate(1);
-
-                    defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()+1);
-                    defaultEndDateUTC.setDate(1);
-
+                    defaultStartDate.setDate(1);
+                    defaultEndDate.setMonth(defaultEndDate.getMonth()+1);
+                    defaultEndDate.setDate(1);
                     break;
                 case 2:
-
-                    defaultStartDateUTC.setDate(1);
-                    defaultStartDateUTC.setMonth(defaultStartDateUTC.getMonth()-2);
-
-                    defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()+1);
-                    defaultEndDateUTC.setDate(1);
-
+                    defaultStartDate.setDate(1);
+                    defaultStartDate.setMonth(defaultStartDate.getMonth()-2);
+                    defaultEndDate.setMonth(defaultEndDate.getMonth()+1);
+                    defaultEndDate.setDate(1);
                     break;
                 case 3:
-
-                    defaultStartDateUTC.setFullYear(defaultStartDateUTC.getFullYear()-1);
-                    defaultStartDateUTC.setDate(1);
-
-                    defaultEndDateUTC.setMonth(defaultEndDateUTC.getMonth()+1);
-                    defaultEndDateUTC.setDate(1);
+                    defaultStartDate.setFullYear(defaultStartDate.getFullYear()-1);
+                    defaultStartDate.setDate(1);
+                    defaultEndDate.setMonth(defaultEndDate.getMonth()+1);
+                    defaultEndDate.setDate(1);
                     break;
                 default:
                     break;
             }
-            chartSpenRev(defaultStartDateUTC, defaultEndDateUTC);
-        	chartPositions(defaultStartDateUTC, defaultEndDateUTC);
-        	chartPercents(defaultStartDateUTC, defaultEndDateUTC);
+            chartSpenRev(defaultStartDate, defaultEndDate);
+        	chartPositions(defaultStartDate, defaultEndDate);
+        	chartPercents(defaultStartDate, defaultEndDate);
         }
 
         function defaultIntervalDate() {
-            $scope.intervalDate(1);
-
+            $scope.intervalDate(2);
         }
         defaultIntervalDate();
-
-
 
 
         $scope.closeAlert = function() {

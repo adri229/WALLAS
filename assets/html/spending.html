@@ -1,6 +1,6 @@
 <form class="interval" accept-charset="UTF-8" role="form">
 <p class="input-group">
-    <input placeholder="From" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="startDate" is-open="datepopupInitOpened" ng-required="true" close-text="Close" />
+    <input placeholder="From" type="text" class="form-control" datepicker-options="dateOptions"  uib-datepicker-popup ng-model="startDate" is-open="datepopupInitOpened" ng-required="true" close-text="Close" ng-change="changeIntervalSpendings()"/>
     <span class="input-group-btn">
       <button type="button" class="btn btn-default" ng-click="openInitDate()"><i class="glyphicon glyphicon-calendar"></i></button>
   </span>

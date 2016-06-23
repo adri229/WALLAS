@@ -39,25 +39,30 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 
     $scope.intervalDate = function(option) {
             var defaultDate = new Date();
-            var defaultStartDateUTC = 0;
-            var defaultEndDateUTC = 0;
+            var defaultStartDate = new Date();
+            var defaultEndDate = new Date();
             switch (option) {
                 case 1:
-                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + defaultDate.getUTCMonth()+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    defaultStartDate.setDate(1);
+                    defaultEndDate.setMonth(defaultEndDate.getMonth()+1);
+                    defaultEndDate.setDate(1);
                     break;
                 case 2:
-                    defaultStartDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()-2)+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    defaultStartDate.setDate(1);
+                    defaultStartDate.setMonth(defaultStartDate.getMonth()-2);
+                    defaultEndDate.setMonth(defaultEndDate.getMonth()+1);
+                    defaultEndDate.setDate(1);
                     break;
                 case 3:
-                    defaultStartDateUTC = (defaultDate.getUTCFullYear()-1) + '-' + defaultDate.getUTCMonth()+ '-01'; 
-                    defaultEndDateUTC = defaultDate.getUTCFullYear() + '-' + (defaultDate.getUTCMonth()+1)+ '-01'; 
+                    defaultStartDate.setFullYear(defaultStartDate.getFullYear()-1);
+                    defaultStartDate.setDate(1);
+                    defaultEndDate.setMonth(defaultEndDate.getMonth()+1);
+                    defaultEndDate.setDate(1);
                     break;
                 default:
                     break;
             }
-            refreshStocks(new Date(defaultStartDateUTC), new Date(defaultEndDateUTC));
+            refreshStocks(defaultStartDate, defaultEndDate);
         }
 
     function notification(msg, type) {
@@ -89,7 +94,9 @@ wallas.controller('StockController', ['$scope', '$cookies', '$uibModal', 'StockS
 
 
     $scope.changeIntervalStocks = function() {
-        refreshStocks($scope.startDate, $scope.endDate);  
+        if ($scope.startDate != null && $scope.endDate != null) {
+            refreshStocks($scope.startDate, $scope.endDate);      
+        }
     }
 
     $scope.create = function() {

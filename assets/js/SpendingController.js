@@ -108,7 +108,9 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
 
 
     $scope.changeIntervalSpendings = function() {
-        refreshSpendings($scope.startDate, $scope.endDate);
+        if ($scope.startDate != null && $scope.endDate != null) {
+            refreshSpendings($scope.startDate, $scope.endDate);    
+        }
     }
 
     function getTypes() {
