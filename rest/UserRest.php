@@ -44,7 +44,7 @@ class UserRest extends BaseRest
 
 
 
-        $user = new \User(strtolower($data->login), $data->passwd, $data->fullname, 
+        $user = new \User(strtolower($data->login), password_hash($data->passwd,PASSWORD_BCRYPT), $data->fullname, 
                 $data->email, str_replace(" ", "", $data->phone), $data->country);
         
         
@@ -109,7 +109,7 @@ class UserRest extends BaseRest
                     return;
                 }
 
-                $user->setPassword($data->passwd);
+                $user->setPassword(password_hash($data->passwd,PASSWORD_BCRYPT));
                 
                 break;
             default:

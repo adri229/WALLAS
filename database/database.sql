@@ -73,11 +73,11 @@ CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto' AUTO_INCREMENT=1;
   
 INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`, `country`) VALUES
-('adri229','adri229','adrian gonzalez','adri229@gmailcom','988102030','Spain'),
-('adri339','adri339','adrian dominguez','adri339@gmailcom','988102030','Spain'),
-('adri449','adri449','adrian perez','adri449@gmailcom','988102030','Spain'),
-('adri559','adri559','adrian martinez','adri559@gmailcom','988102030','Spain'),
-('adri669','adri669','adrian vazquez','adri669@gmailcom','988102030','Spain');    
+('adri229','$2y$10$RmU5MwjgiI48vkHzRS3BiOtQY5LSQTa.Oe7/JmNDDCAizardsdp/C','adrian gonzalez','adri229@gmailcom','988102030','Spain'),
+('adri339','$2y$10$aameo0kWBO09kpvpl6B0yumLiayGWgQhWc.KpkafoFOLVm4gqTAmK','adrian dominguez','adri339@gmailcom','988102030','Spain'),
+('adri449','$2y$10$orRCQxumVq3DOTPV0ZcLLuSzZEP84JKA1eMx87xFPnHunRMoPCd92','adrian perez','adri449@gmailcom','988102030','Spain'),
+('adri559','$2y$10$yhhaK08iySsp1BnNwdH2ae/c2cdxYmY8Wo9JJoTotsAIigdlfoSsm','adrian martinez','adri559@gmailcom','988102030','Spain'),
+('adri669','$2y$10$BoMnGs22bMQ3cV7ynRvi1ObRN2gn2XCaZh7xwy8es5cnOTt.BVOqS','adrian vazquez','adri669@gmailcom','988102030','Spain');    
 
 
 INSERT INTO `SPENDING` (`dateSpending`,`quantity`,`name`,`owner`) VALUES 

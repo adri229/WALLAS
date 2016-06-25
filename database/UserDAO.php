@@ -70,12 +70,17 @@ class UserDAO {
 	 * @return boolean true si encuentra un usuario con ese email/password|false en caso contrario
 	 */
 	public function isValidUser($login, $password) {
-        $stmt = $this->db->prepare ( "SELECT COUNT(login) FROM USER WHERE login=? and password=?" );
-        $stmt->execute ( array($login, $password ));
+        $stmt = $this->db->prepare("SELECT * FROM USER WHERE login=?");
+        $stmt->execute(array($login));
+		$user = $stmt->fetch(PDO::FETCH_ASSOC);
 		
-        if ($stmt->fetchColumn() > 0) {
-			return true;
-        }
+        if (!sizeof($user) == 0) {
+			if (password_verify($password, $user['password'])) {
+				return true;
+			}
+       } 
+       return false;
+        
 	}
 	
 
