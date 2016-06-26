@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Modelo de la relación gasto-tipo
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class TypeSpending
 {
 	private $idTypeSpending;

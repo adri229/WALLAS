@@ -1,10 +1,9 @@
 <?php
-// file: /core/PDOConnection.php
 
 /**
  * Clase que nos permite realizar la conexion con la base de datos
  * 
- * @author adrian <adricelixfernandez@gmail.com>
+ * @author acfernandez <acfernandez4@esei.uvigo.es>
  */
 
 class PDOConnection {

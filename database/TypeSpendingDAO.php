@@ -1,13 +1,17 @@
 <?php
 
+/**
+ * Clase que gestiona el acceso a la base de datos del modelo TypeSpending
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class TypeSpendingDAO
 {
 	private $db;
     public function __construct() {
         $this->db = PDOConnection::getInstance ();
     }
-
-    
 
     public function save($typeSpending)
     {
@@ -38,7 +42,5 @@ class TypeSpendingDAO
         $stmt = $this->db->prepare("DELETE FROM TYPE_SPENDING WHERE type = ?");
         $stmt->execute(array($idType));
     }
-
-
 }
 ?>

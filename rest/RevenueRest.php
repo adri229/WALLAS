@@ -1,14 +1,16 @@
 <?php
-
-require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../database/UserDAO.php");
-
 require_once(__DIR__."/../model/Revenue.php");
 require_once(__DIR__."/../database/RevenueDAO.php");
-
-
 require_once(__DIR__."/../rest/BaseRest.php");
 
+/**
+ * Clase que recibe las peticiones relacionadas con la gestión de ingresos.
+ * Se comunica con otros componentes del servidor para realizar las acciones
+ * solicitadas por el cliente y le envía una respuesta acorde al resultado
+ * obtenido de la realización de las acciones solicitadas.
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
 
 class RevenueRest extends BaseRest
 {
@@ -30,10 +32,8 @@ class RevenueRest extends BaseRest
     		$revenue->setQuantity($data->quantity);
         	$revenue->setName($data->name);
     		$revenue->setOwner($currentUser->getLogin());
-    	
-    	
+    	  	
 	    	try {
-	    		//$revenue->validate();	
 	    		  $idRevenue = $this->revenueDAO->save($revenue);
 	    		  header($this->server->getServerProtocol().' 201 Created');
 	      		header('Location: '.$this->server->getRequestUri()."/".$idRevenue);
@@ -56,13 +56,11 @@ class RevenueRest extends BaseRest
       		return;
     	}
 
-
     	if($revenue->getOwner()->getLogin() != $currentUser->getLogin()) {
     		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("you are not the owner of this revenue");
       		return;
     	}
-
 
       	if (isset($data->quantity) && isset($data->name) && isset($data->date)) {
       		$revenue->setDate($data->date);
@@ -70,8 +68,6 @@ class RevenueRest extends BaseRest
         	$revenue->setName($data->name);
     		
 	    	try {
-	            // validate Post object
-	            //$revenue->validate(); // if it fails, ValidationException
 	            $this->revenueDAO->update($revenue);
 	            header($this->server->getServerProtocol().' 200 Ok');
 	        }catch (ValidationException $e) {
@@ -92,7 +88,6 @@ class RevenueRest extends BaseRest
       		echo("Revenue with id ".$idRevenue." not found");
       		return;
     	}
-
 
     	if($revenue->getOwner()->getLogin() != $currentUser->getLogin()) {
     		header($this->server->getServerProtocol().' 403 Forbidden');

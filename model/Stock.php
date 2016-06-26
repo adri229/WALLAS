@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Modelo de saldos
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class Stock
 {
 	private $idStock;

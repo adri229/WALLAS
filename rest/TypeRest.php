@@ -1,14 +1,18 @@
 <?php
 
-require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../database/UserDAO.php");
-
 require_once(__DIR__."/../model/Type.php");
 require_once(__DIR__."/../database/TypeDAO.php");
 require_once(__DIR__."/../database/TypeSpendingDAO.php");
-
 require_once(__DIR__."/../rest/BaseRest.php");
 
+/**
+ * Clase que recibe las peticiones relacionadas con la gestión de tipos. Se
+ * comunica con otros componentes del servidor para realizar las acciones
+ * solicitadas por el cliente y le envía una respuesta acorde al resultado
+ * obtenido de la realización de las acciones solicitadas.
+ *
+  * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
 
 class TypeRest extends BaseRest
 {
@@ -76,7 +80,6 @@ class TypeRest extends BaseRest
 			$type->setName($data->name);
 
     		try {
-      			//$type->validate(); // if it fails, ValidationException
       			$this->typeDAO->update($type);
       			header($this->server->getServerProtocol().' 200 Ok');
     		}catch (ValidationException $e) {
@@ -104,7 +107,6 @@ class TypeRest extends BaseRest
     	}
 
     	try {
-    		//$this->typeSpendingDAO->deleteByType($idType);
       		$this->typeDAO->delete($idType);
       		header($this->server->getServerProtocol().' 200 Ok');
     	}catch (ValidationException $e) {
@@ -145,7 +147,6 @@ class TypeRest extends BaseRest
     	header('Content-Type: application/json');
     	echo(json_encode($type_array));
 	}
-
 }
 
 $typeRest = new TypeRest();
@@ -154,6 +155,4 @@ URIDispatcher::getInstance()
 	->map("POST", "/types", array($typeRest,"create"))
 	->map("PUT", "/types/$1", array($typeRest, "update"))
 	->map("DELETE", "/types/$1", array($typeRest, "delete"));
-
-
 ?>

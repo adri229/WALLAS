@@ -1,6 +1,7 @@
 'use strict';
 
-var wallas = angular.module('wallasApp', ['ngMaterial','ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages','ui.bootstrap', 'highcharts-ng']);
+var wallas = angular.module('wallasApp', ['ngMaterial','ngRoute', 'ngAnimate', 'ngCookies', 
+    'ngMessages','ui.bootstrap', 'highcharts-ng']);
 
 wallas.config(['$routeProvider', function ($routeProvider) {
 
@@ -52,7 +53,6 @@ wallas.config(['$routeProvider', function ($routeProvider) {
 
 wallas.run(['$rootScope', '$location', '$cookies', '$http',
     function ($rootScope, $location, $cookies, $http) {
-        // keep user logged in after page refresh
         
         $rootScope.globals = $cookies.getObject('globals') || {};
         if ($rootScope.globals.currentUser) {
@@ -60,7 +60,6 @@ wallas.run(['$rootScope', '$location', '$cookies', '$http',
         }
  
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // redirect to login page if not logged in
             if (
               $location.path() !== '/login' 
               && $location.path() !== '/register' 

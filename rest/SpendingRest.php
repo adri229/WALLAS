@@ -1,18 +1,21 @@
 <?php
 
-require_once(__DIR__ . "/../model/User.php");
-require_once(__DIR__ . "/../database/UserDAO.php");
-
 require_once(__DIR__ . "/../model/Spending.php");
 require_once(__DIR__ . "/../database/SpendingDAO.php");
-
 require_once(__DIR__ . "/../model/TypeSpending.php");
 require_once(__DIR__ . "/../database/TypeSpendingDAO.php");
-
 require_once(__DIR__ . "/../model/Type.php");
 require_once(__DIR__ . "/../database/TypeDAO.php");
-
 require_once(__DIR__ . "/../rest/BaseRest.php");
+
+/**
+ * Clase que recibe las peticiones relacionadas con la gestión de gastos. Se
+ * comunica con otros componentes del servidor para realizar las acciones
+ * solicitadas por el cliente y le envía una respuesta acorde al resultado
+ * obtenido de la realización de las acciones solicitadas.
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
 
 class SpendingRest extends BaseRest {
 
@@ -39,13 +42,10 @@ class SpendingRest extends BaseRest {
 
 
             try {
-                //$spending->validate();
                 $idSpending = $this->spendingDAO->save($spending);
 
                 foreach ($data->types as $type_loop) {
-
                     $type = $this->typeDAO->findById($type_loop->idType);
-
 
                     if ($type == NULL) {
                         $this->spendingDAO->delete($idSpending);
@@ -59,8 +59,6 @@ class SpendingRest extends BaseRest {
 
                     $this->typeSpendingDAO->save($typeSpending);
                 }
-
-
                 header($this->server->getServerProtocol() . ' 201 Created');
                 header('Location: ' . $this->server->getRequestUri() . "/" . $idSpending);
                 header('Content-Type: application/json');
@@ -82,7 +80,6 @@ class SpendingRest extends BaseRest {
             return;
         }
 
-
         if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
             header($this->server->getServerProtocol() . ' 403 Forbidden');
             echo("you are not the owner of this spending");
@@ -95,8 +92,6 @@ class SpendingRest extends BaseRest {
             $spending->setName($data->name);
 
             try {
-                // validate Post object
-                //$spending->validate(); // if it fails, ValidationException
                 $this->typeSpendingDAO->deleteBySpending($idSpending);
                 header($this->server->getServerProtocol() . ' 200 Ok');
             } catch (ValidationException $e) {
@@ -105,7 +100,6 @@ class SpendingRest extends BaseRest {
             }
             foreach ($data->types as $type_loop) {
                 $type = $this->typeDAO->findById($type_loop->idType);
-
 
                 if ($type == NULL) {
                     header($this->server->getServerProtocol() . ' 400 Bad request');
@@ -120,22 +114,14 @@ class SpendingRest extends BaseRest {
             }
 
             try {
-            // validate Post object
-            //$spending->validate(); // if it fails, ValidationException
-
                 $this->spendingDAO->update($spending);
-
                 header($this->server->getServerProtocol() . ' 200 Ok');
             } catch (ValidationException $e) {
                 header($this->server->getServerProtocol() . ' 400 Bad request');
                 echo(json_encode($e->getErrors()));
             }
         }
-
-
-
     }
-
 
     public function delete($idSpending) {
         $currentUser = parent::authenticateUser();
@@ -147,7 +133,6 @@ class SpendingRest extends BaseRest {
             return;
         }
 
-
         if ($spending->getOwner()->getLogin() != $currentUser->getLogin()) {
             header($this->server->getServerProtocol() . ' 403 Forbidden');
             echo("you are not the owner of this spending");
@@ -155,7 +140,6 @@ class SpendingRest extends BaseRest {
         }
 
         try {
-            //$this->typeSpendingDAO->deleteBySpending($idSpending);
             $this->spendingDAO->delete($idSpending);
             header($this->server->getServerProtocol() . ' 200 Ok');
         } catch (ValidationException $e) {
@@ -191,7 +175,6 @@ class SpendingRest extends BaseRest {
                     }
                 }
 
-
                 $spendings_array = [];
                 foreach ($spendings as $spending) {
                     $types_array = [];
@@ -205,8 +188,6 @@ class SpendingRest extends BaseRest {
                             ]);
                         }
                     }
-
-
 
                     array_push($spendings_array, [
                         "idSpending" => $spending->getIdSpending(),
@@ -236,7 +217,6 @@ class SpendingRest extends BaseRest {
                     }
                 }
 
-
                 $spendings_array = [];
                 foreach ($spendings as $spending) {
 
@@ -247,18 +227,11 @@ class SpendingRest extends BaseRest {
                         "quantity" => $spending->getQuantity(),
                         "owner" => $currentUser->getLogin()
                     ]);
-
                 }
                 break;
             default:
-                # code...
                 break;
         }
-
-
-
-
-
         header($this->server->getServerProtocol() . ' 200 Ok');
         header('Content-Type: application/json');
         echo(json_encode($spendings_array));

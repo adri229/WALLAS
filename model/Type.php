@@ -1,18 +1,21 @@
 <?php
 
+/**
+ * Modelo de tipos
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
 
 class Type
 {
 	private $idType;
 	private $name;
-
 	private $owner;
 
-	public function __construct($idType = NULL, $name = NULL, $percent = NULL, $owner = NULL)
+	public function __construct($idType = NULL, $name = NULL, $owner = NULL)
 	{
 		$this->idType = $idType;
 		$this->name = $name;
-		$this->percent = $percent;
 		$this->owner = $owner;
 	}
 
@@ -25,7 +28,6 @@ class Type
 	{
 		return $this->name;
 	}
-
 
 	public function getOwner()
 	{

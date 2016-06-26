@@ -1,7 +1,11 @@
 <?php
 /**
-* 
-*/
+ * Clase que proporciona un acceso en orientación a objetos de la
+ * variable global $_GET, para obtener parámetros de peticiones GET.
+ * 
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class RequestWrapper
 {
 	private $request;
@@ -10,7 +14,6 @@ class RequestWrapper
 	{
 		$this->request = $this->initFromHttp();
 	}
-
 
 	private function initFromHttp()
 	{
@@ -28,7 +31,4 @@ class RequestWrapper
 		return $this->request["endDate"];
 	}
 }
-
-
-
 ?>

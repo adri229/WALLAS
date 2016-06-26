@@ -5,6 +5,13 @@ require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/../components/ServerWrapper.php");
 require_once(__DIR__."/../components/RequestWrapper.php");
 
+/**
+ * Clase de la cuál heredan todas las clases Rest que implementa la
+ * autenticación de usuarios en el servidor.
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class BaseRest
 {
     

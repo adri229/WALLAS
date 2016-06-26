@@ -2,27 +2,19 @@
 require_once (__DIR__ . "/../core/PDOConnection.php");
 require_once(__DIR__."/../model/User.php");
 
+/**
+ * Clase que gestiona el acceso a la base de datos del modelo User
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
 
 class UserDAO {
 	
-	/**
-	 * Referencia a la conexion PDO
-	 * 
-	 * @var PDO
-	 */
 	private $db;
 	public function __construct() {
             $this->db = PDOConnection::getInstance ();
 	}
-	
-	/**
-	 * Guarda un usuario en la base de datos
-	 *
-	 * @param User $user
-	 *        	El usuario a ser guardado
-	 * @throws PDOException si ocurre algun error en la BD
-	 * @return void
-	 */
+
 	public function save(User $user) 
 	{
         $stmt = $this->db->prepare ( "INSERT INTO `USER` (`login`,`password`,`fullname`,
@@ -37,14 +29,6 @@ class UserDAO {
         ));
 	}
 	
-	/**
-	 * Encuentra un usuario en la base de datos con su email.
-	 *
-	 * @param String $useremail
-	 *        	El email del usuario
-	 * @throws PDOException si ocurre algun error en la BD
-	 * @return User instancia del objeto User
-	 */
 	public function findByID($login) {
         $stmt = $this->db->prepare ( "SELECT * FROM USER WHERE login=?" );
         $stmt->execute (array($login));
@@ -58,17 +42,6 @@ class UserDAO {
         }
 	}
 	
-	/**
-	 * Comprueba si el email y la password
-	 * son validos para hacer login
-	 *
-	 * @param String $email
-	 *        	El email del usuario
-	 * @param String $password
-	 *        	El email del usuario
-	 * @throws PDOException si ocurre algun error en la BD
-	 * @return boolean true si encuentra un usuario con ese email/password|false en caso contrario
-	 */
 	public function isValidUser($login, $password) {
         $stmt = $this->db->prepare("SELECT * FROM USER WHERE login=?");
         $stmt->execute(array($login));
@@ -82,8 +55,6 @@ class UserDAO {
        return false;
         
 	}
-	
-
 
 	public function isNewLogin($login) {
     	$stmt = $this->db->prepare("SELECT COUNT(login) FROM USER where login=?");
@@ -92,18 +63,8 @@ class UserDAO {
     	if ($stmt->fetchColumn() == 0) {   
       		return true;
     	} 
-  }
+    }
 
-	/**
-	 * Actualiza la password del usuario
-	 *
-	 * @param String $user
-	 *        	El usuario
-	 * @throws PDOException si ocurre algun error en la BD
-	 */
-
-
-	
 	public function update($user)
 	{
 		print_r($user);

@@ -1,13 +1,15 @@
 <?php
 
-require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../database/UserDAO.php");
-
 require_once(__DIR__."/../model/Type.php");
 require_once(__DIR__."/../database/TypeDAO.php");
-
-
 require_once(__DIR__."/../rest/BaseRest.php");
+
+/**
+ * Clase que genera los porcentajes de tipos de gastos y se los envía al
+ * cliente en función del intervalo de fechas proporcionado por el usuario.
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
 
 class PercentSpendingRest extends BaseRest
 {
@@ -19,9 +21,6 @@ class PercentSpendingRest extends BaseRest
         $this->typeDAO = new TypeDAO();
 	}
 
-
-
-
 	public function getPercents($owner)
 	{
         $currentUser = parent::authenticateUser();
@@ -29,22 +28,12 @@ class PercentSpendingRest extends BaseRest
         $startDate = $this->request->getStartDate();
         $endDate = $this->request->getEndDate();
 
-
         $types = $this->typeDAO->findByOwnerAndFilterWithPercents($owner, $startDate, $endDate);
 		if ($types == NULL) {
             header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("The defined interval time not contains percents");
             return;
         }
-
-
-        /*$typesChart = [];
-        foreach ($types as $type) {
-            array_push($typesChart, [
-                "name" => $type->getName(),
-                "percent" => $type->getPercent()
-            ]);
-        }*/
 
 		header($this->server->getServerProtocol().' 200 Ok');
     	header('Content-Type: application/json');
@@ -56,5 +45,4 @@ class PercentSpendingRest extends BaseRest
 $percentSpendingRest = new PercentSpendingRest();
 URIDispatcher::getInstance()
     ->map("GET", "/percents/$1", array($percentSpendingRest, "getPercents"));
-
 ?>

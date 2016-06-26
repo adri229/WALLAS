@@ -28,10 +28,14 @@
             <div class="modal-body" ng-init="alertRevenue = false" >
                 <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertRevenue" ng-show="alertRevenue">{{msg}}</uib-alert> 
             </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" ng-disabled="createRevenueForm.$invalid" ng-click="create(revenue)"><span class="glyphicon glyphicon-ok-sign"></span> OK</button>
-        <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" ng-disabled="createRevenueForm.$invalid" ng-click="create(revenue)">
+              <span class="glyphicon glyphicon-ok-sign"></span> OK
+          </button>
+          <button type="button" class="btn btn-default" ng-click="cancel()">
+              <span class="glyphicon glyphicon-remove"></span> Cancel
+          </button>
         </div>
     
-    </div>  
+      </div>  
     </div>

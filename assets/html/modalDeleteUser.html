@@ -1,16 +1,25 @@
 <div class="modal-content">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </button>
         <h4 class="modal-title custom_align" id="Heading">Delete your account</h4>
     </div>
     <div class="modal-body">
-        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete your account?</div>
+        <div class="alert alert-danger">
+            <span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete your account?
+        </div>
         <div ng-init="alertUser = false" >
-          <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertUser" ng-show="alertUser">{{msg}}</uib-alert> 
+          <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertUser" ng-show="alertUser">{{msg}}
+          </uib-alert> 
       </div>
     </div>
     <div class="modal-footer ">
-        <button type="button" class="btn btn-success" ng-click="delete()"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-        <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> No</button>
-        </div>
+        <button type="button" class="btn btn-success" ng-click="delete()">
+            <span class="glyphicon glyphicon-ok-sign"></span> Yes
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">
+            <span class="glyphicon glyphicon-remove"></span> No
+        </button>
     </div>
+</div>

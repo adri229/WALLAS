@@ -4,11 +4,16 @@ require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/BaseRest.php");
 require_once(__DIR__."/../components/ServerWrapper.php");
+
 /**
- * Refactorizar cuando se cree la clase Server
- * @author acfernandez4
- *
+ * Clase que recibe las peticiones relacionadas con la gestión de usuarios. Se 
+ * comunica con otros componentes del servidor para realizar las acciones
+ * solicitadas por el cliente y le envía una respuesta acorde al resultado
+ * obtenido de la realización de las acciones solicitadas.
+ * 
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
  */
+
 class UserRest extends BaseRest 
 {
     private $userDAO;
@@ -42,14 +47,11 @@ class UserRest extends BaseRest
 		    return;
         }
 
-
-
         $user = new \User(strtolower($data->login), password_hash($data->passwd,PASSWORD_BCRYPT), $data->fullname, 
                 $data->email, str_replace(" ", "", $data->phone), $data->country);
         
         
         try {
-            //$user->validate();
             $this->userDAO->save($user);
             header($this->server->getServerProtocol() .' 201 Created');
             header("Location: ". $this->server->getRequestUri() ."/".$data->login);
@@ -72,14 +74,11 @@ class UserRest extends BaseRest
 
         $user = $this->userDAO->findByID($login);
 
-
         if ($user == NULL) {
             header($this->server->getServerProtocol() . ' 400 Bad request');
             echo("User with id ".$login." not found");
             return;
         }
-
-
 
         switch ($attribute) {
             case 'account':
@@ -103,7 +102,6 @@ class UserRest extends BaseRest
             case 'password':
 
                 if ($data->passwd != $data->verifyPass) {
-                   
                     header($this->server->getServerProtocol() . ' 400 Bad request');
                     echo("The entered passwords do not match");
                     return;
@@ -113,12 +111,10 @@ class UserRest extends BaseRest
                 
                 break;
             default:
-                # code...
                 break;
         }
 
         try {
-            //$user->validate();
             $this->userDAO->update($user);
             header($this->server->getServerProtocol() . ' 200 OK');
         } catch (Exception $e) {
@@ -163,7 +159,6 @@ class UserRest extends BaseRest
             return;
         }
         
-
         $user_array = array(
             "login" => $user->getLogin(),
             "password" => $user->getPassword(),
@@ -176,7 +171,6 @@ class UserRest extends BaseRest
         header($this->server->getServerProtocol() . ' 200 Ok');
         header('Content-Type: application/json');
         echo(json_encode($user_array));        
-        
     }
 
     public function login($login)
@@ -188,8 +182,7 @@ class UserRest extends BaseRest
         } else {
             header($this->server->getServerProtocol() . ' 200 Ok');
             echo("Hello ".$login);
-        }
-        
+        }       
     }
     
     

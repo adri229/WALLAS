@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Modelo de gastos
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class Spending
 {
 	private $idSpending;

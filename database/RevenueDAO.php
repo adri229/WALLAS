@@ -4,14 +4,20 @@ require_once (__DIR__ . "/../core/PDOConnection.php");
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/Revenue.php");
 
+/**
+ * Clase que gestiona el acceso a la base de datos del modelo Revenue
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class RevenueDAO
 {
 	private $db;
-    public function __construct() {
+    public function __construct() 
+    {
         $this->db = PDOConnection::getInstance ();
     }
 	
-
     public function findByOwnerAndFilter($owner, $startDate, $endDate)
     {
         $query = "SELECT * FROM REVENUE WHERE owner = ? AND dateRevenue BETWEEN ? AND ?";
@@ -19,8 +25,7 @@ class RevenueDAO
         $stmt->execute(array($owner, $startDate, $endDate));
         $revenues_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        $revenues = array();
-        
+        $revenues = array(); 
         foreach ($revenues_db as $revenue) {
             array_push($revenues, new Revenue($revenue["idRevenue"],
                                 str_replace(" ", "T", $revenue["dateRevenue"])."Z",
@@ -31,8 +36,6 @@ class RevenueDAO
         return $revenues;
     }
 
-
-    
     public function findById($idRevenue)
     {
     	$stmt = $this->db->prepare("SELECT * FROM REVENUE WHERE idRevenue = ?");
@@ -75,9 +78,5 @@ class RevenueDAO
     	$stmt = $this->db->prepare("DELETE FROM REVENUE WHERE idRevenue = ?");
     	$stmt->execute(array($idRevenue));
     }
-    
-
-
-
 }
 ?>

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Modelo de ingresos
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class Revenue
 {
 	private $idRevenue;
@@ -64,8 +70,5 @@ class Revenue
 	{
 		$this->owner = $owner;
 	}
-
-
-
 }
 ?>

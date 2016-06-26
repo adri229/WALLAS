@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Modelo de usuarios
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class User 
 {
 	private $login;

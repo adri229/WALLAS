@@ -24,8 +24,12 @@
                 <uib-alert type="danger" dismiss-on-timeout="2000" close="closeAlert()" ng-if="alertStock" ng-show="alertStock">{{msg}}</uib-alert> 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" ng-disabled="updateStockForm.$invalid" ng-click="update(stock)"><span class="glyphicon glyphicon-ok-sign"></span> OK</button>
-              <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+              <button type="button" class="btn btn-success" ng-disabled="updateStockForm.$invalid" ng-click="update(stock)">
+                  <span class="glyphicon glyphicon-ok-sign"></span> OK
+                </button>
+              <button type="button" class="btn btn-default" ng-click="cancel()">
+                  <span class="glyphicon glyphicon-remove"></span> Cancel
+              </button>
             </div>
         </div>
     </div>

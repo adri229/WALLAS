@@ -5,16 +5,19 @@ require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/Spending.php");
 require_once(__DIR__."/../model/Type.php");
 
+/**
+ * Clase que gestiona el acceso a la base de datos del modelo Spending
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
 
 class SpendingDAO
 {
     private $db;
-    public function __construct() {
+    public function __construct() 
+    {
         $this->db = PDOConnection::getInstance ();
     }
-
-
-
 
     public function findById($idSpending)
     {
@@ -30,8 +33,7 @@ class SpendingDAO
         }
     }
 
-
-     public function findByOwnerAndFilterWithTypes($owner, $startDate, $endDate)
+    public function findByOwnerAndFilterWithTypes($owner, $startDate, $endDate)
     {
         $stmt = $this->db->prepare("SELECT s.idSpending as 'spending.id',
                 s.dateSpending as 'spending.date',
@@ -45,8 +47,6 @@ class SpendingDAO
             WHERE s.owner = ? AND s.dateSpending BETWEEN ? AND ? ORDER BY s.idSpending");
         $stmt->execute(array($owner, $startDate, $endDate));
         $spendings_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 
         if (sizeof($spendings_db) > 0) {
             $currentSpending = NULL;
@@ -76,7 +76,6 @@ class SpendingDAO
 
     }
 
-
     public function findByOwnerAndFilter($owner, $startDate, $endDate)
     {
         $stmt = $this->db->prepare("SELECT * FROM SPENDING WHERE owner = ? AND dateSpending BETWEEN ? AND ?");
@@ -91,7 +90,6 @@ class SpendingDAO
         }
         return $spendings;
     }
-
 
     public function save($spending)
     {
@@ -116,7 +114,5 @@ class SpendingDAO
     	$stmt = $this->db->prepare("DELETE FROM SPENDING WHERE idSpending = ?");
     	$stmt->execute(array($idSpending));
     }
-
-
 }
 ?>

@@ -1,6 +1,9 @@
 <?php
 /**
-* 
+ * Clase que proporciona un acceso en orientación a objetos de la
+ * variable global $_SERVER, para obtener información del servidor.
+ * 
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
 */
 class ServerWrapper
 {
@@ -16,7 +19,6 @@ class ServerWrapper
 	{
 		return $this->server['PHP_AUTH_USER'];
 	}
-
 
 	public function getPhpAuthPw()
 	{

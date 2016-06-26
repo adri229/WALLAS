@@ -1,28 +1,23 @@
 <?php
 
-require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../database/UserDAO.php");
-
 require_once(__DIR__."/../model/Stock.php");
 require_once(__DIR__."/../database/StockDAO.php");
-
-require_once(__DIR__."/../model/Spending.php");
-require_once(__DIR__."/../database/SpendingDAO.php");
-
-require_once(__DIR__."/../model/Revenue.php");
-require_once(__DIR__."/../database/RevenueDAO.php");
-
-
 require_once(__DIR__."/../rest/BaseRest.php");
 require_once(__DIR__."/../components/ServerWrapper.php");
+
+/**
+ * Clase que recibe las peticiones relacionadas con la gestión de saldos. Se
+ * comunica con otros componentes del servidor para realizar las acciones
+ * solicitadas por el cliente y le envía una respuesta acorde al resultado
+ * obtenido de la realización de las acciones solicitadas.
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */ 
 
 class StockRest extends BaseRest
 {
 	private $stockDAO;
 
-
-  
-	
 	public function __construct()
 	{
         parent::__construct();
@@ -41,7 +36,6 @@ class StockRest extends BaseRest
     	
     	
 	    	try {
-	    		//$stock->validate();	
 	    		$idStock = $this->stockDAO->save($stock);
 	    		header($this->server->getServerProtocol() .' 201 Created');
 	      		header('Location: '. $this->server->getRequestUri() ."/".$idStock);
@@ -77,8 +71,6 @@ class StockRest extends BaseRest
     		$stock->setTotal($data->total);
 
     		try {
-      			// validate Post object
-      			//$stock->validate(); // if it fails, ValidationException
       			$this->stockDAO->update($stock);
       			header($this->server->getServerProtocol() .' 200 Ok');
     		}catch (ValidationException $e) {
@@ -100,7 +92,6 @@ class StockRest extends BaseRest
       		return;
     	}
 
-
     	if($stock->getOwner()->getLogin() != $currentUser->getLogin()) {
     		header($this->server->getServerProtocol().' 403 Forbidden');
       		echo("you are not the owner of this stock");
@@ -113,9 +104,7 @@ class StockRest extends BaseRest
     	}catch (ValidationException $e) {
       		header($this->server->getServerProtocol() .' 400 Bad request');
       		echo(json_encode($e->getErrors()));
-    	}	
-
-
+    	}
 	}
 
 
@@ -126,8 +115,7 @@ class StockRest extends BaseRest
 
         $startDate = $this->request->getStartDate();
         $endDate = $this->request->getEndDate();
-
-       
+   
         $stocks = $this->stockDAO->findByOwnerAndFilter($owner, $startDate, $endDate);
         if ($stocks == NULL) {
             header($this->server->getServerProtocol() . ' 400 Bad request');
@@ -144,16 +132,14 @@ class StockRest extends BaseRest
         }
 
         $stock_array = [];
-            foreach ($stocks as $stock) {
-        	    array_push($stock_array, [
-            	    "idStock" => $stock->getIdStock(),
-                    "date" => $stock->getDate(),
-                    "total" => $stock->getTotal(),
-                    "owner" => $stock->getOwner()->getLogin()
-                ]);
-            }
-                
-
+        foreach ($stocks as $stock) {
+            array_push($stock_array, [
+           	    "idStock" => $stock->getIdStock(),
+                "date" => $stock->getDate(),
+                "total" => $stock->getTotal(),
+                "owner" => $stock->getOwner()->getLogin()
+            ]);
+        }
 		header($this->server->getServerProtocol() .' 200 Ok');
     	header('Content-Type: application/json');
     	echo(json_encode($stock_array));
@@ -161,14 +147,10 @@ class StockRest extends BaseRest
 
 }
 
-
 $stockRest = new StockRest();
 URIDispatcher::getInstance()
-  ->map("GET", "/stocks/$1", array($stockRest, "getByOwner"))	
-	->map("POST", "/stocks", array($stockRest,"create"))
+    ->map("GET", "/stocks/$1", array($stockRest, "getByOwner"))	
+    ->map("POST", "/stocks", array($stockRest,"create"))
 	->map("PUT", "/stocks/$1", array($stockRest, "update"))
 	->map("DELETE", "/stocks/$1", array($stockRest, "delete"));
-
-
-
 ?>

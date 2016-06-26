@@ -4,10 +4,17 @@ require_once (__DIR__ . "/../core/PDOConnection.php");
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/Type.php");
 
+/**
+ * Clase que gestiona el acceso a la base de datos del modelo Type
+ *
+ * @author acfernandez4 <acfernandez4@esei.uvigo.es>
+ */
+
 class TypeDAO
 {
 	private $db;
-    public function __construct() {
+    public function __construct() 
+    {
         $this->db = PDOConnection::getInstance ();
     }
 
@@ -20,7 +27,7 @@ class TypeDAO
         $types = array();
 
         foreach ($types_db as $type) {
-            array_push($types, new Type($type["idType"], $type["name"], NULL, new User($type["owner"])));
+            array_push($types, new Type($type["idType"], $type["name"], new User($type["owner"])));
         }
         return $types;
     }
@@ -35,7 +42,6 @@ class TypeDAO
             return new Type(
                 $type["idType"],
                 $type["name"],
-                NULL,
                 new User($type["owner"]));
         } else {
             return NULL;
@@ -61,6 +67,16 @@ class TypeDAO
     	$stmt->execute(array($idType));
     }
 
+    /**
+     * Metodo que calcula el porcentaje de los tipos de gasto del usuario pasado
+     * como parametro en funcion del rango de fechas pasado como parametro.
+     * Para realizar el calculo, primero obtiene todos los gastos y la cantidad
+     * numerica de gasto que representan. Despues se invoca a un metodo privado
+     * para conocer el total de gasto del usuario y se calculan los porcentajes
+     * de cada tipo de gasto. Finalmente, se crea un tipo de gasto especial que
+     * representa el porcentaje de gasto de aquellos gastos que no tengan ningun
+     * tipo de gasto asignado.
+     */
     public function findByOwnerAndFilterWithPercents($owner, $startDate, $endDate)
     {
         $stmt = $this->db->prepare("SELECT SUM(s.quantity) as 'spending.quantity',
@@ -75,14 +91,11 @@ class TypeDAO
         if (sizeof($types_db)) {
             $total = $this->getTotal($owner, $startDate, $endDate);
 
-
             $types = [];
             foreach ($types_db as $type_loop) {
-                //$type = new Type(['type.id'],['type.name'],((['spending.quantity']*100)/$total),$owner);
                 $type = new Type();
                 $type->setName($type_loop['type.name']);
                 $percent = ($type_loop["spending.quantity"] * 100) / $total;
-                //$type->setPercent(round($percent,2));
 
                 array_push($types, array("typename"=>$type->getName(), "percent"=>round($percent,2), "total"=>(float)$type_loop["spending.quantity"]));
             }
@@ -94,17 +107,11 @@ class TypeDAO
 	            $specialType->setName("Without category");
 	            array_push($types, array("typename"=>$specialType->getName(), "percent"=>round($percentSpecialType,2), "total"=>(float)$totalWithoutType));
             }
-
-
-
             return $types;
         }
         else {
             return NULL;
         }
-
-
-
     }
 
     private function getTotal($owner, $startDate, $endDate)
@@ -117,8 +124,6 @@ class TypeDAO
 
         return ($total[0]['spending.quantity']);
     }
-
-
 
     private function getTotalSpendingsWithoutType($owner, $startDate, $endDate)
     {
@@ -140,6 +145,5 @@ class TypeDAO
             return true;
         }
     }
-
 }
 ?>
