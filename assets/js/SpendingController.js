@@ -117,7 +117,6 @@ wallas.controller('SpendingController', ['$scope', '$cookies', '$uibModal', 'Spe
         TypeService.getByOwner(login).then(
             function(response) {
                 $scope.types = response.data;
-
             },
             function(response) {
 

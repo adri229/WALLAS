@@ -2,8 +2,8 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','RevenueService', 
-  function($scope, $cookies, $uibModal, RevenueService) {
+wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','RevenueService', 'TypeService',
+  function($scope, $cookies, $uibModal, RevenueService, TypeService) {
 
     var user = $cookies.getObject('globals');
     var login = user.currentUser.login;
@@ -106,10 +106,21 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
         refreshRevenues($scope.startDate, $scope.endDate);  
     }
 
+    function getTypes() {
+        TypeService.getByOwner(login).then(
+            function(response) {
+                $scope.types = response.data;
+            },
+            function(response) {
+
+            }
+        )
+    }
     
 
 
     $scope.create = function() {
+        getTypes();
     	var uibmodalInstance = $uibModal.open({
   			templateUrl: 'assets/html/modalNewRevenue.html',
   			controller: 'RevenueModalController',
@@ -141,6 +152,7 @@ wallas.controller('RevenueController', ['$scope', '$cookies', '$uibModal','Reven
     };
 
     $scope.update = function(revenue) {
+        getTypes();
         var uibmodalInstance = $uibModal.open({
             templateUrl: 'assets/html/modalUpdateRevenue.html',
             controller: 'RevenueModalController',

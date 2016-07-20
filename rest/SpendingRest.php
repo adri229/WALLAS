@@ -98,6 +98,7 @@ class SpendingRest extends BaseRest {
                 header($this->server->getServerProtocol() . ' 400 Bad request');
                 echo(json_encode($e->getErrors()));
             }
+            
             foreach ($data->types as $type_loop) {
                 $type = $this->typeDAO->findById($type_loop->idType);
 

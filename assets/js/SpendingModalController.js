@@ -30,7 +30,6 @@ wallas.controller('SpendingModalController', ['$scope', '$uibModalInstance', 'Sp
 					$uibModalInstance.close('closed');
 				},
 				function(response) {
-					console.log(response);
 					$scope.msg = 'An error ocurred';
 	    			$scope.alertSpending = true;
 				}

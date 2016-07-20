@@ -13,6 +13,7 @@ class Revenue
 	private $quantity;
 	private $name;
 	private $owner;
+	private $types;
 
 	public function __construct($idRevenue = NULL, $date = NULL, $quantity = NULL, $name = NULL, $owner = NULL)
 	{
@@ -21,9 +22,10 @@ class Revenue
 		$this->quantity = (float) $quantity;
 		$this->name = $name;
 		$this->owner = $owner;
+		$this->types = [];
 	}
 
-	public function getidRevenue()
+	public function getIdRevenue()
 	{
 		return $this->idRevenue;
 	}
@@ -45,6 +47,11 @@ class Revenue
 	public function getOwner()
 	{
 		return $this->owner;
+	}
+
+	public function getTypes()
+	{
+		return $this->types;
 	}
 
 	public function setidRevenue($idRevenue)
@@ -69,6 +76,11 @@ class Revenue
 	public function setOwner($owner)
 	{
 		$this->owner = $owner;
+	}
+
+	public function addType($type)
+	{
+		array_push($this->types, $type);
 	}
 }
 ?>

@@ -46,7 +46,7 @@
 	    <tr ng-repeat="spending in spendings.data | orderBy:sortSpending | filter:searchSpending">
 	       <td>{{spending.name}}</td>
 	       <td>{{spending.quantity | currency }}</td>
-		   <td>{{spending.date | date: 'fullDate'}}</td>
+		     <td>{{spending.date | date: 'fullDate'}}</td>
        <td>
 		   		<span ng-repeat="type in spending.types">
             {{type.name}}

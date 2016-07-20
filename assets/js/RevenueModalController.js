@@ -2,11 +2,30 @@
 
 var wallas = angular.module('wallasApp');
 
-wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'RevenueService', 'revenues',
-	function($scope, $uibModalInstance, RevenueService, revenues) {
+wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'RevenueService', 'revenues', '$cookies', 'TypeService',
+	function($scope, $uibModalInstance, RevenueService, revenues, $cookies, TypeService) {
+
+		var user = $cookies.getObject('globals');
+    	var login = user.currentUser.login;
+
+		function getTypes() {
+        	TypeService.getByOwner(login).then(
+	            function(response) {
+	                $scope.types = response.data;
+	            },
+	            function(response) {
+
+	            }
+        	)
+    	}
+
+		if (revenues != null) {
+			$scope.revenue = revenues.revenue;	
+		}
+		
 
 		$scope.create = function(revenue) {
-			console.log(revenue);
+			revenue.types = $scope.selected;
 			RevenueService.create(revenue).then(
 				function(response) {
 					$uibModalInstance.close('closed');
@@ -18,12 +37,8 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 			)
 		}
 
-		if (revenues != null) {
-			$scope.revenue = revenues.revenue;	
-		}
-		
-
 		$scope.update = function(revenue) {
+			revenue.types = $scope.selected;
 			RevenueService.update(revenue, revenues.revenue.idRevenue).then(
 				function(response) {
 					$uibModalInstance.close('closed');
@@ -71,5 +86,39 @@ wallas.controller('RevenueModalController', ['$scope', '$uibModalInstance', 'Rev
 		$scope.closeAlert = function(index) {
         	$scope.alertRevenue = false;
     	};
+
+    	$scope.selected = [];
+      	$scope.toggle = function (item, list) {
+	        var idx = list.indexOf(item);
+	        if (idx > -1) {
+	          list.splice(idx, 1);
+	        }
+	        else {
+	          list.push(item);
+	        }
+      	};
+      	$scope.exists = function (item, list) {
+        	return list.indexOf(item) > -1;
+      	};
+
+      	$scope.isCollapsed = false;
+
+
+      	$scope.addNewType = function(type) {
+      		TypeService.create(type).then(
+				function(response) {
+					$scope.newType = null;
+					getTypes();
+				},
+				function(response) {
+					if (response.data == 'This type already exits') {
+	    				$scope.msg = 'This type already exits';
+	    			} else {
+	    				$scope.msg = 'An error ocurred';
+	    			}
+	    			$scope.alertSpending = true;
+				}
+			)
+      	}
 
 	}]);

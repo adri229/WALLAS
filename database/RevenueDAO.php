@@ -36,6 +36,48 @@ class RevenueDAO
         return $revenues;
     }
 
+    public function findByOwnerAndFilterWithTypes($owner, $startDate, $endDate)
+    {
+        $stmt = $this->db->prepare("SELECT r.idRevenue as 'revenue.id',
+                r.dateRevenue as 'revenue.date',
+                r.quantity as 'revenue.quantity',
+                r.name as 'revenue.name',
+                r.owner as 'revenue.owner',
+                t.idType as 'type.id',
+                t.name as 'type.name',
+                t.owner as 'type.owner'
+            FROM REVENUE r LEFT JOIN TYPE_REVENUE tr  ON r.idRevenue = tr.revenue LEFT JOIN TYPE t on tr.type = t.idType
+            WHERE r.owner = ? AND r.dateRevenue BETWEEN ? AND ? ORDER BY r.idRevenue");
+        $stmt->execute(array($owner, $startDate, $endDate));
+        $revenues_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        if (sizeof($revenues_db) > 0) {
+            $currentRevenue = NULL;
+            $revenues = [];
+            foreach ($revenues_db as $revenue_loop) {
+                if ($currentRevenue == NULL || ($currentRevenue != NULL &&
+                    $revenue_loop["revenue.id"] != $currentRevenue->getIdRevenue())) {
+                        $currentRevenue = new Revenue($revenue_loop["revenue.id"],
+                            str_replace(" ", "T", $revenue_loop["revenue.date"])."Z",
+                            $revenue_loop["revenue.quantity"],
+                            $revenue_loop["revenue.name"],
+                            new User($revenue_loop["revenue.owner"]));
+                    array_push($revenues, $currentRevenue);
+                }
+                if ($revenue_loop["type.id"] != NULL) {
+                    $currentRevenue->addType(new Type($revenue_loop['type.id'],
+                        $revenue_loop['type.name'],
+                        new User($revenue_loop["revenue.owner"])));
+                }
+            }
+            return $revenues;
+
+        } else {
+            return NULL;
+        }
+
+    }
+
     public function findById($idRevenue)
     {
     	$stmt = $this->db->prepare("SELECT * FROM REVENUE WHERE idRevenue = ?");

@@ -42,6 +42,7 @@
             <th ng-click="changeSort(1)"><span ng-class="classSort" >Name</span> </th>
             <th ng-click="changeSort(2)"><span ng-class="classSort" >Quantity</span> </th>
             <th ng-click="changeSort(3)"><span ng-class="classSort" >Date</span> </th>
+            <th>Types</th>
             <th></th>	
           </tr>
     		</thead>
@@ -50,6 +51,11 @@
 		       <td>{{revenue.name}}</td>
 		       <td>{{revenue.quantity | currency }}</td>
 		       <td>{{revenue.date | date: 'fullDate'}}</td>
+           <td>
+              <span ng-repeat="type in revenue.types">
+                {{type.name}}
+              </span>
+           </td>
 		          <td>
                    <button class="btn btn-warning btn-xs" ng-click="update(revenue)" >
                         <span class="glyphicon glyphicon-pencil"></span>

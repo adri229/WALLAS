@@ -10,7 +10,8 @@ wallas.factory('RevenueService', ['$http', function($http){
 		return $http.post('rest/revenues', {
 			date: revenue.date,
 			quantity: revenue.quantity,
-			name: revenue.name
+			name: revenue.name,
+			types: revenue.types
 		});
 	}
 
@@ -18,7 +19,8 @@ wallas.factory('RevenueService', ['$http', function($http){
 		return $http.put('rest/revenues/'.concat(idRevenue), {
 			date: revenue.date,
 			quantity: revenue.quantity,
-			name: revenue.name
+			name: revenue.name,
+			types: revenue.types
 		});
 	}
 
@@ -26,7 +28,7 @@ wallas.factory('RevenueService', ['$http', function($http){
 		var startDateUTC = startDate.getUTCFullYear() + '-' + (startDate.getUTCMonth() + 1)+ '-' + startDate.getUTCDate()+'T'+startDate.getUTCHours()+':'+startDate.getUTCMinutes()+'Z';
         var endDateUTC  = endDate.getUTCFullYear() + '-' + (endDate.getUTCMonth() + 1)+ '-' + endDate.getUTCDate()+'T'+endDate.getUTCHours()+':'+endDate.getUTCMinutes()+'Z';
 
-		return $http.get('rest/revenues/'.concat(login) + '?startDate=' + startDateUTC + '&endDate=' + endDateUTC);
+		return $http.get('rest/revenues/'.concat(login) + '/crud' + '?startDate=' + startDateUTC + '&endDate=' + endDateUTC);
 	}
 
 	revenueService.getDataChartSpenRev = function(login,startDate,endDate) {
@@ -34,7 +36,7 @@ wallas.factory('RevenueService', ['$http', function($http){
 		+ startDate.getUTCDate()+'T'+startDate.getUTCHours()+':'+startDate.getUTCMinutes()+'Z';
 				var endDateUTC  = endDate.getUTCFullYear() + '-' + (endDate.getUTCMonth())+ '-'
 				+ endDate.getUTCDate()+'T'+endDate.getUTCHours()+':'+endDate.getUTCMinutes()+'Z';
-		return $http.get('rest/revenues/'.concat(login) + '?startDate=' + startDateUTC + '&endDate=' + endDateUTC);
+		return $http.get('rest/revenues/'.concat(login) + '/chart' + '?startDate=' + startDateUTC + '&endDate=' + endDateUTC);
 	}
 
 	revenueService.delete = function(idRevenue) {

@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `TYPE` (
     FOREIGN KEY (`owner`) REFERENCES `USER` (`login`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de los tipos de gastos' AUTO_INCREMENT=1;
 
--- creacion de la tabla TYPE
+-- creacion de la tabla TYPE_SPENDING
 CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     `idTypeSpending` int(9) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a la relación tipo-gasto',
     `type` int(9) NOT NULL COMMENT 'Clave primaria del tipo de gasto, no puede ser nula',
@@ -70,6 +70,16 @@ CREATE TABLE IF NOT EXISTS `TYPE_SPENDING` (
     PRIMARY KEY (`idTypeSpending`), 
     FOREIGN KEY (`type`) REFERENCES `TYPE` (`idType`) ON DELETE CASCADE, 
     FOREIGN KEY (`spending`) REFERENCES `SPENDING` (`idSpending`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto' AUTO_INCREMENT=1;
+
+-- creacion de la tabla TYPE_REVENUE
+CREATE TABLE IF NOT EXISTS `TYPE_REVENUE` (
+    `idTypeRevenue` int(9) NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria que identifica a la relación tipo-gasto',
+    `type` int(9) NOT NULL COMMENT 'Clave primaria del tipo de ingresoº, no puede ser nula',
+    `revenue` int(9) NOT NULL COMMENT 'Clave primaria del ingreso, no puede ser nula',
+    PRIMARY KEY (`idTypeRevenue`), 
+    FOREIGN KEY (`type`) REFERENCES `TYPE` (`idType`) ON DELETE CASCADE, 
+    FOREIGN KEY (`revenue`) REFERENCES `REVENUE` (`idRevenue`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que relaciona los gastos con su tipo de gasto' AUTO_INCREMENT=1;
   
 INSERT INTO `USER` (`login`,`password`,`fullname`,`email`,`phone`, `country`) VALUES

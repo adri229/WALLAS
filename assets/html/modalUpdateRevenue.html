@@ -23,6 +23,30 @@
                     <button type="button" class="btn btn-default" ng-click="opendate()"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                   </p>
+                  <fieldset class="standard" >
+                    <label>Select types</label>
+                     <ul class="list-inline">
+                      <li ng-repeat="type in types">
+                        <md-checkbox ng-checked="exists(type, selected)" ng-click="toggle(type,selected)">{{ type.name }}</md-checkbox>
+                      </li>
+                  </ul>  
+                  </fieldset>
+                  <button type="button" class="btn btn-default" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
+                        Are you need more types?
+                 </button>
+                  <div uib-collapse="isCollapsed">
+                    <div class="well well-lg">
+                        <form name="addTypeForm" accept-charset="UTF-8" role="form">
+                          <md-input-container class="md-block" flex-gt-xs >
+                              <label>Name</label>
+                              <input ng-model="newType.name" type="text" name="name" autofocus>
+                          </md-input-container>
+                        </md-input-container>
+                      </form>
+                        <button type="button" class="btn btn-primary" ng-disabled="addTypeForm.$invalid" ng-click="addNewType(newType)">OK</button>
+                        <button class="btn btn-warning" ng-click="isCollapsed = !isCollapsed">Cancel</button>
+                    </div>
+                </div>
                 </form>
             </md-content>
             <div class="modal-body" ng-init="alertRevenue = false" >

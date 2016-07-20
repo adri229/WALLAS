@@ -48,22 +48,5 @@ class TypeSpending
 	{
 		$this->type = $type;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
 ?>
